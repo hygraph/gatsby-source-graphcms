@@ -1,72 +1,72 @@
-import { GraphQLClient } from "graphql-request"
-import { forEach, forEachObjIndexed } from "ramda"
-import crypto from "crypto"
-import { extractTypeName } from "./util"
+import {GraphQLClient} from 'graphql-request';
+import {forEach, forEachObjIndexed} from 'ramda';
+import crypto from 'crypto';
+import {extractTypeName} from './util';
 import {
   faultyKeywords,
   keywordsError,
-  checkForFaultyFields,
-} from './faulty-keywords'
+  checkForFaultyFields
+} from './faulty-keywords';
 
-const SOURCE_NAME = `GraphCMS`
+const SOURCE_NAME = `GraphCMS`;
 
 const DEBUG_MODE = process.env.DEBUG_MODE || false;
 
 exports.sourceNodes = async (
-  { boundActionCreators, reporter },
-  { endpoint, token, query }
+  {boundActionCreators, reporter},
+  {endpoint, token, query}
 ) => {
   if (query) {
-    const { createNode } = boundActionCreators
+    const {createNode} = boundActionCreators;
 
     const clientOptions = {
       headers: {
-        Authorization: token ? `Bearer ${token}` : undefined,
-      },
-    }
-    
-    const client = new GraphQLClient(endpoint, clientOptions)
+        Authorization: token ? `Bearer ${token}` : undefined
+      }
+    };
 
-    const userQueryResult = await client.request(query)
-    // keywords workaround
+    const client = new GraphQLClient(endpoint, clientOptions);
+
+    const userQueryResult = await client.request(query);
+    // Keywords workaround
     if (checkForFaultyFields(userQueryResult, faultyKeywords)) {
-      reporter.panic(`gatsby-source-graphcms: ${keywordsError}`)
+      reporter.panic(`gatsby-source-graphcms: ${keywordsError}`);
     }
     if (DEBUG_MODE) {
-      const jsonUserQueryResult = JSON.stringify(userQueryResult, undefined, 2)
-      console.log(`\ngatsby-source-graphcms: GraphQL query results: ${jsonUserQueryResult}`)
+      const jsonUserQueryResult = JSON.stringify(userQueryResult, undefined, 2);
+      console.log(`\ngatsby-source-graphcms: GraphQL query results: ${jsonUserQueryResult}`);
     }
-    forEachObjIndexed(createNodes(createNode, reporter), userQueryResult)
+    forEachObjIndexed(createNodes(createNode, reporter), userQueryResult);
   } else {
-    reporter.panic(`gatsby-source-graphcms: you need to provide a GraphQL query in the plugin 'query' parameter`)
+    reporter.panic(`gatsby-source-graphcms: you need to provide a GraphQL query in the plugin 'query' parameter`);
   }
-}
+};
 
 const createNodes = (createNode, reporter) => (value, key) => {
   forEach(queryResultNode => {
-    const { id, ...fields } = queryResultNode
-    const jsonNode = JSON.stringify(queryResultNode)
+    const {id, ...fields} = queryResultNode;
+    const jsonNode = JSON.stringify(queryResultNode);
     const gatsbyNode = {
-        id,
-        ...fields,
-        parent: `${SOURCE_NAME}_${key}`,
-        children: [],
-        internal: {
-          type: extractTypeName(key),
-          content: jsonNode,
-          contentDigest: crypto.createHash(`md5`).update(jsonNode).digest(`hex`),
-        },
+      id,
+      ...fields,
+      parent: `${SOURCE_NAME}_${key}`,
+      children: [],
+      internal: {
+        type: extractTypeName(key),
+        content: jsonNode,
+        contentDigest: crypto.createHash(`md5`).update(jsonNode).digest(`hex`)
       }
+    };
 
     if (DEBUG_MODE) {
-      const jsonFields = JSON.stringify(fields)
-      const jsonGatsbyNode = JSON.stringify(gatsbyNode)
-      reporter.info(`  processing node: ${jsonNode}`)
-      reporter.info(`    node id ${id}`)
-      reporter.info(`    node fields: ${jsonFields}`)
-      reporter.info(`    gatsby node: ${jsonGatsbyNode}`)
+      const jsonFields = JSON.stringify(fields);
+      const jsonGatsbyNode = JSON.stringify(gatsbyNode);
+      reporter.info(`  processing node: ${jsonNode}`);
+      reporter.info(`    node id ${id}`);
+      reporter.info(`    node fields: ${jsonFields}`);
+      reporter.info(`    gatsby node: ${jsonGatsbyNode}`);
     }
 
-    createNode(gatsbyNode)
-  }, value)
-}
+    createNode(gatsbyNode);
+  }, value);
+};
