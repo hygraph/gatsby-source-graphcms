@@ -161,8 +161,7 @@ challenge for the plugin.
 
 All of the aforementioned limitations are under active discussion and
 development in the Gatsby channel on the GraphCMS Slack group.
-[Join us!](https://graphcms.slack.com/) Contact a contributor for an invite if
-needed.
+[Join us!](https://slack.graphcms.com/)
 
 ## Other TODOs
 
