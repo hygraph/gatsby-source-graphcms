@@ -54,7 +54,7 @@ plugins: [
   }
 ],
 ```
-Use a `.env` file or set environment variables directly to access the GraphCMS endpoint and token. This avoids committing potentially sensitive data.
+Use an `.env` file or set environment variables directly to access the GraphCMS endpoint and token. This avoids committing potentially sensitive data.
 
 ## Plugin options
 |              |                                                          |
@@ -65,7 +65,7 @@ Use a `.env` file or set environment variables directly to access the GraphCMS e
 
 ## How to query : GraphQL
 
-Let's say you have a GraphQL type called `Post`. You would query it like so:
+Let's say you have a GraphQL type called `Artist`. You would query all artists like so:
 
 ```graphql
 {
@@ -89,30 +89,25 @@ Let's say you have a GraphQL type called `Post`. You would query it like so:
 
 ## Current limitations
 
-### Fields which have sub selections do not work
+#### `length` must be aliased
 
-This one pertains to the introspection metaquery method.
+If you have a field named `length` it must be aliased to something else like so: `myLength: length`. This is due to internal limitations of gatsby's graphql.
 
-Example:
-```
-    Artist {
-      picture {
-        url
-    ...
-```
+#### Does not support over 1000 records per `__type`
 
-The metaQuery currently used is not capable of finding url from
-the above query, which will cause the query that fetches all
-data to fail. It will have to be modified. It looks like it will
-be a bit more difficult to find that url and add it to the query,
-as it might require making a __type query for each field of a
-type that has subfields and then modifying the final query
-before firing it. Related errors can be seen at:
-[redmega/example_05_static_site_generation_with_gatsby](https://github.com/redmega/example_05_static_site_generation_with_gatsby)
+A way to automatically paginate and fetch all data is being worked on, but this is a limitation on the graph.cool backend.
 
-Does not support datasets over 1000 items per type, localization, or automatic _meta count association, although all are under active discussion in the Gatsby channel on the GraphCMS Slack group. [Join us!](https://graphcms.slack.com/) Contact a contributor for an invite if needed.
+#### Does not support localization
 
-## TODOs
+GraphCMS recently implemented localization, which provides an interesting challenge for the plugin.
+
+#### Does not support automatic \_\_meta count association
+<!-- Talk about this more -->
+
+## Discussion
+All of the aforementioned limitations are under active discussion and development in the Gatsby channel on the GraphCMS Slack group. [Join us!](https://graphcms.slack.com/) Contact a contributor for an invite if needed.
+
+## Other TODOs
 
 1. Implement support for relationships/embedded fields
 1. Implement mapping feature for transformation plugins, like the MongoDB plugin
@@ -120,7 +115,7 @@ Does not support datasets over 1000 items per type, localization, or automatic _
 
 ## Contributors
 
-- [@redmega](https://github.com/redmega/) Angel Piscola
+- [@redmega](https://github.com/redmega) Angel Piscola
 - [@rafacm](https://github.com/rafacm) Rafael Cordones
 - [@hmeissner](https://github.com/hmeissner) Hugo Meissner
 - [@rdela](https://github.com/rdela) Ricky de Laveaga
