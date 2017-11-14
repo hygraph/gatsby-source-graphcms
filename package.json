@@ -32,6 +32,13 @@
   },
   "xo": {
     "space": true,
-    "parser": "babel-eslint"
+    "quotes": "backtick",
+    "parser": "babel-eslint",
+    "overrides": [
+      {
+        "files": "src/__tests__/*.js",
+        "globals": ["it", "expect"]
+      }
+    ]
   }
 }
