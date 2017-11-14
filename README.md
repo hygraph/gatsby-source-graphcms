@@ -5,7 +5,7 @@
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
 
-#### [Working example: @hmeissner/gatsby-graphcms-testing](https://github.com/hmeissner/gatsby-graphcms-testing)
+#### [Working example: @rdela/gatsby-graphcms-testing](https://github.com/rdela/gatsby-graphcms-testing)
 
 ## Install
 
@@ -167,8 +167,12 @@ needed.
 ## Other TODOs
 
 1. Implement support for relationships/embedded fields
-1. Implement mapping feature for transformation plugins, like the MongoDB plugin
-1. Explore schema stitching and `graphql-tools`
+1. Implement mapping feature for transformation plugins, like
+   [the MongoDB plugin](https://www.gatsbyjs.org/packages/gatsby-source-mongodb/#mapping-mediatype-feature)
+1. Explore schema stitching —
+   [Apollo GraphQL Tools Docs docs](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html),
+   [blog post](https://dev-blog.apollodata.com/graphql-schema-stitching-8af23354ac37)
+   — and `[graphql-tools](https://github.com/apollographql/graphql-tools)`
 
 ## Contributors
 
