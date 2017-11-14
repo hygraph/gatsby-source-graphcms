@@ -1,4 +1,4 @@
-import R from "ramda"
+import { intersection } from "ramda"
 
 export const faultyKeywords = [
   `length`,
@@ -13,7 +13,7 @@ export const checkForFaultyFields = (data, keywords) => {
     const all = []
     const getKeys = (obj) =>
       all.push(
-        ...Object.keys(obj).map(key => 
+        ...Object.keys(obj).map(key =>
           obj[key] instanceof Object
           ? getKeys(obj[key]) && key
           : key
@@ -23,7 +23,7 @@ export const checkForFaultyFields = (data, keywords) => {
     return all
   }
 
-  const containsKeywords = R.intersection(getAllKeys(data), keywords).length > 0
+  const containsKeywords = intersection(getAllKeys(data), keywords).length > 0
 
   return containsKeywords
 }
