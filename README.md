@@ -170,7 +170,7 @@ needed.
 1. Implement mapping feature for transformation plugins, like
    [the MongoDB plugin](https://www.gatsbyjs.org/packages/gatsby-source-mongodb/#mapping-mediatype-feature)
 1. Explore schema stitching —
-   [Apollo GraphQL Tools Docs docs](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html),
+   [Apollo GraphQL Tools Docs](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html),
    [blog post](https://dev-blog.apollodata.com/graphql-schema-stitching-8af23354ac37)
    — and `[graphql-tools](https://github.com/apollographql/graphql-tools)`
 
