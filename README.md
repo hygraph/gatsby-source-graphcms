@@ -154,8 +154,11 @@ in this case, bearing in mind pagination limitations described above.
 
 #### Does not support localization
 
-GraphCMS recently implemented localization, which provides an interesting
-challenge for the plugin.
+[GraphCMS recently implemented localization](https://graphcms.com/blog/introducing-content-localization),
+which provides an interesting challenge for the plugin. Work in Gatsby on
+“[GeoIP and Language-based redirects](https://github.com/gatsbyjs/gatsby/pull/2890)”
+is ongoing with some really nice
+[extras for those who host with Netlify](https://www.netlify.com/docs/redirects/#geoip-and-language-based-redirects).
 
 ## Discussion
 
