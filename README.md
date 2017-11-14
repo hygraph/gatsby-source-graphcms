@@ -30,7 +30,7 @@ testing steps below.
    below.
 1. From there you can `cd ../.. && yarn && yarn develop` to test.
 
-### Every time you rebuild the plugin, gatsby's development server has to be restarted for the changes to be reflected in your test environment.
+### Every time you rebuild the plugin, you must restart Gatsby’s development server to reflect the changes in your test environment.
 
 ## Usage
 
