@@ -172,7 +172,7 @@ needed.
 1. Explore schema stitching —
    [Apollo GraphQL Tools Docs](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html),
    [blog post](https://dev-blog.apollodata.com/graphql-schema-stitching-8af23354ac37)
-   — and `[graphql-tools](https://github.com/apollographql/graphql-tools)`
+   — and [graphql-tools](https://github.com/apollographql/graphql-tools)
 
 ## Contributors
 
