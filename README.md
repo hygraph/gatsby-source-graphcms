@@ -5,7 +5,7 @@
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
 
-#### [Working example: @rdela/gatsby-graphcms-testing](https://github.com/rdela/gatsby-graphcms-testing)
+#### [Working example: @hmeissner/gatsby-graphcms-testing](https://github.com/rdela/gatsby-graphcms-testing)
 
 ## Install
 
