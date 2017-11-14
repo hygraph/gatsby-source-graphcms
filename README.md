@@ -93,18 +93,48 @@ Let's say you have a GraphQL type called `Artist`. You would query all artists l
 
 #### `length` must be aliased
 
-If you have a field named `length` it must be aliased to something else like so: `myLength: length`. This is due to internal limitations of gatsby's graphql.
+If you have a field named `length` it must be aliased to something else like so: `myLength: length`. This is due to internal limitations of Gatsby’s GraphQL implementation.
 
 #### Does not support over 1000 records per `__type`
 
-A way to automatically paginate and fetch all data is being worked on, but this is a limitation on the graph.cool backend.
+A way to automatically paginate and fetch all data is being worked on, but this is a limitation on the [graph.cool](https://www.graph.cool) backend. See [Graphcool Forum — Query without pagination limits](https://www.graph.cool/forum/t/query-without-pagination-limits/845) and [Graphcool Docs — Query API — Pagination](https://www.graph.cool/docs/reference/graphql-api/query-api-nia9nushae/#pagination)
+> Limitations
+> Note that a maximum of 1000 nodes can be returned per pagination field. If you need to query more nodes than that, you can use first and skip to seek through the different pages. You can also include multiple versions of the same field with different pagination parameter in one query using GraphQL Aliases.
+
+#### Does not support automatic \_\_meta count association
+Related to pagination and 1K limitation, if you want to show an
+accurate total count of the result set without wanting to
+aggregate on the client side, especially with large sets, you
+might want to use the auto-generated meta fields with `count`.
+A way to automatically extract the meta fields from query and
+use `createNodeFields` to add the meta fields to their
+corresponding nodes is being worked on.
+
+If in the config query:
+```allArticles {
+  id
+}
+__allArticlesMeta {
+  count
+}
+```
+We would instead move the `_allArticlesMeta` inside `allArticles`
+(as we don’t need nor want any nodes from meta fields) and then
+query the total articles count like so in the page level:
+```allArticles {
+  __meta {
+    count
+  }
+}```
+
+For now we advise using `this.props.data.articles.edges.length`
+instead because Gatsby tries to create nodes out of top level
+fields which does not make sense in this case, bearing in mind
+pagination limitations described above.
 
 #### Does not support localization
 
 GraphCMS recently implemented localization, which provides an interesting challenge for the plugin.
-
-#### Does not support automatic \_\_meta count association
-<!-- Talk about this more -->
 
 ## Discussion
 All of the aforementioned limitations are under active discussion and development in the Gatsby channel on the GraphCMS Slack group. [Join us!](https://graphcms.slack.com/) Contact a contributor for an invite if needed.
