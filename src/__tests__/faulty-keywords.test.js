@@ -1,8 +1,8 @@
-const { GraphQLClient } = require(`graphql-request`)
-const { faultyKeywords, checkForFaultyFields } = require(`../faulty-keywords`)
+const {GraphQLClient} = require(`graphql-request`);
+const {faultyKeywords, checkForFaultyFields} = require(`../faulty-keywords`);
 
-const endpoint = `https://api.graphcms.com/simple/v1/vinylbase`
-const client = new GraphQLClient(endpoint)
+const endpoint = `https://api.graphcms.com/simple/v1/vinylbase`;
+const client = new GraphQLClient(endpoint);
 
 const faultyQuery = `{
   allArtists {
@@ -17,7 +17,7 @@ const faultyQuery = `{
       }
     }
   }
-}`
+}`;
 
 const swellQuery = `{
   allArtists {
@@ -32,16 +32,16 @@ const swellQuery = `{
       }
     }
   }
-}`
+}`;
 
 it(`returns true if the query contains a faulty keyword`, async () => {
-  expect.assertions(1)
-  const queryResult = await client.request(faultyQuery)
-  expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(true)
-})
+  expect.assertions(1);
+  const queryResult = await client.request(faultyQuery);
+  expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(true);
+});
 
 it(`returns false if the faulty keyword is aliased`, async () => {
-  expect.assertions(1)
-  const queryResult = await client.request(swellQuery)
-  expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(false)
-})
+  expect.assertions(1);
+  const queryResult = await client.request(swellQuery);
+  expect(checkForFaultyFields(queryResult, faultyKeywords)).toBe(false);
+});
