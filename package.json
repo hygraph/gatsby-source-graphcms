@@ -1,9 +1,21 @@
 {
+  "version": "0.0.1",
   "name": "gatsby-source-graphcms",
   "description": "Gatsby source plugin for building websites using the GraphCMS as a data source.",
-  "author": "Angel Piscola <angelpiscola@gmail.com>",
-  "version": "0.0.1",
+  "keywords": [
+    "gatsby",
+    "graphcms"
+  ],
+  "homepage": "https://github.com/GraphCMS/gatsby-source-graphcms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GraphCMS/gatsby-source-graphcms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GraphCMS/gatsby-source-graphcms/issues"
+  },
   "license": "MIT",
+  "author": "Angel Piscola <angelpiscola@gmail.com>",
   "deprecated": false,
   "main": "index.js",
   "scripts": {
@@ -39,6 +51,17 @@
         "files": "src/__tests__/*.js",
         "globals": ["it", "expect"]
       }
+    ]
+  },
+  "renovate": {
+    "extends": [
+      ":library"
+    ],
+    "labels": [
+      "renovate"
+    ],
+    "assignees": [
+      "rdela"
     ]
   }
 }
