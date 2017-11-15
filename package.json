@@ -55,7 +55,7 @@
   },
   "renovate": {
     "extends": [
-      ":library"
+      "config:base"
     ],
     "labels": [
       "renovate"
