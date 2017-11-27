@@ -3,8 +3,12 @@
   "name": "gatsby-source-graphcms",
   "description": "Gatsby source plugin for building websites using the GraphCMS as a data source.",
   "keywords": [
+    "data",
     "gatsby",
-    "graphcms"
+    "gatsby-plugin",
+    "graphcms",
+    "graphql",
+    "source"
   ],
   "homepage": "https://github.com/GraphCMS/gatsby-source-graphcms",
   "repository": {
