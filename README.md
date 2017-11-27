@@ -5,7 +5,7 @@
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
 
-#### [Working example: @hmeissner/gatsby-graphcms-testing](https://github.com/hmeissner/gatsby-graphcms-testing)
+#### Example: [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example)
 
 ## Install
 
@@ -23,9 +23,9 @@ testing steps below.
    `~/code/graphcms/myKillerGatsbySite/plugins/`
 1. `git clone https://github.com/GraphCMS/gatsby-source-graphcms.git`
 1. `cd gatsby-source-graphcms`
-1. `yarn && yarn build` Swap `yarn build` for `yarn watch` in plugin's directory
+1. `yarn` or `yarn && yarn watch` in plugin's directory
    for auto-rebuilding the plugin after you make changes to it—only during
-   development, remember to build the plugin pre-deployment.
+   development.
 1. Make sure plugin is referenced in your Gatsby config, as in the example
    below.
 1. From there you can `cd ../.. && yarn && yarn develop` to test.
