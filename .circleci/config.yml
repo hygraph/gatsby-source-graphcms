@@ -4,7 +4,7 @@
 # https://github.com/CircleCI-Public/circleci-demo-workflows/blob/parallel-jobs/.circleci/config.yml
 version: 2
 jobs:
-  "node-4"
+  "node-4":
     docker:
       - image: circleci/node:4
     working_directory: ~/repo
@@ -24,7 +24,7 @@ jobs:
       # run tests!
       - run: yarn test
 
-  "node-6"
+  "node-6":
     docker:
       - image: circleci/node:6
     working_directory: ~/repo
@@ -44,7 +44,7 @@ jobs:
       # run tests!
       - run: yarn test
 
-  "node-8"
+  "node-8":
     docker:
       - image: circleci/node:8
     working_directory: ~/repo
@@ -64,7 +64,7 @@ jobs:
       # run tests!
       - run: yarn test
 
-  "node-9"
+  "node-9":
     docker:
       - image: circleci/node:9
     working_directory: ~/repo
