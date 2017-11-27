@@ -30,7 +30,6 @@
     "babel-cli": "6.26.0",
     "babel-eslint": "8.0.2",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-plugin-transform-runtime": "6.23.0",
     "babel-preset-env": "1.6.1",
     "cross-env": "5.1.1",
     "jest": "21.2.1",
@@ -49,7 +48,10 @@
     "overrides": [
       {
         "files": "src/__tests__/*.js",
-        "globals": ["it", "expect"]
+        "globals": [
+          "it",
+          "expect"
+        ]
       }
     ]
   },
