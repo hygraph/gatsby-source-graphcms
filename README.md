@@ -1,10 +1,8 @@
 # gatsby-source-graphcms
 
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
-[![CircleCI](https://img.shields.io/circleci/project/github/GraphCMS/gatsby-source-graphcms.svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![CircleCI](https://img.shields.io/circleci/project/github/GraphCMS/gatsby-source-graphcms.svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
 
-Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
-[GraphCMS](https://graphcms.com) endpoint.
+Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a [GraphCMS](https://graphcms.com) endpoint.
 
 #### Example: [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example)
 
@@ -18,10 +16,10 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 ## Testing plugin contributions
 
 1. `cd` to the Gatsby install you want to test your changes to the plugin code
-   with, or clone
-   [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example).
-1. If you have installed the plugin through `yarn` or `npm` `yarn remove
-   gatsby-source-graphcms` or `npm r gatsby-source-graphcms`
+   with, or clone [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example).
+1. If you cloned the example or previously installed the plugin through `yarn`
+   or `npm`, `yarn remove gatsby-source-graphcms` or `npm r
+   gatsby-source-graphcms`.
 1. `mkdir plugins` if it does not exist yet and `cd` into it.
 1. Your path should now be something like
    `~/code/graphcms/myKillerGatsbySite/plugins/`
@@ -57,9 +55,7 @@ plugins: [
 ],
 ```
 
-Gatsby’s data processing layer begins with “source” plugins, configured in
-`gatsby-config.js`. Here the site sources its data from the GraphCMS endpoint.
-Use an `.env` file or set environment variables directly to access the GraphCMS
+Gatsby’s data processing layer begins with “source” plugins, configured in `gatsby-config.js`. Here the site sources its data from the GraphCMS endpoint. Use an `.env` file or set environment variables directly to access the GraphCMS
 endpoint and token. This avoids committing potentially sensitive data.
 
 ## Plugin options
@@ -105,11 +101,7 @@ implementation.
 
 #### Does not support over 1000 records per `__type`
 
-A way to automatically paginate and fetch all data is being worked on, but this
-is a limitation on the [graph.cool](https://www.graph.cool) backend. See
-[Graphcool Forum — Query without pagination limits](https://www.graph.cool/forum/t/query-without-pagination-limits/845)
-and
-[Graphcool Docs — Query API — Pagination](https://www.graph.cool/docs/reference/graphql-api/query-api-nia9nushae/#pagination)
+A way to automatically paginate and fetch all data is being worked on, but this is a limitation on the [graph.cool](https://www.graph.cool) backend. See [Graphcool Forum — Query without pagination limits](https://www.graph.cool/forum/t/query-without-pagination-limits/845) and [Graphcool Docs — Query API — Pagination](https://www.graph.cool/docs/reference/graphql-api/query-api-nia9nushae/#pagination)
 
 > Limitations Note that a maximum of 1000 nodes can be returned per pagination
 > field. If you need to query more nodes than that, you can use first and skip
@@ -119,12 +111,7 @@ and
 
 #### Does not support automatic __meta count association
 
-Related to pagination and 1K limitation, if you want to show an accurate total
-count of the result set without wanting to aggregate on the client side,
-especially with large sets, you might want to use the auto-generated meta fields
-with `count`. A way to automatically extract the meta fields from query and use
-`createNodeFields` to add the meta fields to their corresponding nodes is being
-worked on.
+Related to pagination and 1K limitation, if you want to show an accurate total count of the result set without wanting to aggregate on the client side, especially with large sets, you might want to use the auto-generated meta fields with `count`. A way to automatically extract the meta fields from query and use `createNodeFields` to add the meta fields to their corresponding nodes is being worked on.
 
 If in the config query:
 
@@ -137,9 +124,7 @@ __allArticlesMeta {
 }
 ```
 
-We would instead move the `_allArticlesMeta` inside `allArticles` (as we don’t
-need nor want any nodes from meta fields) and then query the total articles
-count like so in the page level:
+We would instead move the `_allArticlesMeta` inside `allArticles` (as we don’t need nor want any nodes from meta fields) and then query the total articles count like so in the page level:
 
 ```
 allArticles {
@@ -149,33 +134,21 @@ allArticles {
 }
 ```
 
-For now we advise using `this.props.data.articles.edges.length` instead because
-Gatsby tries to create nodes out of top level fields which does not make sense
-in this case, bearing in mind pagination limitations described above.
+For now we advise using `this.props.data.articles.edges.length` instead because Gatsby tries to create nodes out of top level fields which does not make sense in this case, bearing in mind pagination limitations described above.
 
 #### Does not support localization
 
-[GraphCMS recently implemented localization](https://graphcms.com/blog/introducing-content-localization),
-which provides an interesting challenge for the plugin. Work in Gatsby on
-“[GeoIP and Language-based redirects](https://github.com/gatsbyjs/gatsby/pull/2890)”
-is ongoing with some really nice
-[extras for those who host with Netlify](https://www.netlify.com/docs/redirects/#geoip-and-language-based-redirects).
+[GraphCMS recently implemented localization](https://graphcms.com/blog/introducing-content-localization), which provides an interesting challenge for the plugin. Work in Gatsby on “[GeoIP and Language-based redirects](https://github.com/gatsbyjs/gatsby/pull/2890)” is ongoing with some really nice [extras for those who host with Netlify](https://www.netlify.com/docs/redirects/#geoip-and-language-based-redirects).
 
 ## Discussion
 
-All of the aforementioned limitations are under active discussion and
-development in the Gatsby channel on the GraphCMS Slack group.
-[Join us!](https://slack.graphcms.com/)
+All of the aforementioned limitations are under active discussion and development in the Gatsby channel on the GraphCMS Slack group. [Join us!](https://slack.graphcms.com/)
 
 ## Other TODOs
 
 1. Implement support for relationships/embedded fields
-1. Implement mapping feature for transformation plugins, like
-   [the MongoDB plugin](https://www.gatsbyjs.org/packages/gatsby-source-mongodb/#mapping-mediatype-feature)
-1. Explore schema stitching —
-   [Apollo GraphQL Tools Docs](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html),
-   [blog post](https://dev-blog.apollodata.com/graphql-schema-stitching-8af23354ac37)
-   — and [graphql-tools](https://github.com/apollographql/graphql-tools)
+1. Implement mapping feature for transformation plugins, like [the MongoDB plugin](https://www.gatsbyjs.org/packages/gatsby-source-mongodb/#mapping-mediatype-feature)
+1. Explore schema stitching — [Apollo GraphQL Tools Docs](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html), [blog post](https://dev-blog.apollodata.com/graphql-schema-stitching-8af23354ac37) — and [graphql-tools](https://github.com/apollographql/graphql-tools)
 
 ## Contributors
 
