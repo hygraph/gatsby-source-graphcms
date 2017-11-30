@@ -1,6 +1,6 @@
 # gatsby-source-graphcms
 
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) &nbsp; &nbsp; [![CircleCI](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms.svg?style=svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
@@ -9,10 +9,9 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 
 ## Install
 
-1. `yarn add gatsby-source-graphcms`
-  or
-  `npm i gatsby-source-graphcms`
-1. Make sure plugin is referenced in your Gatsby config, as in the [example&nbsp;below](#usage).
+1. `yarn add gatsby-source-graphcms` or `npm i gatsby-source-graphcms`
+1. Make sure plugin is referenced in your Gatsby config, as in the
+   [example&nbsp;below](#usage).
 1. `gatsby develop`
 
 ## Gatsby's GraphCMS plugin testing
@@ -23,10 +22,10 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
    `~/code/graphcms/myKillerGatsbySite/plugins/`
 1. `git clone https://github.com/GraphCMS/gatsby-source-graphcms.git`
 1. `cd gatsby-source-graphcms`
-1. `yarn` or `yarn && yarn watch` in plugin's directory
-   for auto-rebuilding the plugin after you make changes to it—only during
-   development.
-1. Make sure plugin is referenced in your Gatsby config, as in the [example&nbsp;below](#usage).
+1. `yarn` or `yarn && yarn watch` in plugin's directory for auto-rebuilding the
+   plugin after you make changes to it—only during development.
+1. Make sure plugin is referenced in your Gatsby config, as in the
+   [example&nbsp;below](#usage).
 1. From there you can `cd ../.. && yarn && yarn develop` to test.
 
 ### Every time you rebuild the plugin, you must restart Gatsby’s development server to reflect the changes in your test environment.
