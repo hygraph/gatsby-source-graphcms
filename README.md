@@ -1,6 +1,6 @@
 # gatsby-source-graphcms
 
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) &nbsp; &nbsp; [![CircleCI](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms.svg?style=svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![CircleCI](https://img.shields.io/circleci/project/github/GraphCMS/gatsby-source-graphcms.svg?style=svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
