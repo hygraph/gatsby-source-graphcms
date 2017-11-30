@@ -5,15 +5,15 @@
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
 
-#### [Working example: @hmeissner/gatsby-graphcms-testing](https://github.com/hmeissner/gatsby-graphcms-testing)
+#### Example: [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example)
 
 ## Install
 
-Once publishied to npm, you will be able to `npm install --save
-gatsby-source-graphcms`
-
-For now during alpha-testing phase you need to build the plugin, following the
-testing steps below.
+1. `yarn add gatsby-source-graphcms`
+  or
+  `npm i gatsby-source-graphcms`
+1. Make sure plugin is referenced in your Gatsby config, as in the [example&nbsp;below](#usage).
+1. `gatsby develop`
 
 ## Gatsby's GraphCMS plugin testing
 
@@ -23,11 +23,10 @@ testing steps below.
    `~/code/graphcms/myKillerGatsbySite/plugins/`
 1. `git clone https://github.com/GraphCMS/gatsby-source-graphcms.git`
 1. `cd gatsby-source-graphcms`
-1. `yarn && yarn build` Swap `yarn build` for `yarn watch` in plugin's directory
+1. `yarn` or `yarn && yarn watch` in plugin's directory
    for auto-rebuilding the plugin after you make changes to it—only during
-   development, remember to build the plugin pre-deployment.
-1. Make sure plugin is referenced in your Gatsby config, as in the example
-   below.
+   development.
+1. Make sure plugin is referenced in your Gatsby config, as in the [example&nbsp;below](#usage).
 1. From there you can `cd ../.. && yarn && yarn develop` to test.
 
 ### Every time you rebuild the plugin, you must restart Gatsby’s development server to reflect the changes in your test environment.
