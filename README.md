@@ -1,6 +1,7 @@
 # gatsby-source-graphcms
 
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![CircleCI](https://img.shields.io/circleci/project/github/GraphCMS/gatsby-source-graphcms.svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![CircleCI](https://img.shields.io/circleci/project/github/GraphCMS/gatsby-source-graphcms.svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
 
 Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 [GraphCMS](https://graphcms.com) endpoint.
@@ -17,15 +18,16 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 ## Testing plugin contributions
 
 1. `cd` to the Gatsby install you want to test your changes to the plugin code
-   with, or clone [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example).
-1. If you have installed the plugin through `yarn` or `npm`
-   `yarn remove gatsby-source-graphcms` or `npm r gatsby-source-graphcms`
+   with, or clone
+   [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example).
+1. If you have installed the plugin through `yarn` or `npm` `yarn remove
+   gatsby-source-graphcms` or `npm r gatsby-source-graphcms`
 1. `mkdir plugins` if it does not exist yet and `cd` into it.
 1. Your path should now be something like
    `~/code/graphcms/myKillerGatsbySite/plugins/`
 1. `git clone https://github.com/GraphCMS/gatsby-source-graphcms.git`
 1. `cd gatsby-source-graphcms`
-1. `yarn` or `yarn && yarn watch` in plugin's directory for auto-rebuilding the
+1. `yarn` or `yarn && yarn watch` in plugin’s directory for auto-rebuilding the
    plugin after you make changes to it—only during development.
 1. Make sure plugin is referenced in your Gatsby config, as in the
    [example&nbsp;below](#usage).
@@ -39,10 +41,6 @@ _In your gatsby config..._
 
 ```javascript
 plugins: [
-  /*
-   * Gatsby's data processing layer begins with “source”
-   * plugins. Here the site sources its data from the GraphCMS endpoint
-   */
   {
     resolve: `gatsby-source-graphcms`,
     options: {
@@ -59,6 +57,8 @@ plugins: [
 ],
 ```
 
+Gatsby’s data processing layer begins with “source” plugins, configured in
+`gatsby-config.js`. Here the site sources its data from the GraphCMS endpoint.
 Use an `.env` file or set environment variables directly to access the GraphCMS
 endpoint and token. This avoids committing potentially sensitive data.
 
@@ -72,7 +72,7 @@ endpoint and token. This avoids committing potentially sensitive data.
 
 ## How to query : GraphQL
 
-Let's say you have a GraphQL type called `Artist`. You would query all artists
+Let’s say you have a GraphQL type called `Artist`. You would query all artists
 like so:
 
 ```graphql
