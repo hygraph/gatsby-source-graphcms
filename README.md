@@ -14,10 +14,13 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
    [example&nbsp;below](#usage).
 1. `gatsby develop`
 
-## Testing plugin changes
+## Testing plugin contributions
 
-1. `cd` to your Gatsby install, `mkdir plugins` if it does not exist yet and
-   `cd` into it.
+1. `cd` to the Gatsby install you want to test your changes to the plugin code
+   with, or clone [@GraphCMS/gatsby-graphcms-example](https://github.com/GraphCMS/gatsby-graphcms-example).
+1. If you have installed the plugin through `yarn` or `npm`
+   `yarn remove gatsby-source-graphcms` or `npm r gatsby-source-graphcms`
+1. `mkdir plugins` if it does not exist yet and `cd` into it.
 1. Your path should now be something like
    `~/code/graphcms/myKillerGatsbySite/plugins/`
 1. `git clone https://github.com/GraphCMS/gatsby-source-graphcms.git`
