@@ -14,7 +14,7 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
    [example&nbsp;below](#usage).
 1. `gatsby develop`
 
-## Gatsby's GraphCMS plugin testing
+## Testing plugin changes
 
 1. `cd` to your Gatsby install, `mkdir plugins` if it does not exist yet and
    `cd` into it.
