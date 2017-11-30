@@ -9,11 +9,11 @@ Source plugin for pulling data into [Gatsby](https://github.com/gatsbyjs) from a
 
 ## Install
 
-Once publishied to npm, you will be able to `npm install --save
-gatsby-source-graphcms`
-
-For now during alpha-testing phase you need to build the plugin, following the
-testing steps below.
+1. `yarn add gatsby-source-graphcms`
+  or
+  `npm i gatsby-source-graphcms`
+1. Make sure plugin is referenced in your Gatsby config, as in the [example&nbsp;below](#usage).
+1. `gatsby develop`
 
 ## Gatsby's GraphCMS plugin testing
 
@@ -26,8 +26,7 @@ testing steps below.
 1. `yarn` or `yarn && yarn watch` in plugin's directory
    for auto-rebuilding the plugin after you make changes to it—only during
    development.
-1. Make sure plugin is referenced in your Gatsby config, as in the example
-   below.
+1. Make sure plugin is referenced in your Gatsby config, as in the [example&nbsp;below](#usage).
 1. From there you can `cd ../.. && yarn && yarn develop` to test.
 
 ### Every time you rebuild the plugin, you must restart Gatsby’s development server to reflect the changes in your test environment.
