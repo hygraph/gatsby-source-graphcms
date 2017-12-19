@@ -68,6 +68,15 @@
     ],
     "assignees": [
       "rdela"
-    ]
+    ],
+    "devDependencies": {
+      "schedule": [
+        "on the first day of the month"
+      ],
+      "automerge": true,
+      "major": {
+        "automerge": false
+      }
+    }
   }
 }
