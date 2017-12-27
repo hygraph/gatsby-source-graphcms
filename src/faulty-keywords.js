@@ -1,29 +1,28 @@
-import {intersection} from 'ramda';
+import {map, filter, compose} from 'ramda';
 
-export const faultyKeywords = [
+const keywords = [
   `length`
 ];
 
-// TODO: provide a link to aliasing section in plugin's README
-export const keywordsError = `Found unaliased reserved field with a name matching one of ${faultyKeywords}. Build failed! Please refer to the caveats in the gatsby-source-graphcms README for a solution. (link)`;
+const inlineQuery = query =>
+  query.replace(/(\r\n|\n|\r|\s+)/g, ' ');
 
-// Checking if the query we pass in config has any of the faulty fields
-export const checkForFaultyFields = (data, keywords) => {
-  const getAllKeys = obj => {
-    const all = [];
-    const getKeys = obj =>
-      all.push(
-        ...Object.keys(obj).map(key =>
-          obj[key] instanceof Object ?
-          getKeys(obj[key]) && key :
-          key
-        )
-      );
-    getKeys(obj);
-    return all;
-  };
+// ignore if there's a colon behind/ahead of the keyword
+const keywordToRegex = keyword =>
+  new RegExp(`(?<!:\\s*)\\b${keyword}\\b(?!\\s*:)`);
 
-  const containsKeywords = intersection(getAllKeys(data), keywords).length > 0;
+const checkQuery = inlinedQuery => regex =>
+  regex.test(inlinedQuery);
 
-  return containsKeywords;
+const violations = query => compose(
+  filter(checkQuery(query)),
+  map(keywordToRegex)
+)(keywords);
+
+export const faultyKeywordsCount = query => {
+  const violationsArr = violations(query);
+  return violationsArr.length;
 };
+
+export const keywordsError = count =>
+  `Found unaliased field with name matching ${count} of reserved keywords ([ ${keywords} ]). Build failed! Please refer to the caveats in the gatsby-source-graphcms README for a solution: https://github.com/GraphCMS/gatsby-source-graphcms#length-must-be-aliased`;
