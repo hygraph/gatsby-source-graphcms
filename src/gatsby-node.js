@@ -4,7 +4,7 @@ import {createNodes} from './util';
 import {DEBUG_MODE} from './constants';
 import {
   keywordsError,
-  faultyKeywordsCount
+  checkForFaultyFields
 } from './faulty-keywords';
 
 exports.sourceNodes = async (
@@ -25,9 +25,8 @@ exports.sourceNodes = async (
     const userQueryResult = await client.request(query);
 
     // Keywords workaround
-    const violationCount = faultyKeywordsCount(query);
-    if (violationCount) {
-      reporter.panic(`gatsby-source-graphcms: ${keywordsError(violationCount)}`);
+    if (checkForFaultyFields(userQueryResult)) {
+      reporter.panic(`gatsby-source-graphcms: ${keywordsError}`);
     }
 
     if (DEBUG_MODE) {
