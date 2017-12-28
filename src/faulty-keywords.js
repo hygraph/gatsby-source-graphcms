@@ -1,16 +1,18 @@
-import {filter} from 'ramda'
+import {filter} from 'ramda';
 
 const keywords = [
   `length`
 ];
 
 const getAllObjKeys = obj => {
-  let all = [];
+  const all = [];
   const getObjKeys = obj =>
     all.push(
       ...Object.keys(obj).map(key => {
-        if(obj[key] instanceof Object) getObjKeys(obj[key])
-        return key
+        if (obj[key] instanceof Object) {
+          getObjKeys(obj[key]);
+        }
+        return key;
       })
     );
   getObjKeys(obj);
@@ -18,12 +20,12 @@ const getAllObjKeys = obj => {
 };
 
 const checkForKeyword = key =>
-  keywords.includes(key)
+  keywords.includes(key);
 
 // Checking if the query we pass in config has any of the faulty fields
 export const checkForFaultyFields = userQueryResult => {
-  const allKeys = getAllObjKeys(userQueryResult)
-  const faultyFields = filter(checkForKeyword, allKeys)
+  const allKeys = getAllObjKeys(userQueryResult);
+  const faultyFields = filter(checkForKeyword, allKeys);
 
   return faultyFields.length;
 };

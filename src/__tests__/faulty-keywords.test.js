@@ -1,47 +1,27 @@
-const {GraphQLClient} = require(`graphql-request`);
 const {checkForFaultyFields} = require(`../faulty-keywords`);
 
-const endpoint = `https://api.graphcms.com/simple/v1/vinylbase`;
-const client = new GraphQLClient(endpoint);
+const faultyResponse = {
+  allTracks: [
+    {length: 214},
+    {length: 184}
+  ]
+};
 
-const faultyQuery = `{
-  allArtists {
-    records {
-      tracks {
-        record {
-          tracks {
-            id
-            length
-          }
-        }
-      }
-    }
-  }
-}`;
+const swellResponse = {
+  allTracks: [
+    {aliasedLength: 214},
+    {aliasedLength: 184}
+  ]
+};
 
-const swellQuery = `{
-  allArtists {
-    records {
-      tracks {
-        record {
-          tracks {
-            id
-            aliasedLength: length
-          }
-        }
-      }
-    }
-  }
-}`;
-
-it(`returns true if the query contains a faulty keyword`, async () => {
-  expect.assertions(1);
-  const queryResult = await client.request(faultyQuery);
-  expect(checkForFaultyFields(queryResult)).toBeTruthy();
+it(`returns true if the query contains a faulty keyword`, () => {
+  expect(
+    checkForFaultyFields(faultyResponse)
+  ).toBeTruthy();
 });
 
-it(`returns false if the faulty keyword is aliased`, async () => {
-  expect.assertions(1);
-  const queryResult = await client.request(swellQuery);
-  expect(checkForFaultyFields(queryResult)).toBeFalsy();
+it(`returns false if the faulty keyword is aliased`, () => {
+  expect(
+    checkForFaultyFields(swellResponse)
+  ).toBeFalsy();
 });
