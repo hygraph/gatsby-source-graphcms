@@ -14,13 +14,13 @@ const swellResponse = {
   ]
 };
 
-it(`returns true if the query contains a faulty keyword`, () => {
+it(`is truthy if the query contains a faulty keyword`, () => {
   expect(
     checkForFaultyFields(faultyResponse)
   ).toBeTruthy();
 });
 
-it(`returns false if the faulty keyword is aliased`, () => {
+it(`is falsy if the faulty keyword is aliased`, () => {
   expect(
     checkForFaultyFields(swellResponse)
   ).toBeFalsy();
