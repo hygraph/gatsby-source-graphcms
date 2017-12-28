@@ -7,15 +7,14 @@ const keywords = [
 const getAllObjKeys = obj => {
   const all = [];
   const getObjKeys = obj =>
-    all.push(
-      ...Object.keys(obj).map(key => {
-        if (obj[key] instanceof Object) {
-          getObjKeys(obj[key]);
-        }
-        return key;
-      })
-    );
+    Object.keys(obj).forEach(key => {
+      if (obj[key] instanceof Object) {
+        getObjKeys(obj[key]);
+      }
+      all.push(key);
+    });
   getObjKeys(obj);
+
   return all;
 };
 
