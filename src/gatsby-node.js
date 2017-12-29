@@ -3,7 +3,6 @@ import {forEachObjIndexed} from 'ramda';
 import {createNodes} from './util';
 import {DEBUG_MODE} from './constants';
 import {
-  faultyKeywords,
   keywordsError,
   checkForFaultyFields
 } from './faulty-keywords';
@@ -24,10 +23,12 @@ exports.sourceNodes = async (
     const client = new GraphQLClient(endpoint, clientOptions);
 
     const userQueryResult = await client.request(query);
+
     // Keywords workaround
-    if (checkForFaultyFields(userQueryResult, faultyKeywords)) {
+    if (checkForFaultyFields(userQueryResult)) {
       reporter.panic(`gatsby-source-graphcms: ${keywordsError}`);
     }
+
     if (DEBUG_MODE) {
       const jsonUserQueryResult = JSON.stringify(userQueryResult, undefined, 2);
       console.log(`\ngatsby-source-graphcms: GraphQL query results: ${jsonUserQueryResult}`);
