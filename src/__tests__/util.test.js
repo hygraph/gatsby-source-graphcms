@@ -14,8 +14,8 @@ describe('Util function tests', () => {
       expect(formatTypeName('Post')).toBe('allPosts');
       expect(formatTypeName('Page')).toBe('allPages');
       expect(formatTypeName('Recess')).toBe('allRecesses');
-      // expect(formatTypeName('Index')).toBe('allIndexes');
-      // expect(formatTypeName('Focus')).toBe('allFocuses');
+      // XXX: expect(formatTypeName('Index')).toBe('allIndexes');
+      // XXX: expect(formatTypeName('Focus')).toBe('allFocuses');
     });
 
     it('extracts the type name from a xyz', () => {
@@ -47,9 +47,10 @@ c
       expect(constructTypeQuery(type)).toBe(query);
     });
 
-    // TODO: This one. Too tired now.
-    it.skip('Assembles multiple queries together', () => {
-
+    // TODO: The rest of the assembleQueries tests.
+    it('throws an error when trying to assemble an undefined query list', () => {
+      const assemble = () => assembleQueries(undefined);
+      expect(assemble).toThrow();
     });
 
     it('Creates some gatsby nodes or something', () => {

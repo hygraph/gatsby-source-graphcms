@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import {compose, join, pluck, map, path, forEach} from 'ramda';
-import { singular, plural } from 'pluralize';
+import {singular, plural} from 'pluralize';
 
 import {SOURCE_NAME, DEBUG_MODE} from './constants';
 
