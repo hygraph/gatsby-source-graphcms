@@ -23,8 +23,8 @@
   "deprecated": false,
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "build": "babel src --out-dir . --ignore __tests__",
+    "test": "yarn lint && jest",
+    "build": "yarn test && babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "lint": "xo --fix",
     "prepublish": "cross-env NODE_ENV=production npm run build"
