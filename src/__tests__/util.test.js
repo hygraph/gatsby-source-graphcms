@@ -9,13 +9,13 @@ import {
 
 describe('Util function tests', () => {
   describe('String manipulation', () => {
-    // TODO: This is just a little bit broken until we find a good plural lib to match GraphCMS's.
+    // Next: This is just a little bit broken until we find a good plural lib to match GraphCMS's.
     it('formats the type name properly', () => {
       expect(formatTypeName('Post')).toBe('allPosts');
       expect(formatTypeName('Page')).toBe('allPages');
       expect(formatTypeName('Recess')).toBe('allRecesses');
-      // XXX: expect(formatTypeName('Index')).toBe('allIndexes');
-      // XXX: expect(formatTypeName('Focus')).toBe('allFocuses');
+      // Index: expect(formatTypeName('Index')).toBe('allIndexes');
+      // Focus: expect(formatTypeName('Focus')).toBe('allFocuses');
     });
 
     it('extracts the type name from a xyz', () => {
@@ -47,7 +47,7 @@ describe('Util function tests', () => {
       expect(constructTypeQuery(type).replace(/\s/g, '')).toBe(query);
     });
 
-    // TODO: The rest of the assembleQueries tests.
+    // Next: The rest of the assembleQueries tests.
     it('throws an error when trying to assemble an undefined query list', () => {
       const assemble = () => assembleQueries(undefined);
       expect(assemble).toThrow();
