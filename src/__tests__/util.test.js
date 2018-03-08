@@ -34,17 +34,17 @@ describe('Util function tests', () => {
       name: 'Post',
       fields: [{name: 'a'}, {name: 'b'}, {name: 'c'}]
     };
-    // TODO: This is funky, I hate it
+
     const query = `
-  allPosts {
-    a
-b
-c
-  }
-`;
+      allPosts {
+        a
+        b
+        c
+      }
+    `.replace(/\s/g, '');
 
     it('Constructs a type query from a given type', () => {
-      expect(constructTypeQuery(type)).toBe(query);
+      expect(constructTypeQuery(type).replace(/\s/g, '')).toBe(query);
     });
 
     // TODO: The rest of the assembleQueries tests.
@@ -66,7 +66,7 @@ c
         internal: {
           content: '{"id":1,"fields":[{"name":"a"}]}',
           contentDigest: 'faeed10185d8d423f42c5b37891dcdd9',
-          type: 'Post'
+          type: 'Post' // <== Fixed type name!!
         },
         parent: 'GraphCMS_allPosts'
       };
