@@ -1,7 +1,8 @@
 {
   "version": "1.0.0-alpha.1",
   "name": "gatsby-source-graphcms",
-  "description": "Gatsby source plugin for building websites using the GraphCMS as a data source.",
+  "description":
+    "Gatsby source plugin for building websites using the GraphCMS as a data source.",
   "keywords": [
     "data",
     "gatsby",
@@ -27,7 +28,7 @@
     "build": "yarn test && babel src --out-dir . --ignore __tests__",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "lint": "xo --fix",
-    "prepublish": "cross-env NODE_ENV=production npm run build"
+    "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
@@ -53,26 +54,16 @@
     "overrides": [
       {
         "files": "src/__tests__/*.js",
-        "env": [
-          "jest"
-        ]
+        "env": ["jest"]
       }
     ]
   },
   "renovate": {
-    "extends": [
-      "config:base"
-    ],
-    "labels": [
-      "renovate"
-    ],
-    "assignees": [
-      "rdela"
-    ],
+    "extends": ["config:base"],
+    "labels": ["renovate"],
+    "assignees": ["rdela"],
     "devDependencies": {
-      "schedule": [
-        "on the first day of the month"
-      ],
+      "schedule": ["on the first day of the month"],
       "automerge": true,
       "major": {
         "automerge": false
