@@ -1,13 +1,14 @@
 import crypto from 'crypto';
 import {compose, join, pluck, map, path, forEach} from 'ramda';
-import {SOURCE_NAME, DEBUG_MODE} from './constants';
-// If type ends in a non-vowel, we need to append es. Else s.
-// TODO: Use an actual pluralize library for this. This doesn't cover all use cases.
-export const formatTypeName = t => `all${t}${t.endsWith(`s`) ? `es` : `s`}`;
+import {singular, plural} from 'pluralize';
 
-// Get the type name back from a formatted type name.
-// TODO: Use the same pluralize to convert from plural to singular?
-export const extractTypeName = t => /all(.+(?:s|es))/gi.exec(t)[1];
+import {SOURCE_NAME, DEBUG_MODE} from './constants';
+
+// Convert a type name to a formatted plural type name.
+export const formatTypeName = t => `all${plural(t)}`;
+
+// Get the singular type name back from a formatted type name.
+export const extractTypeName = t => singular(t.replace(/all/, ''));
 
 // Create the query body
 export const surroundWithBraces = c => `{${c}}`;
