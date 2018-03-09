@@ -9,13 +9,13 @@ import {
 
 describe('Util function tests', () => {
   describe('String manipulation', () => {
-    // Next: This is just a little bit broken until we find a good plural lib to match GraphCMS's.
+    // TODO: This is just a little bit broken until we find a good plural lib to match GraphCMS's.
     it('formats the type name properly', () => {
       expect(formatTypeName('Post')).toBe('allPosts');
       expect(formatTypeName('Page')).toBe('allPages');
       expect(formatTypeName('Recess')).toBe('allRecesses');
-      // Index: expect(formatTypeName('Index')).toBe('allIndexes');
-      // Focus: expect(formatTypeName('Focus')).toBe('allFocuses');
+      // XXX: expect(formatTypeName('Index')).toBe('allIndexes');
+      // XXX: expect(formatTypeName('Focus')).toBe('allFocuses');
     });
 
     it('extracts the type name from a xyz', () => {
@@ -47,7 +47,7 @@ describe('Util function tests', () => {
       expect(constructTypeQuery(type).replace(/\s/g, '')).toBe(query);
     });
 
-    // Next: The rest of the assembleQueries tests.
+    // TODO: The rest of the assembleQueries tests.
     it('throws an error when trying to assemble an undefined query list', () => {
       const assemble = () => assembleQueries(undefined);
       expect(assemble).toThrow();
@@ -71,11 +71,19 @@ describe('Util function tests', () => {
         parent: 'GraphCMS_allPosts'
       };
 
-      createThemNodes([{id: 0, fields: [{name: 'a'}]}, {id: 1, fields: [{name: 'a'}]}], 'allPosts');
+      createThemNodes(
+        [
+          {id: 0, fields: [{name: 'a'}]},
+          {id: 1, fields: [{name: 'a'}]}
+        ],
+        'allPosts'
+      );
 
       expect(createNode).toBeCalledWith(whatThisThingGetsCalledWith);
       expect(createNode).toHaveBeenCalledTimes(2);
-      expect(createNode.mock.calls[0][0]).not.toEqual(createNode.mock.calls[1][0]);
+      expect(createNode.mock.calls[0][0]).not.toEqual(
+        createNode.mock.calls[1][0]
+      );
       expect(reporter).not.toHaveBeenCalled();
     });
   });
