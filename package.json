@@ -62,7 +62,7 @@
   "renovate": {
     "extends": [
       "config:base",
-      "docker:disable"
+      "default:pinDigestsDisabled"
     ],
     "labels": [
       "renovate"
