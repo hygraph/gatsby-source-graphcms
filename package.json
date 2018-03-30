@@ -78,6 +78,7 @@
       "major": {
         "automerge": false
       }
-    }
+    },
+    "enabledManagers": ["npm"]
   }
 }
