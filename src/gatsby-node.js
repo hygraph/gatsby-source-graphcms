@@ -16,7 +16,7 @@ exports.sourceNodes = async (
 
     const clientOptions = {
       headers: {
-        Origin: origin ? origin : '',
+        Origin: origin || '',
         Authorization: token ? `Bearer ${token}` : undefined
       }
     };
