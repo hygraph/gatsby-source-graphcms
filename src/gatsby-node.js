@@ -11,6 +11,7 @@ exports.sourceNodes = async (
   {boundActionCreators, reporter},
   {endpoint, token, query, origin}
 ) => {
+  // Change for circleCI
   if (query) {
     const {createNode} = boundActionCreators;
 
