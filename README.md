@@ -65,7 +65,7 @@ endpoint and token. This avoids committing potentially sensitive data.
 | **endpoint** | Indicates the endpoint to use for the graphql connection |
 |    **token** | The API access token. Optional if the endpoint is public |
 |    **query** | The GraphQL query to execute against the endpoint        |
-|   **origin** | The Origin header, if required by your endpoint (#52)    |
+|   **origin** | The Origin header, if required by your endpoint [#52](https://github.com/GraphCMS/gatsby-source-graphcms/pull/52)    |
 
 ## How to query : GraphQL
 
