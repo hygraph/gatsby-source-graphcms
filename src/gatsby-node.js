@@ -9,13 +9,14 @@ import {
 
 exports.sourceNodes = async (
   {boundActionCreators, reporter},
-  {endpoint, token, query}
+  {endpoint, token, query, origin}
 ) => {
   if (query) {
     const {createNode} = boundActionCreators;
 
     const clientOptions = {
       headers: {
+        Origin: origin || '',
         Authorization: token ? `Bearer ${token}` : undefined
       }
     };
