@@ -1,6 +1,6 @@
 # https://circleci.com/docs/2.0/language-javascript/
 # https://hub.docker.com/r/circleci/node/tags/
-# https://circleci.com/docs/2.0/language-javascript/
+# https://circleci.com/docs/2.0/parallelism-faster-jobs/
 # https://github.com/CircleCI-Public/circleci-demo-workflows/blob/parallel-jobs/.circleci/config.yml
 version: 2
 jobs:
