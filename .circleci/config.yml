@@ -1,6 +1,6 @@
 # https://circleci.com/docs/2.0/language-javascript/
 # https://hub.docker.com/r/circleci/node/tags/
-# https://circleci.com/docs/2.0/language-javascript/
+# https://circleci.com/docs/2.0/parallelism-faster-jobs/
 # https://github.com/CircleCI-Public/circleci-demo-workflows/blob/parallel-jobs/.circleci/config.yml
 version: 2
 jobs:
@@ -44,9 +44,9 @@ jobs:
       # run tests!
       - run: yarn test
 
-  "node-9":
+  "node-10":
     docker:
-      - image: circleci/node:9
+      - image: circleci/node:10
     working_directory: ~/repo
     steps:
       - checkout
@@ -70,4 +70,4 @@ workflows:
     jobs:
       - "node-6"
       - "node-8"
-      - "node-9"
+      - "node-10"
