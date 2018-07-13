@@ -7,22 +7,24 @@ import {
   checkForFaultyFields
 } from './faulty-keywords';
 
+const setHeaders = (origin, token) => {
+  let headers = {};
+  if (origin) {
+    headers = Object.assign(headers, {"Origin": origin})
+  }
+  if (token) {
+    headers = Object.assign(headers, {"Authorization": `Bearer ${token}`})
+  }
+  return Object.keys(headers).length === 0 ? {} : { headers };
+};
+
 exports.sourceNodes = async (
   {boundActionCreators, reporter},
   {endpoint, token, query, origin}
 ) => {
   if (query) {
     const {createNode} = boundActionCreators;
-
-    const clientOptions = {
-      headers: {
-        Origin: origin || '',
-        Authorization: token ? `Bearer ${token}` : undefined
-      }
-    };
-
-    const client = new GraphQLClient(endpoint, clientOptions);
-
+    const client = new GraphQLClient(endpoint, setHeaders(origin, token));
     const userQueryResult = await client.request(query);
 
     // Keywords workaround
