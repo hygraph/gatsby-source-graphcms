@@ -1,22 +1,11 @@
 import {GraphQLClient} from 'graphql-request';
 import {forEachObjIndexed} from 'ramda';
-import {createNodes} from './util';
+import {createNodes, createdHeaders} from './util';
 import {DEBUG_MODE} from './constants';
 import {
   keywordsError,
   checkForFaultyFields
 } from './faulty-keywords';
-
-const setHeaders = (origin, token) => {
-  let headers = {};
-  if (origin) {
-    headers = Object.assign(headers, {"Origin": origin})
-  }
-  if (token) {
-    headers = Object.assign(headers, {"Authorization": `Bearer ${token}`})
-  }
-  return Object.keys(headers).length === 0 ? {} : { headers };
-};
 
 exports.sourceNodes = async (
   {boundActionCreators, reporter},
@@ -24,7 +13,7 @@ exports.sourceNodes = async (
 ) => {
   if (query) {
     const {createNode} = boundActionCreators;
-    const client = new GraphQLClient(endpoint, setHeaders(origin, token));
+    const client = new GraphQLClient(endpoint, createdHeaders(origin, token));
     const userQueryResult = await client.request(query);
 
     // Keywords workaround
