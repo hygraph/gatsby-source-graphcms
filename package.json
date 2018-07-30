@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "name": "gatsby-source-graphcms",
   "description": "Gatsby source plugin for building websites using the GraphCMS as a data source.",
   "keywords": [
