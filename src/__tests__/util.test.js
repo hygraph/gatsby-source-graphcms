@@ -4,7 +4,8 @@ import {
   surroundWithBraces,
   constructTypeQuery,
   assembleQueries,
-  createNodes
+  createNodes,
+  createdHeaders
 } from '../util';
 
 describe('Util function tests', () => {
@@ -85,6 +86,12 @@ describe('Util function tests', () => {
         createNode.mock.calls[1][0]
       );
       expect(reporter).not.toHaveBeenCalled();
+    });
+
+    it('creates a Headers object', () => {
+      expect(createdHeaders()).toMatchObject({});
+      expect(createdHeaders('foo')).toMatchObject({headers: {Origin: 'foo'}});
+      expect(createdHeaders('foo', 'bar')).toMatchObject({headers: {Origin: 'foo', Authorization: 'Bearer bar'}});
     });
   });
 });

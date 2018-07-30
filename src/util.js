@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import {compose, join, pluck, map, path, forEach} from 'ramda';
+import {compose, join, pluck, map, path, forEach, isEmpty, merge} from 'ramda';
 import {singular, plural} from 'pluralize';
 
 import {SOURCE_NAME, DEBUG_MODE} from './constants';
@@ -55,4 +55,16 @@ export const createNodes = (createNode, reporter) => (value, key) => {
 
     createNode(gatsbyNode);
   }, value);
+};
+
+// Construct Headers object for GraphQLClient
+export const createdHeaders = (origin, token) => {
+  let headers = {};
+  if (origin) {
+    headers = merge(headers, {Origin: origin});
+  }
+  if (token) {
+    headers = merge(headers, {Authorization: `Bearer ${token}`});
+  }
+  return isEmpty(headers) ? {} : {headers};
 };

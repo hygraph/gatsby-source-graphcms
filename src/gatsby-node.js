@@ -1,6 +1,6 @@
 import {GraphQLClient} from 'graphql-request';
 import {forEachObjIndexed} from 'ramda';
-import {createNodes} from './util';
+import {createNodes, createdHeaders} from './util';
 import {DEBUG_MODE} from './constants';
 import {
   keywordsError,
@@ -13,16 +13,7 @@ exports.sourceNodes = async (
 ) => {
   if (query) {
     const {createNode} = boundActionCreators;
-
-    const clientOptions = {
-      headers: {
-        Origin: origin || '',
-        Authorization: token ? `Bearer ${token}` : undefined
-      }
-    };
-
-    const client = new GraphQLClient(endpoint, clientOptions);
-
+    const client = new GraphQLClient(endpoint, createdHeaders(origin, token));
     const userQueryResult = await client.request(query);
 
     // Keywords workaround
