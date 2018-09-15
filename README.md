@@ -45,7 +45,7 @@ plugins: [
       endpoint: `graphql_endpoint`,
       token: `graphql_token`,
       query: `{
-          allArtists {
+          artists {
             id
             name
           }
@@ -74,7 +74,7 @@ like so:
 
 ```graphql
 {
-  allArtists {
+  artists {
     id
     name
     slug
