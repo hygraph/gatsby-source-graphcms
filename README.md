@@ -1,3 +1,5 @@
+# This plugin is deprecated. Gatsby now provides a universal way to connect to a graphql API via [this](https://www.gatsbyjs.org/packages/gatsby-source-graphql/) plugin. You can find an example on how to use it for GraphCMS integration [here](https://github.com/GraphCMS/graphcms-examples/tree/master/current/gatsby-source-plugin-blog).
+
 # gatsby-source-graphcms
 
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo) [![CircleCI](https://img.shields.io/circleci/project/github/GraphCMS/gatsby-source-graphcms.svg)](https://circleci.com/gh/GraphCMS/gatsby-source-graphcms)
