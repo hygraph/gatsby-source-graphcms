@@ -1,0 +1,18 @@
+{
+  "name": "gatsby-source-graphcms",
+  "version": "1.0.0-alpha.3",
+  "description": "Gatsby source plugin for building websites using the GraphCMS as a data source.",
+  "main": "index.js",
+  "keywords": [
+    "data",
+    "gatsby",
+    "gatsby-plugin",
+    "graphcms",
+    "graphql",
+    "source"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "gatsby-graphql-source-toolkit": "0.2.0"
+  }
+}
