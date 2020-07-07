@@ -13,10 +13,10 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
   const possibleTypes = schema.getPossibleTypes(nodeInterface)
 
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
-    remoteTypeName: type,
+    remoteTypeName: type.name,
     remoteIdFields: ['__typename', 'id'],
-    queries: `query LIST_${pluralize(type).toUpperCase()} { ${pluralize(
-      type
+    queries: `query LIST_${pluralize(type.name).toUpperCase()} { ${pluralize(
+      type.name.toLowerCase()
     )}(limit: $limit, skip: $skip) }`,
   }))
 
