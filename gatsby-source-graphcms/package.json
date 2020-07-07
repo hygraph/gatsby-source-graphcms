@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gatsby-graphql-source-toolkit": "0.2.0",
+    "gatsby-graphql-source-toolkit": "0.2.2",
     "pluralize": "8.0.0"
   }
 }
