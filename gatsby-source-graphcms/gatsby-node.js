@@ -15,9 +15,9 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type,
     remoteIdFields: ['__typename', 'id'],
-    queries: `query LIST_${pluralize(
+    queries: `query LIST_${pluralize(type).toUpperCase()} { ${pluralize(
       type
-    ).toUpperCase()} { products(limit: $limit, skip: $skip) }`,
+    )}(limit: $limit, skip: $skip) }`,
   }))
 
   const fragments = generateDefaultFragments({ schema, gatsbyNodeTypes })
