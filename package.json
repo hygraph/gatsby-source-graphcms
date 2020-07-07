@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "graphql-request": "^1.5.1",
+    "graphql-request": "^2.0.0",
     "pluralize": "^7.0.0",
     "ramda": "^0.25.0"
   },
