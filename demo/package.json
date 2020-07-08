@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "gatsby": "2.23.22",
-    "gatsby-source-graphcms": "*",
+    "gatsby-source-graphcms": "2.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   }
