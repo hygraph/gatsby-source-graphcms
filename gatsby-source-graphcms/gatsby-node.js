@@ -67,7 +67,7 @@ exports.onCreateNode = async (
       getCache,
     })
 
-    if (fileNode) node.file = fileNode.id
+    if (fileNode) node.localFile = fileNode.id
   }
 }
 
@@ -78,7 +78,7 @@ exports.createSchemaCustomization = (
   if (downloadLocalImages)
     createTypes(`
     type GraphCMS_Asset {
-      file: File @link
+      localFile: File @link
     }
   `)
 }
