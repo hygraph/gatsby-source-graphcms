@@ -50,13 +50,15 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
   await sourceAllNodes(config)
 }
 
-exports.onCreateNode = async ({
-  node,
-  actions: { createNode },
-  createNodeId,
-  getCache,
-}) => {
-  if (node.remoteTypeName === 'Asset' && node.mimeType.includes('image/')) {
+exports.onCreateNode = async (
+  { node, actions: { createNode }, createNodeId, getCache },
+  { downloadLocalImages = false }
+) => {
+  if (
+    downloadLocalImages &&
+    node.remoteTypeName === 'Asset' &&
+    node.mimeType.includes('image/')
+  ) {
     const fileNode = await createRemoteFileNode({
       url: node.url,
       parentNodeId: node.id,
@@ -69,8 +71,12 @@ exports.onCreateNode = async ({
   }
 }
 
-exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
-  createTypes(`
+exports.createSchemaCustomization = (
+  { actions: { createTypes } },
+  { downloadLocalImages = false }
+) => {
+  if (downloadLocalImages)
+    createTypes(`
     type GraphCMS_Asset {
       file: File @link
     }
