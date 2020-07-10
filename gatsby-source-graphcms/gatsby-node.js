@@ -35,7 +35,10 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
       query LIST_${pluralize(type.name).toUpperCase()} { ${pluralize(
       type.name.toLowerCase()
     )}(first: $limit, skip: $offset) }
-      query NODE_${type.name.toUpperCase()}($id: ID!) { ${type.name.toLowerCase()}(where: { id: $id }) }`,
+      query NODE_${type.name.toUpperCase()}($where: ${
+      type.name
+    }WhereUniqueInput!) { ${type.name.toLowerCase()}(where: $where) }`,
+    nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
   const fragments = generateDefaultFragments({ schema, gatsbyNodeTypes })
