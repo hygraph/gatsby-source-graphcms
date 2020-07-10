@@ -1,5 +1,5 @@
 const {
-  createDefaultQueryExecutor,
+  wrapQueryExecutorWithQueue,
   loadSchema,
   generateDefaultFragments,
   compileNodeQueries,
@@ -8,10 +8,20 @@ const {
   sourceAllNodes,
 } = require('gatsby-graphql-source-toolkit')
 const { createRemoteFileNode } = require('gatsby-source-filesystem')
+const fetch = require('node-fetch')
 const pluralize = require('pluralize')
 
 const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
-  const execute = createDefaultQueryExecutor(endpoint)
+  const execute = async ({ operationName, query, variables = {} }) => {
+    return await fetch(endpoint, {
+      method: 'POST',
+      body: JSON.stringify({ query, variables, operationName }),
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+    }).then((res) => res.json())
+  }
   const schema = await loadSchema(execute)
 
   const nodeInterface = schema.getType('Node')
@@ -36,7 +46,7 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
   return {
     gatsbyApi,
     schema,
-    execute,
+    execute: wrapQueryExecutorWithQueue(execute, { concurrency: 10 }),
     gatsbyTypePrefix: `GraphCMS_`,
     gatsbyNodeDefs: buildNodeDefinitions({ gatsbyNodeTypes, documents }),
   }
