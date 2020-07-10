@@ -6,6 +6,7 @@ const {
   buildNodeDefinitions,
   createSchemaCustomization,
   sourceAllNodes,
+  sourceNodeChanges,
 } = require('gatsby-graphql-source-toolkit')
 const { createRemoteFileNode } = require('gatsby-source-filesystem')
 const fetch = require('node-fetch')
@@ -55,11 +56,32 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
 }
 
 exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
+  const { webhookBody } = gatsbyApi
+
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
 
   await createSchemaCustomization(config)
 
-  await sourceAllNodes(config)
+  if (webhookBody && Object.keys(webhookBody).length) {
+    const { operation, data } = webhookBody
+
+    const nodeEvent = (operation, { __typename, id }) => {
+      switch (operation) {
+        case 'delete':
+          return {
+            eventName: 'DELETE',
+            remoteTypeName: __typename,
+            remoteId: { __typename, id },
+          }
+      }
+    }
+
+    await sourceNodeChanges(config, {
+      nodeEvents: [nodeEvent(operation, data)],
+    })
+  } else {
+    await sourceAllNodes(config)
+  }
 }
 
 exports.onCreateNode = async (
