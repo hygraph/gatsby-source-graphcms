@@ -7,6 +7,7 @@ const {
   createSchemaCustomization,
   sourceAllNodes,
 } = require('gatsby-graphql-source-toolkit')
+const { createRemoteFileNode } = require('gatsby-source-filesystem')
 const pluralize = require('pluralize')
 
 const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
@@ -47,4 +48,37 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
   await createSchemaCustomization(config)
 
   await sourceAllNodes(config)
+}
+
+exports.onCreateNode = async (
+  { node, actions: { createNode }, createNodeId, getCache },
+  { downloadLocalImages = false }
+) => {
+  if (
+    downloadLocalImages &&
+    node.remoteTypeName === 'Asset' &&
+    node.mimeType.includes('image/')
+  ) {
+    const fileNode = await createRemoteFileNode({
+      url: node.url,
+      parentNodeId: node.id,
+      createNode,
+      createNodeId,
+      getCache,
+    })
+
+    if (fileNode) node.localFile = fileNode.id
+  }
+}
+
+exports.createSchemaCustomization = (
+  { actions: { createTypes } },
+  { downloadLocalImages = false }
+) => {
+  if (downloadLocalImages)
+    createTypes(`
+    type GraphCMS_Asset {
+      localFile: File @link
+    }
+  `)
 }
