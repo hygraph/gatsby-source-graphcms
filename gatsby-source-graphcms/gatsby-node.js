@@ -73,6 +73,12 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
             remoteTypeName: __typename,
             remoteId: { __typename, id },
           }
+        case 'create':
+          return {
+            eventName: 'UPDATE',
+            remoteTypeName: __typename,
+            remoteId: { __typename, id },
+          }
       }
     }
 
