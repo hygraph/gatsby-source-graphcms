@@ -6,6 +6,7 @@ const {
   buildNodeDefinitions,
   createSchemaCustomization,
   sourceAllNodes,
+  sourceNodeChanges,
 } = require('gatsby-graphql-source-toolkit')
 const { createRemoteFileNode } = require('gatsby-source-filesystem')
 const fetch = require('node-fetch')
@@ -30,9 +31,14 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
     remoteIdFields: ['__typename', 'id'],
-    queries: `query LIST_${pluralize(type.name).toUpperCase()} { ${pluralize(
+    queries: `
+      query LIST_${pluralize(type.name).toUpperCase()} { ${pluralize(
       type.name.toLowerCase()
-    )}(first: $limit, skip: $offset) }`,
+    )}(first: $limit, skip: $offset) }
+      query NODE_${type.name.toUpperCase()}($where: ${
+      type.name
+    }WhereUniqueInput!) { ${type.name.toLowerCase()}(where: $where) }`,
+    nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
   const fragments = generateDefaultFragments({ schema, gatsbyNodeTypes })
@@ -53,11 +59,41 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
 }
 
 exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
+  const { webhookBody } = gatsbyApi
+
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
 
   await createSchemaCustomization(config)
 
-  await sourceAllNodes(config)
+  if (webhookBody && Object.keys(webhookBody).length) {
+    const { operation, data } = webhookBody
+
+    const nodeEvent = (operation, { __typename, id }) => {
+      switch (operation) {
+        case 'delete':
+        case 'unpublish':
+          return {
+            eventName: 'DELETE',
+            remoteTypeName: __typename,
+            remoteId: { __typename, id },
+          }
+        case 'create':
+        case 'publish':
+        case 'update':
+          return {
+            eventName: 'UPDATE',
+            remoteTypeName: __typename,
+            remoteId: { __typename, id },
+          }
+      }
+    }
+
+    await sourceNodeChanges(config, {
+      nodeEvents: [nodeEvent(operation, data)],
+    })
+  } else {
+    await sourceAllNodes(config)
+  }
 }
 
 exports.onCreateNode = async (
