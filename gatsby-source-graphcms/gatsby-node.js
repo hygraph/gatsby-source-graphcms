@@ -71,12 +71,14 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
     const nodeEvent = (operation, { __typename, id }) => {
       switch (operation) {
         case 'delete':
+        case 'unpublish':
           return {
             eventName: 'DELETE',
             remoteTypeName: __typename,
             remoteId: { __typename, id },
           }
         case 'create':
+        case 'publish':
         case 'update':
           return {
             eventName: 'UPDATE',
