@@ -5,7 +5,7 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "dev": "gatsby develop"
+    "dev": "ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop"
   },
   "dependencies": {
     "gatsby": "2.23.22",
