@@ -2,6 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   plugins: [
+    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-source-graphcms',
       options: {
@@ -10,5 +11,6 @@ module.exports = {
         token: process.env.GRAPHCMS_TOKEN,
       },
     },
+    'gatsby-transformer-sharp',
   ],
 }
