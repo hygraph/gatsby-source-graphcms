@@ -12,6 +12,18 @@ const { createRemoteFileNode } = require('gatsby-source-filesystem')
 const fetch = require('node-fetch')
 const pluralize = require('pluralize')
 
+exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
+  if (!pluginOptions || !pluginOptions.endpoint)
+    return reporter.panic(
+      'gatsby-source-graphcms: You must provide your GraphCMS endpoint URL'
+    )
+
+  if (!pluginOptions || !pluginOptions.token)
+    return reporter.panic(
+      'gatsby-source-graphcms: You must provide a GraphCMS API token'
+    )
+}
+
 const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     return await fetch(endpoint, {
