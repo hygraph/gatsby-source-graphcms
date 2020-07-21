@@ -59,28 +59,6 @@
       }
     ]
   },
-  "release": {
-    "branches": [
-      {
-        "name": "master"
-      },
-      {
-        "name": "next",
-        "prerelease": true
-      }
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "gatsby-source-graphcms"
-        }
-      ],
-      "@semantic-release/github"
-    ]
-  },
   "renovate": {
     "extends": [
       "config:base",
