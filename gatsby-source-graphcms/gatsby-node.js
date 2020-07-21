@@ -117,15 +117,19 @@ exports.onCreateNode = async (
     node.remoteTypeName === 'Asset' &&
     node.mimeType.includes('image/')
   ) {
-    const fileNode = await createRemoteFileNode({
-      url: node.url,
-      parentNodeId: node.id,
-      createNode,
-      createNodeId,
-      getCache,
-    })
+    try {
+      const fileNode = await createRemoteFileNode({
+        url: node.url,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        getCache,
+      })
 
-    if (fileNode) node.localFile = fileNode.id
+      if (fileNode) node.localFile = fileNode.id
+    } catch (e) {
+      console.error('gatsby-source-graphcms:', e)
+    }
   }
 }
 
