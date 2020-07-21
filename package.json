@@ -8,5 +8,27 @@
     "build": "yarn workspace demo build",
     "clean": "yarn workspace demo clean",
     "dev": "yarn workspace demo dev"
+  },
+  "release": {
+    "branches": [
+      {
+        "name": "master"
+      },
+      {
+        "name": "next",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "gatsby-source-graphcms"
+        }
+      ],
+      "@semantic-release/github"
+    ]
   }
 }
