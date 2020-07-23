@@ -51,7 +51,7 @@ module.exports = {
 
 - `endpoint` _String_ (**required**)
 
-  - The endpoint URL for the GraphCMS project. This can be find in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
+  - The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
 
 - `token` _String_
 
