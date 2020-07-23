@@ -25,3 +25,21 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
     })
   })
 }
+
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    GraphCMS_Product: {
+      formattedPrice: {
+        type: 'String',
+        resolve: (source) => {
+          return new Intl.NumberFormat('en-US', {
+            currency: 'USD',
+            style: 'currency',
+          }).format(source.price)
+        },
+      },
+    },
+  }
+
+  createResolvers(resolvers)
+}
