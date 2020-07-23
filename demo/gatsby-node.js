@@ -5,9 +5,12 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
     {
       products: allGraphCmsProduct {
         nodes {
+          description {
+            text
+          }
+          formattedPrice
           id
           name
-          price
           slug
         }
       }

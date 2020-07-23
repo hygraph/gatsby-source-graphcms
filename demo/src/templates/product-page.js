@@ -2,12 +2,34 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import Img from 'gatsby-image'
 
-const ProductPage = ({ data: { productImage }, pageContext: { product } }) => {
+const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
+  const [mainImage] = productImages.nodes
+
   return (
-    <div>
-      <h1>{product.name}</h1>
-      {productImage && (
-        <Img fluid={productImage.localFile.childImageSharp.fluid} />
+    <div className="bg-white flex flex-1 flex-col md:flex-row p-8 rounded-lg shadow">
+      <div className="flex flex-1 flex-col">
+        <h2 className="my-4 text-gray-900 text-3xl leading-5 font-medium">
+          {product.name}
+        </h2>
+        <p className="font-semibold text-purple-600 text-lg">
+          {product.formattedPrice}
+        </p>
+        {product.description && (
+          <React.Fragment>
+            <hr className="my-4" />
+            <p className="leading-relaxed md:text-xl text-lg">
+              {product.description.text}
+            </p>
+          </React.Fragment>
+        )}
+      </div>
+      {mainImage && (
+        <div className="w-full md:w-3/5">
+          <Img
+            fluid={mainImage.localFile.childImageSharp.fluid}
+            fadeIn={false}
+          />
+        </div>
       )}
     </div>
   )
@@ -15,13 +37,15 @@ const ProductPage = ({ data: { productImage }, pageContext: { product } }) => {
 
 export const query = graphql`
   query ProductImageQuery($id: String!) {
-    productImages: graphCmsAsset(
-      productImages: { elemMatch: { id: { eq: $id } } }
+    productImages: allGraphCmsAsset(
+      filter: { productImages: { elemMatch: { id: { eq: $id } } } }
     ) {
-      localFile {
-        childImageSharp {
-          fluid {
-            ...GatsbyImageSharpFluid
+      nodes {
+        localFile {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
           }
         }
       }
