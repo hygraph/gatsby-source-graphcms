@@ -15,8 +15,8 @@ const ProductPage = ({ data: { productImage }, pageContext: { product } }) => {
 
 export const query = graphql`
   query ProductImageQuery($id: String!) {
-    productImage: graphCmsAsset(
-      productImage: { elemMatch: { id: { eq: $id } } }
+    productImages: graphCmsAsset(
+      productImages: { elemMatch: { id: { eq: $id } } }
     ) {
       localFile {
         childImageSharp {
