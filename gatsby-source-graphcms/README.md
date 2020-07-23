@@ -10,7 +10,7 @@ yarn add gatsby-source-graphcms
 
 ## Configuration
 
-> We recommend using environment variables with your GraphCMS token and endpoint values. You can learn more about using environment variables with gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
 
 ### Basic
 
