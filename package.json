@@ -104,5 +104,5 @@
       ],
       "@semantic-release/github"
     ]
-  },
+  }
 }
