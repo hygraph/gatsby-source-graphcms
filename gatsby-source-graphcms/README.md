@@ -55,7 +55,7 @@ module.exports = {
 
 - `token` _String_
 
-  - If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctl authorize with the API. You can learn more about creating and manageing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
+  - If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
 
 - `downloadLocalImages` _Boolean_ (default value: `false`)
 
