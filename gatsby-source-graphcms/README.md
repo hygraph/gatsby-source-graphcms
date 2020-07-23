@@ -5,7 +5,7 @@
 ## Installation
 
 ```shell
-yarn add gatsby-source-graphcms
+yarn add gatsby-source-graphcms@next
 ```
 
 ## Configuration
