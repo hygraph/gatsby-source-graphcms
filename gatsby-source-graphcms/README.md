@@ -1,6 +1,6 @@
-# `gatsby-source-graphcms`
+# gatsby-source-graphcms
 
-> A Gatsby source plugin for GraphCMS projects 🚀
+> The official Gatsby source plugin for GraphCMS projects 🚀
 
 ## Installation
 
