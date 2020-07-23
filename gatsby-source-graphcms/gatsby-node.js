@@ -17,11 +17,6 @@ exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
     return reporter.panic(
       'gatsby-source-graphcms: You must provide your GraphCMS endpoint URL'
     )
-
-  if (!pluginOptions || !pluginOptions.token)
-    return reporter.panic(
-      'gatsby-source-graphcms: You must provide a GraphCMS API token'
-    )
 }
 
 const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
