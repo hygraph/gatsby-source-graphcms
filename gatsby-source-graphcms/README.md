@@ -59,4 +59,47 @@ module.exports = {
 
 - `downloadLocalImages` _Boolean_ (default value: `false`)
 
-  - Download and cache GraphCMS image assets in your Gatsby project. This enables you to use Gatsby transformers (and [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image)) with your GraphCMS image assets.
+  - Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).
+
+## Downloading local image assets
+
+This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image), for image loading optimizations, with your GraphCMS image assets.
+
+To enable this, add `downloadLocalImages: true` to your plugin configuration.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        downloadLocalImages: true,
+      },
+    },
+  ],
+}
+```
+
+This adds a `localFile` field to the `GraphCMS_Asset` type which resolves to the file node generated at build by [`gatsby-source-filesystem`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem).
+
+You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/) as a part of your GraphQL query.
+
+```gql
+{
+  allGraphCmsAsset {
+    nodes {
+      localFile {
+        childImageSharp {
+          fixed {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+For more information on using `gatsby-image`, please see the [documentation](https://www.gatsbyjs.org/packages/gatsby-image/?=#how-to-use).
