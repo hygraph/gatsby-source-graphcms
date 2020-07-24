@@ -15,7 +15,6 @@
   "dependencies": {
     "gatsby-graphql-source-toolkit": "0.2.2",
     "gatsby-source-filesystem": "2.3.18",
-    "node-fetch": "2.6.0",
-    "pluralize": "8.0.0"
+    "node-fetch": "2.6.0"
   }
 }
