@@ -2,6 +2,8 @@
 
 > The official Gatsby source plugin for GraphCMS projects 🚀
 
+⚠️ **THIS PLUGIN IS IN BETA. PLEASE USE AT YOUR OWN RISK** ⚠️
+
 [Demo](https://gatsby-source-graphcms.vercel.app/)
 
 ## Installation
