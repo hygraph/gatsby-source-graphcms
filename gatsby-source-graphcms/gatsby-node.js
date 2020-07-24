@@ -10,7 +10,6 @@ const {
 } = require('gatsby-graphql-source-toolkit')
 const { createRemoteFileNode } = require('gatsby-source-filesystem')
 const fetch = require('node-fetch')
-const pluralize = require('pluralize')
 
 exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
   if (!pluginOptions || !pluginOptions.endpoint)
@@ -33,18 +32,30 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
   const schema = await loadSchema(execute)
 
   const nodeInterface = schema.getType('Node')
+  const query = schema.getType('Query')
+  const queryFields = query.getFields()
   const possibleTypes = schema.getPossibleTypes(nodeInterface)
+
+  const singularRootFieldName = (type) =>
+    Object.keys(queryFields).find(
+      (fieldName) => queryFields[fieldName].type === type
+    )
+
+  const pluralRootFieldName = (type) =>
+    Object.keys(queryFields).find(
+      (fieldName) => String(queryFields[fieldName].type) === `[${type.name}!]!`
+    )
 
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
     remoteIdFields: ['__typename', 'id'],
     queries: `
-      query LIST_${pluralize(type.name).toUpperCase()} { ${pluralize(
-      type.name.toLowerCase()
+      query LIST_${pluralRootFieldName(type)} { ${pluralRootFieldName(
+      type
     )}(first: $limit, skip: $offset) }
-      query NODE_${type.name.toUpperCase()}($where: ${
-      type.name
-    }WhereUniqueInput!) { ${type.name.toLowerCase()}(where: $where) }`,
+      query NODE_${singularRootFieldName(type)} { ${singularRootFieldName(
+      type
+    )}(where: $where) }`,
     nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
