@@ -53,9 +53,9 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
       query LIST_${pluralRootFieldName(type)} { ${pluralRootFieldName(
       type
     )}(first: $limit, skip: $offset) }
-      query NODE_${singularRootFieldName(type)}($where: ${
-      type.name
-    }WhereUniqueInput!) { ${singularRootFieldName(type)}(where: $where) }`,
+      query NODE_${singularRootFieldName(type)} { ${singularRootFieldName(
+      type
+    )}(where: $where) }`,
     nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
