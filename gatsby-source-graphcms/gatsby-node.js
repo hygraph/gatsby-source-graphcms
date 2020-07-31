@@ -144,7 +144,7 @@ exports.onCreateNode = async (
       .map(([, value]) => value)
       .filter(
         (value) =>
-          value?.['remoteTypeName'] && value['remoteTypeName'] === 'RichText'
+          value && value.remoteTypeName && value.remoteTypeName === 'RichText'
       )
 
     if (fields.length) {
