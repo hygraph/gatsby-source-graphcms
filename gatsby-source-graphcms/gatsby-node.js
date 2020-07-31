@@ -177,15 +177,15 @@ exports.createSchemaCustomization = (
 ) => {
   if (downloadLocalImages)
     createTypes(`
-    type GraphCMS_Asset {
-      localFile: File @link
-    }
-  `)
+      type GraphCMS_Asset {
+        localFile: File @link
+      }
+    `)
 
   if (buildMarkdownNodes)
     createTypes(`
-    type GraphCMS_RichText {
-      markdownNode: GraphCMS_MarkdownNode @link
-    }
-  `)
+      type GraphCMS_RichText {
+        markdownNode: GraphCMS_MarkdownNode @link
+      }
+    `)
 }
