@@ -157,3 +157,5 @@ Once installed, you will be able to query for `MDX` fields using a query similar
   }
 }
 ```
+
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a full MDX implementation.
