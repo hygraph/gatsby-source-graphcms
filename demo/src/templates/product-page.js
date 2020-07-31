@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Img from 'gatsby-image'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
   const [mainImage] = productImages.nodes
@@ -17,9 +18,9 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
         {product.description && (
           <React.Fragment>
             <hr className="my-4" />
-            <p className="leading-relaxed md:text-xl text-lg">
-              {product.description.text}
-            </p>
+            <MDXRenderer>
+              {product.description.markdownNode.childMdx.body}
+            </MDXRenderer>
           </React.Fragment>
         )}
       </div>
