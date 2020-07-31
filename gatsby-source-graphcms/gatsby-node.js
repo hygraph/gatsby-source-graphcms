@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const {
   wrapQueryExecutorWithQueue,
   loadSchema,
@@ -137,6 +138,35 @@ exports.onCreateNode = async (
       console.error('gatsby-source-graphcms:', e)
     }
   }
+
+  const fields = Object.entries(node)
+    .map(([, value]) => value)
+    .filter(
+      (value) =>
+        value?.['remoteTypeName'] && value['remoteTypeName'] === 'RichText'
+    )
+
+  if (fields.length) {
+    fields.forEach((field) => {
+      const markdownNode = {
+        id: `MarkdownNode:${createNodeId(node.id)}`,
+        parent: node.id,
+        internal: {
+          type: `GraphCMS_MarkdownNode`,
+          mediaType: 'text/markdown',
+          content: field.markdown,
+          contentDigest: crypto
+            .createHash(`md5`)
+            .update(field.markdown)
+            .digest(`hex`),
+        },
+      }
+
+      createNode(markdownNode)
+
+      field.markdownNode = markdownNode.id
+    })
+  }
 }
 
 exports.createSchemaCustomization = (
@@ -147,6 +177,12 @@ exports.createSchemaCustomization = (
     createTypes(`
     type GraphCMS_Asset {
       localFile: File @link
+    }
+  `)
+
+  createTypes(`
+    type GraphCMS_RichText {
+      markdownNode: GraphCMS_MarkdownNode @link
     }
   `)
 }
