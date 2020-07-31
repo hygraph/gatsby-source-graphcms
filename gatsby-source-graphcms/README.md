@@ -65,6 +65,10 @@ module.exports = {
 
   - Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).
 
+- `buldMarkdownNodes` _Boolean_ (default value: `false`)
+
+  - Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).
+
 ## Downloading local image assets
 
 This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image), for image loading optimizations, with your GraphCMS image assets.
@@ -107,3 +111,51 @@ You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gat
 ```
 
 For more information on using `gatsby-image`, please see the [documentation](https://www.gatsbyjs.org/packages/gatsby-image/?=#how-to-use).
+
+## Using markdown nodes
+
+This source plugin provides the option to build markdown nodes for all `RichText` fields in your GraphCMS schema, which in turn can be used with [MDX](https://mdxjs.com).
+
+To enable this, add `buildMarkdownNodes: true` to your plugin configuration.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        buildMarkdownNodes: true,
+      },
+    },
+  ],
+}
+```
+
+Enabling this option adds a `markdownNode` nested field to all `RichText` fields on the generated Gatsby schema.
+
+### Usage with `gatsby-plugin-mdx`
+
+These newly built nodes can be used with [`gatsby-plugin-mdx`](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx) to render markdown from GraphCMS.
+
+Once installed, you will be able to query for `MDX` fields using a query similar to the one below.
+
+```gql
+{
+  allGraphCmsPost {
+    nodes {
+      id
+      content {
+        markdownNode {
+          childMdx {
+            body
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a full MDX implementation.

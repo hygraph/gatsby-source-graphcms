@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const {
   wrapQueryExecutorWithQueue,
   loadSchema,
@@ -116,7 +117,7 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
 
 exports.onCreateNode = async (
   { node, actions: { createNode }, createNodeId, getCache },
-  { downloadLocalImages = false }
+  { buildMarkdownNodes = false, downloadLocalImages = false }
 ) => {
   if (
     downloadLocalImages &&
@@ -137,16 +138,54 @@ exports.onCreateNode = async (
       console.error('gatsby-source-graphcms:', e)
     }
   }
+
+  if (buildMarkdownNodes) {
+    const fields = Object.entries(node)
+      .map(([, value]) => value)
+      .filter(
+        (value) =>
+          value && value.remoteTypeName && value.remoteTypeName === 'RichText'
+      )
+
+    if (fields.length) {
+      fields.forEach((field) => {
+        const markdownNode = {
+          id: `MarkdownNode:${createNodeId(node.id)}`,
+          parent: node.id,
+          internal: {
+            type: `GraphCMS_MarkdownNode`,
+            mediaType: 'text/markdown',
+            content: field.markdown,
+            contentDigest: crypto
+              .createHash(`md5`)
+              .update(field.markdown)
+              .digest(`hex`),
+          },
+        }
+
+        createNode(markdownNode)
+
+        field.markdownNode = markdownNode.id
+      })
+    }
+  }
 }
 
 exports.createSchemaCustomization = (
   { actions: { createTypes } },
-  { downloadLocalImages = false }
+  { buildMarkdownNodes = false, downloadLocalImages = false }
 ) => {
   if (downloadLocalImages)
     createTypes(`
-    type GraphCMS_Asset {
-      localFile: File @link
-    }
-  `)
+      type GraphCMS_Asset {
+        localFile: File @link
+      }
+    `)
+
+  if (buildMarkdownNodes)
+    createTypes(`
+      type GraphCMS_RichText {
+        markdownNode: GraphCMS_MarkdownNode @link
+      }
+    `)
 }
