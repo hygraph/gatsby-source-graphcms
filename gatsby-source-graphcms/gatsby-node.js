@@ -10,6 +10,7 @@ const {
   sourceNodeChanges,
 } = require('gatsby-graphql-source-toolkit')
 const { createRemoteFileNode } = require('gatsby-source-filesystem')
+const he = require('he')
 const fetch = require('node-fetch')
 
 exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
@@ -149,16 +150,18 @@ exports.onCreateNode = async (
 
     if (fields.length) {
       fields.forEach((field) => {
+        const decodedMarkdown = he.decode(field.markdown)
+
         const markdownNode = {
           id: `MarkdownNode:${createNodeId(node.id)}`,
           parent: node.id,
           internal: {
             type: `GraphCMS_MarkdownNode`,
             mediaType: 'text/markdown',
-            content: field.markdown,
+            content: decodedMarkdown,
             contentDigest: crypto
               .createHash(`md5`)
-              .update(field.markdown)
+              .update(decodedMarkdown)
               .digest(`hex`),
           },
         }
