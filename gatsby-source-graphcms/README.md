@@ -65,7 +65,7 @@ module.exports = {
 
   - Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).
 
-- `buldMarkdownNodes` _Boolean_ (default value: `false`)
+- `buildMarkdownNodes` _Boolean_ (default value: `false`)
 
   - Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).
 
