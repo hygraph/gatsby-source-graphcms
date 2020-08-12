@@ -142,18 +142,18 @@ exports.onCreateNode = async (
 
   if (buildMarkdownNodes) {
     const fields = Object.entries(node)
-      .map(([, value]) => value)
+      .map(([key, value]) => ({ key, value }))
       .filter(
-        (value) =>
+        ({ value }) =>
           value && value.remoteTypeName && value.remoteTypeName === 'RichText'
       )
 
     if (fields.length) {
       fields.forEach((field) => {
-        const decodedMarkdown = he.decode(field.markdown)
+        const decodedMarkdown = he.decode(field.value.markdown)
 
         const markdownNode = {
-          id: `MarkdownNode:${createNodeId(node.id)}`,
+          id: `MarkdownNode:${createNodeId(`${node.id}-${field.key}`)}`,
           parent: node.id,
           internal: {
             type: `GraphCMS_MarkdownNode`,
@@ -168,7 +168,7 @@ exports.onCreateNode = async (
 
         createNode(markdownNode)
 
-        field.markdownNode = markdownNode.id
+        field.value.markdownNode = markdownNode.id
       })
     }
   }
