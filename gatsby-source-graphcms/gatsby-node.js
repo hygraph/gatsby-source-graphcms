@@ -50,14 +50,24 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
 
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
-    remoteIdFields: ['__typename', 'id'],
     queries: `
       query LIST_${pluralRootFieldName(type)} { ${pluralRootFieldName(
       type
-    )}(first: $limit, skip: $offset) }
+    )}(first: $limit, skip: $offset) {
+          ..._${type.name}Id_
+        }
+      }
       query NODE_${singularRootFieldName(type)} { ${singularRootFieldName(
       type
-    )}(where: $where) }`,
+    )}(where: $where) {
+        ..._${type.name}Id_
+      }
+    }
+    fragment _${type.name}Id_ on ${type.name} {
+      __typename
+      id
+    }
+    `,
     nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
