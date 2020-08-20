@@ -6123,10 +6123,10 @@ gatsby-graphiql-explorer@^0.4.10:
   dependencies:
     "@babel/runtime" "^7.10.3"
 
-gatsby-graphql-source-toolkit@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/gatsby-graphql-source-toolkit/-/gatsby-graphql-source-toolkit-0.2.2.tgz#07c37eb23c330099c9e9d3d59b3981a999a1ab2f"
-  integrity sha512-gx98EGdzpq3LDd5YNTSdciZDExhOQRLW2kzrc9tLf61N2oV3pnQ1zIrQ5RJHNjKwLUndyfDRmK85bYqYLLcPuA==
+gatsby-graphql-source-toolkit@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/gatsby-graphql-source-toolkit/-/gatsby-graphql-source-toolkit-0.4.0.tgz#74a01d0383e5fb5e3cbeff1ca6d8942d618a4357"
+  integrity sha512-8o8lhx3H+QgLWd0FV8IWaRvnAusMsuCuzsrnX4OVlLLzy68Skcxew9tFf0gJqKR77kpXhDmLEhKqUNzV7tqwuw==
   dependencies:
     "@types/node-fetch" "^2.5.7"
     lodash "^4.17.15"

@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "gatsby-graphql-source-toolkit": "0.2.2",
+    "gatsby-graphql-source-toolkit": "0.4.0",
     "gatsby-source-filesystem": "2.3.18",
     "he": "1.2.0",
     "node-fetch": "2.6.0"
