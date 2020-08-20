@@ -4,7 +4,7 @@
 
 ⚠️ **THIS PLUGIN IS IN BETA. PLEASE USE AT YOUR OWN RISK** ⚠️
 
-[Demo](https://gatsby-source-graphcms.vercel.app/)
+• [Demo](https://gatsby-source-graphcms.vercel.app) • [`gatsby-starter-graphcms-blog`](https://github.com/GraphCMS/gatsby-starter-graphcms-blog)
 
 ## Installation
 
@@ -14,7 +14,7 @@ yarn add gatsby-source-graphcms@next
 
 ## Configuration
 
-> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables/).
+> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables).
 
 ### Basic
 
@@ -92,7 +92,7 @@ module.exports = {
 
 This adds a `localFile` field to the `GraphCMS_Asset` type which resolves to the file node generated at build by [`gatsby-source-filesystem`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem).
 
-You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/) as a part of your GraphQL query.
+You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gatsbyjs.org/packages/gatsby-transformer-sharp) as a part of your GraphQL query.
 
 ```gql
 {
