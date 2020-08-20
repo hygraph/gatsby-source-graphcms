@@ -197,6 +197,9 @@ exports.createSchemaCustomization = (
 
   if (buildMarkdownNodes)
     createTypes(`
+      type GraphCMS_MarkdownNode implements Node {
+        id: ID!
+      }
       type GraphCMS_RichText {
         markdownNode: GraphCMS_MarkdownNode @link
       }
