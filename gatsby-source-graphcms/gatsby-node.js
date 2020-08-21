@@ -1,8 +1,9 @@
 const crypto = require('crypto')
+const fs = require('fs')
 const {
   wrapQueryExecutorWithQueue,
   loadSchema,
-  generateDefaultFragments,
+  readOrGenerateDefaultFragments,
   compileNodeQueries,
   buildNodeDefinitions,
   createSchemaCustomization,
@@ -20,7 +21,10 @@ exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
     )
 }
 
-const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
+const createSourcingConfig = async (
+  gatsbyApi,
+  { endpoint, fragmentsPath = 'graphcms-fragments', token }
+) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     return await fetch(endpoint, {
       method: 'POST',
@@ -61,7 +65,14 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
     nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
-  const fragments = generateDefaultFragments({ schema, gatsbyNodeTypes })
+  const fragmentsDir = `${process.cwd()}/${fragmentsPath}`
+
+  if (!fs.existsSync(fragmentsDir)) fs.mkdirSync(fragmentsDir)
+
+  const fragments = await readOrGenerateDefaultFragments(fragmentsDir, {
+    schema,
+    gatsbyNodeTypes,
+  })
 
   const documents = compileNodeQueries({
     schema,

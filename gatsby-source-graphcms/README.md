@@ -69,6 +69,10 @@ module.exports = {
 
   - Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).
 
+- `fragmentsPath` _String_ (default value: `graphcms-fragments`)
+
+  - The local project path where generated query fragments are saved. This is relative to your current working directory.
+
 ## Downloading local image assets
 
 This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image), for image loading optimizations, with your GraphCMS image assets.
