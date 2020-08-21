@@ -21,7 +21,10 @@ exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
     )
 }
 
-const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
+const createSourcingConfig = async (
+  gatsbyApi,
+  { endpoint, fragmentsPath = 'graphcms-fragments', token }
+) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     return await fetch(endpoint, {
       method: 'POST',
@@ -62,7 +65,7 @@ const createSourcingConfig = async (gatsbyApi, { endpoint, token }) => {
     nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
-  const fragmentsDir = `${process.cwd()}/graphcms-fragments`
+  const fragmentsDir = `${process.cwd()}/${fragmentsPath}`
 
   if (!fs.existsSync(fragmentsDir)) fs.mkdirSync(fragmentsDir)
 
