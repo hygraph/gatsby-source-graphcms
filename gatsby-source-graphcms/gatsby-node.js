@@ -54,14 +54,24 @@ const createSourcingConfig = async (
 
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
-    remoteIdFields: ['__typename', 'id'],
     queries: `
       query LIST_${pluralRootFieldName(type)} { ${pluralRootFieldName(
       type
-    )}(first: $limit, skip: $offset) }
+    )}(first: $limit, skip: $offset) {
+          ..._${type.name}Id_
+        }
+      }
       query NODE_${singularRootFieldName(type)} { ${singularRootFieldName(
       type
-    )}(where: $where) }`,
+    )}(where: $where) {
+        ..._${type.name}Id_
+      }
+    }
+    fragment _${type.name}Id_ on ${type.name} {
+      __typename
+      id
+    }
+    `,
     nodeQueryVariables: ({ id }) => ({ where: { id } }),
   }))
 
@@ -198,6 +208,9 @@ exports.createSchemaCustomization = (
 
   if (buildMarkdownNodes)
     createTypes(`
+      type GraphCMS_MarkdownNode implements Node {
+        id: ID!
+      }
       type GraphCMS_RichText {
         markdownNode: GraphCMS_MarkdownNode @link
       }
