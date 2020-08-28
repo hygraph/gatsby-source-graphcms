@@ -10,8 +10,9 @@ module.exports = {
       options: {
         buildMarkdownNodes: true,
         downloadLocalImages: true,
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
-        token: process.env.GRAPHCMS_TOKEN,
+        endpoint:
+          process.env.GRAPHCMS_ENDPOINT ||
+          'https://api-eu-central-1.graphcms.com/v2/ckclvjtet0f0901z69og3f3gm/master',
       },
     },
     'gatsby-transformer-sharp',
