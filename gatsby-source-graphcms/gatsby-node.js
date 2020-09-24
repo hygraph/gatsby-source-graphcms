@@ -23,7 +23,7 @@ exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
 
 const createSourcingConfig = async (
   gatsbyApi,
-  { endpoint, fragmentsPath = 'graphcms-fragments', token }
+  { endpoint, fragmentsPath = 'graphcms-fragments', locales = ['en'], token }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     return await fetch(endpoint, {
@@ -54,25 +54,34 @@ const createSourcingConfig = async (
 
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
-    queries: `
-      query LIST_${pluralRootFieldName(type)} { ${pluralRootFieldName(
-      type
-    )}(first: $limit, skip: $offset) {
-          ..._${type.name}Id_
+    queries: [
+      ...locales.map(
+        (locale) => `
+        query LIST_${pluralRootFieldName(
+          type
+        )}_${locale} { ${pluralRootFieldName(
+          type
+        )}(first: $limit, locales: [${locale}], skip: $offset) {
+            ..._${type.name}Id_
+          }
+        }`
+      ),
+      `query NODE_${singularRootFieldName(type)}{ ${singularRootFieldName(
+        type
+      )}(where: $where, locale: $locales) {
+        ..._${type.name}Id_
         }
       }
-      query NODE_${singularRootFieldName(type)} { ${singularRootFieldName(
-      type
-    )}(where: $where) {
-        ..._${type.name}Id_
-      }
-    }
-    fragment _${type.name}Id_ on ${type.name} {
-      __typename
-      id
-    }
-    `,
-    nodeQueryVariables: ({ id }) => ({ where: { id } }),
+      fragment _${type.name}Id_ on ${type.name} {
+        __typename
+        id
+        locale
+      }`,
+    ].join('\n'),
+    nodeQueryVariables: ({ id, locale }) => ({
+      where: { id },
+      locales: [locale],
+    }),
   }))
 
   const fragmentsDir = `${process.cwd()}/${fragmentsPath}`
