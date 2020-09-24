@@ -52,6 +52,12 @@ const createSourcingConfig = async (
       (fieldName) => String(queryFields[fieldName].type) === `[${type.name}!]!`
     )
 
+  const hasLocaleField = (type) => {
+    const fieldName = pluralRootFieldName(type)
+
+    return queryFields[fieldName].args.some((arg) => arg.name === `locales`)
+  }
+
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
     queries: [
@@ -59,23 +65,23 @@ const createSourcingConfig = async (
         (locale) => `
         query LIST_${pluralRootFieldName(
           type
-        )}_${locale} { ${pluralRootFieldName(
-          type
-        )}(first: $limit, locales: [${locale}], skip: $offset) {
+        )}_${locale} { ${pluralRootFieldName(type)}(first: $limit, ${
+          hasLocaleField(type) ? `locales: [${locale}]` : ''
+        }, skip: $offset) {
             ..._${type.name}Id_
           }
         }`
       ),
       `query NODE_${singularRootFieldName(type)}{ ${singularRootFieldName(
         type
-      )}(where: $where, locale: $locales) {
+      )}(where: $where, ${hasLocaleField(type) ? `locales: $locales` : ''}) {
         ..._${type.name}Id_
         }
       }
       fragment _${type.name}Id_ on ${type.name} {
         __typename
         id
-        locale
+        ${hasLocaleField(type) ? `locale` : ''}
       }`,
     ].join('\n'),
     nodeQueryVariables: ({ id, locale }) => ({
