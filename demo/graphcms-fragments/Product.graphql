@@ -1,9 +1,10 @@
 fragment Product on Product {
   stage
+  locale
   remoteId: id
-  createdAt
-  updatedAt
-  publishedAt
+  createdAt(variation: COMBINED)
+  updatedAt(variation: COMBINED)
+  publishedAt(variation: COMBINED)
   name
   slug
   description {
@@ -17,12 +18,6 @@ fragment Product on Product {
   price
   images {
     ... on Asset {
-      remoteTypeName: __typename
-      remoteId: id
-    }
-  }
-  reviews {
-    ... on Review {
       remoteTypeName: __typename
       remoteId: id
     }
