@@ -79,9 +79,15 @@ const createSourcingConfig = async (
 
   if (!fs.existsSync(fragmentsDir)) fs.mkdirSync(fragmentsDir)
 
+  const addSystemFieldArguments = (field) => {
+    if (['createdAt', 'publishedAt', 'updatedAt'].includes(field.name))
+      return { variation: `COMBINED` }
+  }
+
   const fragments = await readOrGenerateDefaultFragments(fragmentsDir, {
     schema,
     gatsbyNodeTypes,
+    defaultArgumentValues: [addSystemFieldArguments],
   })
 
   const documents = compileNodeQueries({
