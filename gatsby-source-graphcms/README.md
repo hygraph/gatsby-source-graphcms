@@ -73,6 +73,45 @@ module.exports = {
 
   - The local project path where generated query fragments are saved. This is relative to your current working directory.
 
+- `locales` _[String]_ (default value: `['en']`)
+
+  - An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).
+
+## Querying localised nodes
+
+If using GraphCMS localisation, this plugin provides support to build nodes for all provided locales.
+
+Update your plugin configuration to include the `locales` key.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        locales: ['en', 'de'],
+      },
+    },
+  ],
+}
+```
+
+To query for nodes for a specific locale, use the `filter` query argument.
+
+```gql
+{
+  enProducts: allGraphCmsProduct(filter: { locale: { eq: en } }) {
+    nodes {
+      name
+    }
+  }
+}
+```
+
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a localisation implementation.
+
 ## Downloading local image assets
 
 This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image), for image loading optimizations, with your GraphCMS image assets.
