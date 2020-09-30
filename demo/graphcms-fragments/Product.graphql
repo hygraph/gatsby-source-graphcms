@@ -20,6 +20,7 @@ fragment Product on Product {
     ... on Asset {
       remoteTypeName: __typename
       remoteId: id
+      locale
     }
   }
 }

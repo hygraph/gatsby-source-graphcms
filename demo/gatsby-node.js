@@ -14,6 +14,7 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
           }
           formattedPrice
           id
+          locale
           name
           slug
         }
@@ -28,7 +29,7 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
         id: product.id,
         product,
       },
-      path: `/products/${product.slug}`,
+      path: `/${product.locale}/products/${product.slug}`,
     })
   })
 }

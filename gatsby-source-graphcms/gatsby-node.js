@@ -19,11 +19,22 @@ exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
     return reporter.panic(
       'gatsby-source-graphcms: You must provide your GraphCMS endpoint URL'
     )
+
+  if (
+    pluginOptions.locales &&
+    (!Array.isArray(pluginOptions.locales) ||
+      pluginOptions.locales.length === 0)
+  )
+    return reporter.panic(
+      `gatsby-source-graphcms: Please provide a valid array of locale key strings (i.e. [
+        ('en', 'de')
+      ]`
+    )
 }
 
 const createSourcingConfig = async (
   gatsbyApi,
-  { endpoint, fragmentsPath = 'graphcms-fragments', token }
+  { endpoint, fragmentsPath = 'graphcms-fragments', locales = ['en'], token }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     return await fetch(endpoint, {
@@ -52,27 +63,42 @@ const createSourcingConfig = async (
       (fieldName) => String(queryFields[fieldName].type) === `[${type.name}!]!`
     )
 
+  const hasLocaleField = (type) => {
+    const fieldName = pluralRootFieldName(type)
+
+    return queryFields[fieldName].args.some((arg) => arg.name === `locales`)
+  }
+
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
-    queries: `
-      query LIST_${pluralRootFieldName(type)} { ${pluralRootFieldName(
-      type
-    )}(first: $limit, skip: $offset) {
-          ..._${type.name}Id_
+    queries: [
+      ...locales.map(
+        (locale) => `
+        query LIST_${pluralRootFieldName(
+          type
+        )}_${locale} { ${pluralRootFieldName(type)}(first: $limit, ${
+          hasLocaleField(type) ? `locales: [${locale}]` : ''
+        }, skip: $offset) {
+            ..._${type.name}Id_
+          }
+        }`
+      ),
+      `query NODE_${singularRootFieldName(type)}{ ${singularRootFieldName(
+        type
+      )}(where: $where, ${hasLocaleField(type) ? `locales: $locales` : ''}) {
+        ..._${type.name}Id_
         }
       }
-      query NODE_${singularRootFieldName(type)} { ${singularRootFieldName(
-      type
-    )}(where: $where) {
-        ..._${type.name}Id_
-      }
-    }
-    fragment _${type.name}Id_ on ${type.name} {
-      __typename
-      id
-    }
-    `,
-    nodeQueryVariables: ({ id }) => ({ where: { id } }),
+      fragment _${type.name}Id_ on ${type.name} {
+        __typename
+        id
+        ${hasLocaleField(type) ? `locale` : ''}
+      }`,
+    ].join('\n'),
+    nodeQueryVariables: ({ id, locale }) => ({
+      where: { id },
+      locales: [locale],
+    }),
   }))
 
   const fragmentsDir = `${process.cwd()}/${fragmentsPath}`

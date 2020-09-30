@@ -10,7 +10,7 @@ const IndexPage = ({ data: { products } }) => {
 
         return (
           <li key={product.id} className="bg-white rounded-lg shadow">
-            <Link to={`/products/${product.slug}`}>
+            <Link to={`/${product.locale}/products/${product.slug}`}>
               <div className="flex-1 flex flex-col p-8">
                 {mainImage && (
                   <Img
@@ -48,6 +48,7 @@ export const query = graphql`
             }
           }
         }
+        locale
         name
         slug
       }
