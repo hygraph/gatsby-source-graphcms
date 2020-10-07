@@ -63,11 +63,7 @@ const createSourcingConfig = async (
       (fieldName) => String(queryFields[fieldName].type) === `[${type.name}!]!`
     )
 
-  const hasLocaleField = (type) => {
-    const fieldName = pluralRootFieldName(type)
-
-    return queryFields[fieldName].args.some((arg) => arg.name === `locales`)
-  }
+  const hasLocaleField = (type) => type.getFields().locale
 
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
