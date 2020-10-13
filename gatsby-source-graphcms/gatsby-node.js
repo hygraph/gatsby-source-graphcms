@@ -34,7 +34,13 @@ exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
 
 const createSourcingConfig = async (
   gatsbyApi,
-  { endpoint, fragmentsPath = 'graphcms-fragments', locales = ['en'], token }
+  {
+    endpoint,
+    fragmentsPath = 'graphcms-fragments',
+    locales = ['en'],
+    token,
+    typePrefix = 'GraphCMS_',
+  }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     return await fetch(endpoint, {
@@ -122,7 +128,7 @@ const createSourcingConfig = async (
     gatsbyApi,
     schema,
     execute: wrapQueryExecutorWithQueue(execute, { concurrency: 10 }),
-    gatsbyTypePrefix: `GraphCMS_`,
+    gatsbyTypePrefix: typePrefix,
     gatsbyNodeDefs: buildNodeDefinitions({ gatsbyNodeTypes, documents }),
   }
 }
