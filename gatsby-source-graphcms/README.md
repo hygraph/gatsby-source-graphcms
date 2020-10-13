@@ -77,7 +77,7 @@ module.exports = {
 
 - `fragmentsPath` _String_ (default value: `graphcms-fragments`)
 
-  > If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.
+  > If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.
 
   - The local project path where generated query fragments are saved. This is relative to your current working directory.
 
