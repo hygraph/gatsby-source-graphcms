@@ -61,6 +61,12 @@ module.exports = {
 
   - If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
 
+- `typePrefix` _String_ (default value: `GraphCMS_`)
+
+  > If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.
+
+  - The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default.
+
 - `downloadLocalImages` _Boolean_ (default value: `false`)
 
   - Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).
@@ -70,6 +76,8 @@ module.exports = {
   - Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).
 
 - `fragmentsPath` _String_ (default value: `graphcms-fragments`)
+
+  > If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.
 
   - The local project path where generated query fragments are saved. This is relative to your current working directory.
 
