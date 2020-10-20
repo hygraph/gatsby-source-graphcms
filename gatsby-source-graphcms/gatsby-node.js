@@ -173,7 +173,11 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
 
 exports.onCreateNode = async (
   { node, actions: { createNode }, createNodeId, getCache },
-  { buildMarkdownNodes = false, downloadLocalImages = false }
+  {
+    buildMarkdownNodes = false,
+    downloadLocalImages = false,
+    typePrefix = 'GraphCMS_',
+  }
 ) => {
   if (
     downloadLocalImages &&
@@ -211,7 +215,7 @@ exports.onCreateNode = async (
           id: `MarkdownNode:${createNodeId(`${node.id}-${field.key}`)}`,
           parent: node.id,
           internal: {
-            type: `GraphCMS_MarkdownNode`,
+            type: `${typePrefix}MarkdownNode`,
             mediaType: 'text/markdown',
             content: decodedMarkdown,
             contentDigest: crypto
@@ -231,22 +235,26 @@ exports.onCreateNode = async (
 
 exports.createSchemaCustomization = (
   { actions: { createTypes } },
-  { buildMarkdownNodes = false, downloadLocalImages = false }
+  {
+    buildMarkdownNodes = false,
+    downloadLocalImages = false,
+    typePrefix = 'GraphCMS_',
+  }
 ) => {
   if (downloadLocalImages)
     createTypes(`
-      type GraphCMS_Asset {
+      type ${typePrefix}Asset {
         localFile: File @link
       }
     `)
 
   if (buildMarkdownNodes)
     createTypes(`
-      type GraphCMS_MarkdownNode implements Node {
+      type ${typePrefix}MarkdownNode implements Node {
         id: ID!
       }
-      type GraphCMS_RichText {
-        markdownNode: GraphCMS_MarkdownNode @link
+      type ${typePrefix}RichText {
+        markdownNode: ${typePrefix}MarkdownNode @link
       }
     `)
 }
