@@ -7,6 +7,7 @@
   "scripts": {
     "build": "yarn workspace demo build",
     "clean": "yarn workspace demo clean",
+    "compile": "babel gatsby-source-graphcms/src --out-dir gatsby-source-graphcms --source-maps",
     "dev": "yarn workspace demo dev"
   },
   "release": {

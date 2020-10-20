@@ -5,8 +5,8 @@ on:
       - master
       - next
 jobs:
-  release:
-    name: Release
+  setup:
+    name: Setup
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
@@ -17,8 +17,18 @@ jobs:
           node-version: 12
       - name: Install dependencies
         run: yarn
-      - name: Release
-        env:
+  build:
+    name: Build
+    needs: setup
+    runs-on: ubuntu-18.04
+    steps:
+      - run: yarn compile
+  release:
+    name: Release
+    needs: build
+    runs-on: ubuntu-18.04
+    steps:
+      - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
