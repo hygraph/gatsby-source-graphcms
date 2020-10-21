@@ -200,7 +200,7 @@ Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/t
 
 The source plugin will generate and save GraphQL query fragments for every node type. By default, they will be saved in a `graphcms-fragments` directory at the root of your Gatsby project. This can be configured:
 
-> If using multiple instances of the source plugin, you must provide a value to prevent type and/or fragment conflicts.
+> If using multiple instances of the source plugin, you **must** provide a value to prevent type and/or fragment conflicts.
 
 ```js
 // gatsby-config.js
