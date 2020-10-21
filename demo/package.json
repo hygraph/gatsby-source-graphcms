@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "build": "gatsby build",
+    "build": "yarn compile && gatsby build",
     "clean": "gatsby clean",
-    "dev": "ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop"
+    "compile": "cd ../gatsby-source-graphcms && yarn build",
+    "dev": "yarn compile && gatsby develop"
   },
   "dependencies": {
     "@mdx-js/mdx": "1.6.18",
