@@ -2,14 +2,12 @@
 
 > The official Gatsby source plugin for GraphCMS projects 🚀
 
-⚠️ **THIS PLUGIN IS IN BETA. PLEASE USE AT YOUR OWN RISK** ⚠️
-
 • [Demo](https://gatsby-source-graphcms.vercel.app) • [`gatsby-starter-graphcms-blog`](https://github.com/GraphCMS/gatsby-starter-graphcms-blog)
 
 ## Installation
 
 ```shell
-yarn add gatsby-source-graphcms@next
+yarn add gatsby-source-graphcms
 ```
 
 ## Configuration
@@ -103,7 +101,7 @@ To query for nodes for a specific locale, use the `filter` query argument.
 }
 ```
 
-Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a localisation implementation.
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/master/demo) for an example of a localisation implementation.
 
 ### Downloading local image assets
 
@@ -194,7 +192,7 @@ Once installed, you will be able to query for `MDX` fields using a query similar
 }
 ```
 
-Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a full MDX implementation.
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/master/demo) for an example of a full MDX implementation.
 
 ### Working with query fragments
 
