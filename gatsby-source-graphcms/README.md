@@ -63,7 +63,13 @@ module.exports = {
 | `fragmentsPath` | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts. |
 | `locales` | [String] _(Default: `['en']`)_ | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n). |
 
-## Querying localised nodes
+## Features
+
+* [Querying localised nodes](#querying-localised-nodes)
+* [Downloading local image assets](#downloading-local-image-assets)
+* [Using markdown nodes](#using-markdown-nodes)
+
+### Querying localised nodes
 
 If using GraphCMS localisation, this plugin provides support to build nodes for all provided locales.
 
@@ -98,7 +104,7 @@ To query for nodes for a specific locale, use the `filter` query argument.
 
 Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a localisation implementation.
 
-## Downloading local image assets
+### Downloading local image assets
 
 This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image), for image loading optimizations, with your GraphCMS image assets.
 
@@ -141,7 +147,7 @@ You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gat
 
 For more information on using `gatsby-image`, please see the [documentation](https://www.gatsbyjs.org/packages/gatsby-image/?=#how-to-use).
 
-## Using markdown nodes
+### Using markdown nodes
 
 This source plugin provides the option to build markdown nodes for all `RichText` fields in your GraphCMS schema, which in turn can be used with [MDX](https://mdxjs.com).
 
@@ -164,7 +170,7 @@ module.exports = {
 
 Enabling this option adds a `markdownNode` nested field to all `RichText` fields on the generated Gatsby schema.
 
-### Usage with `gatsby-plugin-mdx`
+#### Usage with `gatsby-plugin-mdx`
 
 These newly built nodes can be used with [`gatsby-plugin-mdx`](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx) to render markdown from GraphCMS.
 
