@@ -68,6 +68,7 @@ module.exports = {
 * [Querying localised nodes](#querying-localised-nodes)
 * [Downloading local image assets](#downloading-local-image-assets)
 * [Using markdown nodes](#using-markdown-nodes)
+* [Working with query fragments](#working-with-query-fragments)
 
 ### Querying localised nodes
 
@@ -194,3 +195,62 @@ Once installed, you will be able to query for `MDX` fields using a query similar
 ```
 
 Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next/demo) for an example of a full MDX implementation.
+
+### Working with query fragments
+
+The source plugin will generate and save GraphQL query fragments for every node type. By default, they will be saved in a `graphcms-fragments` directory at the root of your Gatsby project. This can be configured:
+
+> If using multiple instances of the source plugin, you must provide a value to prevent type and/or fragment conflicts.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        fragmentsPath: 'my-query-fragments'
+      },
+    },
+  ],
+}
+```
+
+The generated fragments are then read from the project for subsequent builds. It is recommended that they are checked in to version control for your project.
+
+Should you make any changes or additions to your GraphCMS schema, you will need to update the query fragments accrdingly. Alternatively they can be regnerated by removing the directory from your project.
+
+#### Modifying query fragments
+
+In some instances, you may need modify query fragments on a per type basis. This may involve:
+
+* Removing unrequired fields
+* Adding new fields with arguments as an aliased field
+
+For example, adding a `featuredCaseStudy` field:
+
+```graphql
+fragment Industry on Industry {
+  featuredCaseStudy: caseStudies(where: { featured: true }, first: 1)
+}
+```
+
+Field arguments cannot be read by Gatsby from the GraphCMS schema. Instead we must alias any required usages as aliased fields. In this example, the `featuredCaseStudy` field would then be available in our Gatsby queries:
+
+```graphql
+{
+  allGraphCmsIndustry {
+    nodes {
+      featuredCaseStudy {
+        ...
+      }
+    }
+  }
+}
+```
+
+
+
+
+
