@@ -1,0 +1,21 @@
+{
+  "name": "gatsby-source-graphcms",
+  "version": "2.0.0",
+  "description": "The official Gatsby source plugin for GraphCMS projects",
+  "main": "index.js",
+  "keywords": [
+    "data",
+    "gatsby",
+    "gatsby-plugin",
+    "graphcms",
+    "graphql",
+    "source"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "gatsby-graphql-source-toolkit": "0.6.3",
+    "gatsby-source-filesystem": "2.3.31",
+    "he": "1.2.0",
+    "node-fetch": "2.6.1"
+  }
+}
