@@ -219,7 +219,7 @@ module.exports = {
 
 The generated fragments are then read from the project for subsequent builds. It is recommended that they are checked in to version control for your project.
 
-Should you make any changes or additions to your GraphCMS schema, you will need to update the query fragments accrdingly. Alternatively they can be regnerated by removing the directory from your project.
+Should you make any changes or additions to your GraphCMS schema, you will need to update the query fragments accrdingly. Alternatively they will be regnerated on a subsequent build after removing the directory from your project.
 
 #### Modifying query fragments
 
