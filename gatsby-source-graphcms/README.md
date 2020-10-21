@@ -53,37 +53,15 @@ module.exports = {
 
 ### Options
 
-- `endpoint` _String_ (**required**)
-
-  - The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
-
-- `token` _String_
-
-  - If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).
-
-- `typePrefix` _String_ (default value: `GraphCMS_`)
-
-  > If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.
-
-  - The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default.
-
-- `downloadLocalImages` _Boolean_ (default value: `false`)
-
-  - Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).
-
-- `buildMarkdownNodes` _Boolean_ (default value: `false`)
-
-  - Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).
-
-- `fragmentsPath` _String_ (default value: `graphcms-fragments`)
-
-  > If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.
-
-  - The local project path where generated query fragments are saved. This is relative to your current working directory.
-
-- `locales` _[String]_ (default value: `['en']`)
-
-  - An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).
+| Key           | Type                                  | Description                                                                           |
+| ------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
+| `endpoint`    | _String_ (**required**) | The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
+| `token`       | String | If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
+| `typePrefix`  | String _(Default: `GraphCMS_`)_ | The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                 |
+| `downloadLocalImages` | Boolean _(Default: `false`)_ | Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets). |
+| `buildMarkdownNodes` | Boolean _(Default: `false`)_ | Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes). |
+| `fragmentsPath` | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts. |
+| `locales` | [String] _(Default: `['en']`)_ | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n). |
 
 ## Querying localised nodes
 
