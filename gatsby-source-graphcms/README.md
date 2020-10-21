@@ -53,22 +53,22 @@ module.exports = {
 
 ### Options
 
-| Key           | Type                                  | Description                                                                           |
-| ------------- | ------------------------------------- | ------------------------------------------------------------------------------------- |
-| `endpoint`    | _String_ (**required**) | The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
-| `token`       | String | If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
-| `typePrefix`  | String _(Default: `GraphCMS_`)_ | The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                 |
-| `downloadLocalImages` | Boolean _(Default: `false`)_ | Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets). |
-| `buildMarkdownNodes` | Boolean _(Default: `false`)_ | Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes). |
-| `fragmentsPath` | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts. |
-| `locales` | [String] _(Default: `['en']`)_ | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n). |
+| Key                   | Type                                     | Description                                                                                                                                                                                                                                                                                                                            |
+| --------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpoint`            | _String_ (**required**)                  | The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).                                                                                                                                                                           |
+| `token`               | String                                   | If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
+| `typePrefix`          | String _(Default: `GraphCMS_`)\_         | The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                                                      |
+| `downloadLocalImages` | Boolean _(Default: `false`)_             | Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).                                                                                                                                                                                                                        |
+| `buildMarkdownNodes`  | Boolean _(Default: `false`)_             | Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).                                                                                                                                                                   |
+| `fragmentsPath`       | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.                                                                                   |
+| `locales`             | [String] _(Default: `['en']`)_           | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).                                                                                                              |
 
 ## Features
 
-* [Querying localised nodes](#querying-localised-nodes)
-* [Downloading local image assets](#downloading-local-image-assets)
-* [Using markdown nodes](#using-markdown-nodes)
-* [Working with query fragments](#working-with-query-fragments)
+- [Querying localised nodes](#querying-localised-nodes)
+- [Downloading local image assets](#downloading-local-image-assets)
+- [Using markdown nodes](#using-markdown-nodes)
+- [Working with query fragments](#working-with-query-fragments)
 
 ### Querying localised nodes
 
@@ -210,7 +210,7 @@ module.exports = {
       resolve: 'gatsby-source-graphcms',
       options: {
         endpoint: process.env.GRAPHCMS_ENDPOINT,
-        fragmentsPath: 'my-query-fragments'
+        fragmentsPath: 'my-query-fragments',
       },
     },
   ],
@@ -225,8 +225,8 @@ Should you make any changes or additions to your GraphCMS schema, you will need 
 
 In some instances, you may need modify query fragments on a per type basis. This may involve:
 
-* Removing unrequired fields
-* Adding new fields with arguments as an aliased field
+- Removing unrequired fields
+- Adding new fields with arguments as an aliased field
 
 For example, adding a `featuredCaseStudy` field:
 
@@ -249,8 +249,3 @@ Field arguments cannot be read by Gatsby from the GraphCMS schema. Instead we mu
   }
 }
 ```
-
-
-
-
-
