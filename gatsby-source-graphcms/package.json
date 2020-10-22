@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "description": "The official Gatsby source plugin for GraphCMS projects",
   "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir ./ --source-maps"
+  },
   "keywords": [
     "data",
     "gatsby",
@@ -13,9 +16,16 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime": "7.12.1",
     "gatsby-graphql-source-toolkit": "0.6.3",
     "gatsby-source-filesystem": "2.3.31",
     "he": "1.2.0",
     "node-fetch": "2.6.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.12.1",
+    "@babel/core": "7.12.3",
+    "@babel/plugin-transform-runtime": "7.12.1",
+    "@babel/preset-env": "7.12.1"
   }
 }

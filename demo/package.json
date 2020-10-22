@@ -5,7 +5,8 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "dev": "ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop"
+    "preinstall": "cd ../gatsby-source-graphcms && yarn build",
+    "dev": "gatsby develop"
   },
   "dependencies": {
     "@mdx-js/mdx": "1.6.18",
