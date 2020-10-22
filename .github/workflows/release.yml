@@ -5,8 +5,8 @@ on:
       - master
       - next
 jobs:
-  setup:
-    name: Setup
+  build:
+    name: Build
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
@@ -17,12 +17,9 @@ jobs:
           node-version: 12
       - name: Install dependencies
         run: yarn
-  build:
-    name: Build
-    needs: setup
-    runs-on: ubuntu-18.04
-    steps:
-      - run: yarn compile
+      - name: Build
+        working-directory: ./gatsby-source-graphcms
+        run: yarn build
   release:
     name: Release
     needs: build
