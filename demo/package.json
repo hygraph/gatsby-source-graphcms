@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "build": "yarn compile && gatsby build",
+    "build": "gatsby build",
     "clean": "gatsby clean",
-    "compile": "cd ../gatsby-source-graphcms && yarn build",
-    "dev": "yarn compile && gatsby develop"
+    "preinstall": "cd ../gatsby-source-graphcms && yarn build",
+    "dev": "gatsby develop"
   },
   "dependencies": {
     "@mdx-js/mdx": "1.6.18",
