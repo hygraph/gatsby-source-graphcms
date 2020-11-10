@@ -5,8 +5,8 @@ on:
       - master
       - next
 jobs:
-  build:
-    name: Build
+  release:
+    name: Build & Release
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
@@ -20,17 +20,6 @@ jobs:
       - name: Build
         working-directory: ./gatsby-source-graphcms
         run: yarn build
-  release:
-    name: Release
-    needs: build
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
