@@ -43,14 +43,24 @@ const createSourcingConfig = async (
   }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
-    return await fetch(endpoint, {
+    const { reporter } = gatsbyApi
+
+    const response = await fetch(endpoint, {
       method: 'POST',
       body: JSON.stringify({ query, variables, operationName }),
       headers: {
         'Content-Type': 'application/json',
         ...(token && { Authorization: `Bearer ${token}` }),
       },
-    }).then((res) => res.json())
+    })
+
+    if (!response.ok)
+      return reporter.panic(
+        `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+        new Error(response.statusText)
+      )
+
+    return await response.json()
   }
   const schema = await loadSchema(execute)
 
