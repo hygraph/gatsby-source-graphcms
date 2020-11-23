@@ -14,7 +14,6 @@ const { createRemoteFileNode } = require('gatsby-source-filesystem')
 const he = require('he')
 const fetch = require('node-fetch')
 
-
 exports.pluginOptionsSchema = ({ Joi }) => {
   return Joi.object({
     buildMarkdownNodes: Joi.boolean()
@@ -193,14 +192,14 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
   if (webhookBody && Object.keys(webhookBody).length) {
     const { operation, data } = webhookBody
 
-    const nodeEvent = (operation, { __typename, id }) => {
+    const nodeEvent = (operation, { __typename, locale, id }) => {
       switch (operation) {
         case 'delete':
         case 'unpublish':
           return {
             eventName: 'DELETE',
             remoteTypeName: __typename,
-            remoteId: { __typename, id },
+            remoteId: { __typename, locale, id },
           }
         case 'create':
         case 'publish':
@@ -208,13 +207,17 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
           return {
             eventName: 'UPDATE',
             remoteTypeName: __typename,
-            remoteId: { __typename, id },
+            remoteId: { __typename, locale, id },
           }
       }
     }
 
+    const { localizations = [{ locale: 'en' }] } = data
+
     await sourceNodeChanges(config, {
-      nodeEvents: [nodeEvent(operation, data)],
+      nodeEvents: localizations.map(({ locale }) =>
+        nodeEvent(operation, { locale, ...data })
+      ),
     })
   } else {
     await sourceAllNodes(config)
