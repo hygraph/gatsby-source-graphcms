@@ -37,6 +37,16 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
 exports.createResolvers = ({ createResolvers }) => {
   const resolvers = {
     GraphCMS_Product: {
+      categories: {
+        args: {
+          locale: 'GraphCMS_Locale!',
+        },
+        resolve: async (source, args, context, info) => {
+          const nodes = await info.originalResolver(source, args, context, info)
+
+          return nodes.filter((node) => node.locale === args.locale)
+        },
+      },
       formattedPrice: {
         type: 'String',
         resolve: (source) => {
