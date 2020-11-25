@@ -84,7 +84,7 @@ const createSourcingConfig = async (
   const execute = async ({ operationName, query, variables = {} }) => {
     const { reporter } = gatsbyApi
 
-    const response = await fetch(endpoint, {
+    return await fetch(endpoint, {
       method: 'POST',
       body: JSON.stringify({ query, variables, operationName }),
       headers: {
@@ -92,14 +92,32 @@ const createSourcingConfig = async (
         ...(token && { Authorization: `Bearer ${token}` }),
       },
     })
+      .then((response) => {
+        if (!response.ok) {
+          return reporter.panic(
+            `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+            new Error(response.statusText)
+          )
+        }
 
-    if (!response.ok)
-      return reporter.panic(
-        `gatsby-source-graphcms: Problem building GraphCMS nodes`,
-        new Error(response.statusText)
-      )
+        return response.json()
+      })
+      .then((response) => {
+        if (response.errors) {
+          return reporter.panic(
+            `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+            new Error(response.errors)
+          )
+        }
 
-    return await response.json()
+        return response
+      })
+      .catch((error) => {
+        return reporter.panic(
+          `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+          new Error(error)
+        )
+      })
   }
   const schema = await loadSchema(execute)
 
