@@ -16,16 +16,16 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "7.12.1",
+    "@babel/runtime": "7.12.5",
     "gatsby-graphql-source-toolkit": "0.6.3",
     "gatsby-source-filesystem": "2.9.0",
     "he": "1.2.0",
     "node-fetch": "2.6.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.12.1",
-    "@babel/core": "7.12.3",
-    "@babel/plugin-transform-runtime": "7.12.1",
-    "@babel/preset-env": "7.12.1"
+    "@babel/cli": "7.12.10",
+    "@babel/core": "7.12.10",
+    "@babel/plugin-transform-runtime": "7.12.10",
+    "@babel/preset-env": "7.12.11"
   }
 }
