@@ -101,7 +101,7 @@ To query for nodes for a specific locale, use the `filter` query argument.
 }
 ```
 
-Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/master/demo) for an example of a localisation implementation.
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/main/demo) for an example of a localisation implementation.
 
 ### Downloading local image assets
 
@@ -192,7 +192,7 @@ Once installed, you will be able to query for `MDX` fields using a query similar
 }
 ```
 
-Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/master/demo) for an example of a full MDX implementation.
+Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/main/demo) for an example of a full MDX implementation.
 
 ### Working with query fragments
 
