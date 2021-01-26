@@ -244,6 +244,7 @@ exports.onCreateNode = async (
         createNode,
         createNodeId,
         getCache,
+        ...(node.fileName && { name: node.fileName }),
       })
 
       if (fileNode) node.localFile = fileNode.id

@@ -23,4 +23,11 @@ fragment Product on Product {
       locale
     }
   }
+  categories {
+    ... on Category {
+      remoteTypeName: __typename
+      remoteId: id
+      locale
+    }
+  }
 }
