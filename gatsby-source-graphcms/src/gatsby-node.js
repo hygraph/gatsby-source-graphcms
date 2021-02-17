@@ -53,24 +53,6 @@ exports.pluginOptionsSchema = ({ Joi }) => {
   })
 }
 
-exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
-  if (!pluginOptions || !pluginOptions.endpoint)
-    return reporter.panic(
-      'gatsby-source-graphcms: You must provide your GraphCMS endpoint URL'
-    )
-
-  if (
-    pluginOptions.locales &&
-    (!Array.isArray(pluginOptions.locales) ||
-      pluginOptions.locales.length === 0)
-  )
-    return reporter.panic(
-      `gatsby-source-graphcms: Please provide a valid array of locale key strings (i.e. [
-        ('en', 'de')
-      ]`
-    )
-}
-
 const createSourcingConfig = async (
   gatsbyApi,
   {
