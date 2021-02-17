@@ -43,6 +43,13 @@ exports.pluginOptionsSchema = ({ Joi }) => {
       .items(Joi.string())
       .min(1)
       .default(['en']),
+    stages: Joi.array()
+      .description(
+        `An array of Content Stages from your GraphCMS project. You can read more about using Content Stages [here](https://graphcms.com/guides/working-with-content-stages).`
+      )
+      .items(Joi.string())
+      .min(1)
+      .default(['PUBLISHED']),
     token: Joi.string().description(
       `If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis)`
     ),
@@ -56,7 +63,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 const createSourcingConfig = async (
   gatsbyApi,
-  { endpoint, fragmentsPath, locales, token, typePrefix }
+  { endpoint, fragmentsPath, locales, stages, token, typePrefix }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     const { reporter } = gatsbyApi
@@ -118,16 +125,18 @@ const createSourcingConfig = async (
   const gatsbyNodeTypes = possibleTypes.map((type) => ({
     remoteTypeName: type.name,
     queries: [
-      ...locales.map(
-        (locale) => `
-        query LIST_${pluralRootFieldName(
-          type
-        )}_${locale} { ${pluralRootFieldName(type)}(first: $limit, ${
-          hasLocaleField(type) ? `locales: [${locale}]` : ''
-        }, skip: $offset) {
-            ..._${type.name}Id_
-          }
-        }`
+      ...locales.map((locale) =>
+        stages.map(
+          (stage) => `
+          query LIST_${pluralRootFieldName(
+            type
+          )}_${locale}_${stage} { ${pluralRootFieldName(type)}(first: $limit, ${
+            hasLocaleField(type) ? `locales: [${locale}]` : ''
+          }, skip: $offset, stage: ${stage}) {
+              ..._${type.name}Id_
+            }
+          }`
+        )
       ),
       `query NODE_${singularRootFieldName(type)}{ ${singularRootFieldName(
         type
@@ -139,11 +148,13 @@ const createSourcingConfig = async (
         __typename
         id
         ${hasLocaleField(type) ? `locale` : ''}
+        stage
       }`,
     ].join('\n'),
-    nodeQueryVariables: ({ id, locale }) => ({
+    nodeQueryVariables: ({ id, locale, stage }) => ({
       where: { id },
       locales: [locale],
+      stage,
     }),
   }))
 
