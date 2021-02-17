@@ -41,6 +41,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
         `An array of locale key strings from your GraphCMS project. You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).`
       )
       .items(Joi.string())
+      .min(1)
       .default(['en']),
     token: Joi.string().description(
       `If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis)`
@@ -53,33 +54,9 @@ exports.pluginOptionsSchema = ({ Joi }) => {
   })
 }
 
-exports.onPreBootstrap = ({ reporter }, pluginOptions) => {
-  if (!pluginOptions || !pluginOptions.endpoint)
-    return reporter.panic(
-      'gatsby-source-graphcms: You must provide your GraphCMS endpoint URL'
-    )
-
-  if (
-    pluginOptions.locales &&
-    (!Array.isArray(pluginOptions.locales) ||
-      pluginOptions.locales.length === 0)
-  )
-    return reporter.panic(
-      `gatsby-source-graphcms: Please provide a valid array of locale key strings (i.e. [
-        ('en', 'de')
-      ]`
-    )
-}
-
 const createSourcingConfig = async (
   gatsbyApi,
-  {
-    endpoint,
-    fragmentsPath = 'graphcms-fragments',
-    locales = ['en'],
-    token,
-    typePrefix = 'GraphCMS_',
-  }
+  { endpoint, fragmentsPath, locales, token, typePrefix }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     const { reporter } = gatsbyApi
