@@ -41,7 +41,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
         `An array of locale key strings from your GraphCMS project. You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).`
       )
       .items(Joi.string())
-      .length(1)
+      .min(1)
       .default(['en']),
     token: Joi.string().description(
       `If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis)`
