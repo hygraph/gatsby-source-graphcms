@@ -3,7 +3,9 @@ const path = require('path')
 exports.createPages = async ({ actions: { createPage }, graphql }) => {
   const { data } = await graphql(`
     {
-      products: allGraphCmsProduct {
+      products: allGraphCmsProduct(
+        filter: { locale: { eq: en }, stage: { eq: PUBLISHED } }
+      ) {
         nodes {
           description {
             markdownNode {
