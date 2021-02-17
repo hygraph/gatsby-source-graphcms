@@ -55,13 +55,7 @@ exports.pluginOptionsSchema = ({ Joi }) => {
 
 const createSourcingConfig = async (
   gatsbyApi,
-  {
-    endpoint,
-    fragmentsPath = 'graphcms-fragments',
-    locales = ['en'],
-    token,
-    typePrefix = 'GraphCMS_',
-  }
+  { endpoint, fragmentsPath, locales, token, typePrefix }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     const { reporter } = gatsbyApi
