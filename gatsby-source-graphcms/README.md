@@ -109,7 +109,9 @@ Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/t
 
 This plugin provides support to build nodes for entries from multiple Content Stages.
 
-Update your plugin configuration to include the `stages` key.
+The provided Content Stages **must** be accessible according to the configuration of your project's [API access](https://graphcms.com/docs/authorization). If providing a `token`, then that [Permanent Auth Token](https://graphcms.com/docs/authorization#permanent-auth-tokens) must have permissions to query data from all provided Content Stages.
+
+The example below assumes that both the `DRAFT` and `PUBLISHED` stages are publicly accessible.
 
 ```js
 // gatsby-config.js
