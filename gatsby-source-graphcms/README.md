@@ -60,10 +60,12 @@ module.exports = {
 | `buildMarkdownNodes`  | Boolean _(Default: `false`)_             | Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).                                                                                                                                                                   |
 | `fragmentsPath`       | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.                                                                                   |
 | `locales`             | [String] _(Default: `['en']`)_           | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).                                                                                                              |
+| `stages`              | [String] _(Default: `['PUBLISHED']`)_    | An array of Content Stages from your GraphCMS project. [Learn more](#querying-from-content-stages). You can read more about using Content Stages [here](https://graphcms.com/guides/working-with-content-stages).                                                                                                                      |
 
 ## Features
 
 - [Querying localised nodes](#querying-localised-nodes)
+- [Querying from content stages](#querying-from-content-stages)
 - [Downloading local image assets](#downloading-local-image-assets)
 - [Using markdown nodes](#using-markdown-nodes)
 - [Working with query fragments](#working-with-query-fragments)
@@ -102,6 +104,41 @@ To query for nodes for a specific locale, use the `filter` query argument.
 ```
 
 Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/main/demo) for an example of a localisation implementation.
+
+### Querying from content stages
+
+This plugin provides support to build nodes for entries from multiple Content Stages.
+
+The provided Content Stages **must** be accessible according to the configuration of your project's [API access](https://graphcms.com/docs/authorization). If providing a `token`, then that [Permanent Auth Token](https://graphcms.com/docs/authorization#permanent-auth-tokens) must have permission to query data from all provided Content Stages.
+
+The example below assumes that both the `DRAFT` and `PUBLISHED` stages are publicly accessible.
+
+```js
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        stages: ['DRAFT', 'PUBLISHED'],
+      },
+    },
+  ],
+}
+```
+
+To query for nodes from a specific Content Stage, use the `filter` query argument.
+
+```gql
+{
+  allGraphCmsProduct(filter: { stage: { eq: DRAFT } }) {
+    nodes {
+      name
+    }
+  }
+}
+```
 
 ### Downloading local image assets
 

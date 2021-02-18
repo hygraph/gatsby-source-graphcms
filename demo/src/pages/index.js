@@ -35,7 +35,9 @@ const IndexPage = ({ data: { products } }) => {
 
 export const query = graphql`
   query PageQuery {
-    products: allGraphCmsProduct {
+    products: allGraphCmsProduct(
+      filter: { locale: { eq: en }, stage: { eq: PUBLISHED } }
+    ) {
       nodes {
         formattedPrice
         id
