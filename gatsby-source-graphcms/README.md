@@ -132,7 +132,7 @@ To query for nodes from a specific Content Stage, use the `filter` query argumen
 
 ```gql
 {
-  enProducts: allGraphCmsProduct(filter: { stage: { eq: DRAFT } }) {
+  allGraphCmsProduct(filter: { stage: { eq: DRAFT } }) {
     nodes {
       name
     }
