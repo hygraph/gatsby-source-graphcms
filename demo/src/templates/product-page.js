@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
@@ -26,9 +26,9 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
       </div>
       {mainImage && (
         <div className="w-full md:w-3/5">
-          <Img
-            fluid={mainImage.localFile.childImageSharp.fluid}
-            fadeIn={false}
+          <GatsbyImage
+            image={mainImage.localFile.childImageSharp.gatsbyImageData}
+            alt={product.name}
           />
         </div>
       )}
@@ -44,9 +44,7 @@ export const query = graphql`
       nodes {
         localFile {
           childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(layout: FULL_WIDTH)
           }
         }
       }

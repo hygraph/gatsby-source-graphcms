@@ -142,7 +142,7 @@ To query for nodes from a specific Content Stage, use the `filter` query argumen
 
 ### Downloading local image assets
 
-This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image), for image loading optimizations, with your GraphCMS image assets.
+This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image), for image loading optimizations, with your GraphCMS image assets.
 
 To enable this, add `downloadLocalImages: true` to your plugin configuration.
 
@@ -181,7 +181,7 @@ You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gat
 }
 ```
 
-For more information on using `gatsby-image`, please see the [documentation](https://www.gatsbyjs.org/packages/gatsby-image/?=#how-to-use).
+For more information on using `gatsby-plugin-image`, please see the [documentation](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/).
 
 ### Using markdown nodes
 
