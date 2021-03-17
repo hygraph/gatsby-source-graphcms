@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 
 const IndexPage = ({ data: { products } }) => {
   return (
@@ -14,7 +14,7 @@ const IndexPage = ({ data: { products } }) => {
               <div className="flex-1 flex flex-col p-8">
                 {mainImage && (
                   <GatsbyImage
-                    image={mainImage.localFile.childImageSharp.gatsbyImageData}
+                    image={getImage(mainImage.localFile)}
                     alt={product.name}
                   />
                 )}
@@ -44,7 +44,7 @@ export const query = graphql`
         images {
           localFile {
             childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH)
+              gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
             }
           }
         }
