@@ -10,6 +10,8 @@ import {
   sourceAllNodes,
   sourceNodeChanges,
 } from 'gatsby-graphql-source-toolkit'
+import { generateImageData } from 'gatsby-plugin-image'
+import { getGatsbyImageResolver } from 'gatsby-plugin-image/graphql-utils'
 import { createRemoteFileNode } from 'gatsby-source-filesystem'
 import he from 'he'
 import fetch from 'node-fetch'
@@ -317,4 +319,48 @@ export function createSchemaCustomization(
         markdownNode: ${typePrefix}MarkdownNode @link
       }
     `)
+}
+
+const generateImageSource = (
+  baseURL,
+  width,
+  height,
+  format,
+  fit = 'clip',
+  { quality = 100 }
+) => {
+  const src = `https://media.graphcms.com/resize=width:${width},height:${height},fit:${fit}/output=quality:${quality}/${baseURL}`
+
+  return { src, width, height, format }
+}
+
+const resolveGatsbyImageData = async (
+  { handle: filename, height, mimeType, width },
+  options
+) => {
+  const imageDataArgs = {
+    ...options,
+    pluginName: `gatsby-source-graphcms`,
+    sourceMetadata: { format: mimeType.split('/')[1], height, width },
+    filename,
+    generateImageSource,
+    options,
+  }
+
+  return generateImageData(imageDataArgs)
+}
+
+export function createResolvers(
+  { createResolvers },
+  { typePrefix = 'GraphCMS_' }
+) {
+  const typeName = `${typePrefix}Asset`
+
+  createResolvers({
+    [typeName]: {
+      gatsbyImageData: getGatsbyImageResolver(resolveGatsbyImageData, {
+        quality: 'Int',
+      }),
+    },
+  })
 }
