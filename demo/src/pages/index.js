@@ -13,10 +13,7 @@ const IndexPage = ({ data: { products } }) => {
             <Link to={`/${product.locale}/products/${product.slug}`}>
               <div className="flex-1 flex flex-col p-8">
                 {mainImage && (
-                  <GatsbyImage
-                    image={getImage(mainImage.localFile)}
-                    alt={product.name}
-                  />
+                  <GatsbyImage image={getImage(mainImage)} alt={product.name} />
                 )}
                 <h2 className="my-4 text-gray-900 text-xl leading-5 font-medium">
                   {product.name}
@@ -42,11 +39,7 @@ export const query = graphql`
         formattedPrice
         id
         images {
-          localFile {
-            childImageSharp {
-              gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
-            }
-          }
+          gatsbyImageData(layout: FULL_WIDTH)
         }
         locale
         name

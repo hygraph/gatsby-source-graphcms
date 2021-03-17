@@ -26,10 +26,7 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
       </div>
       {mainImage && (
         <div className="w-full md:w-3/5">
-          <GatsbyImage
-            image={getImage(mainImage.localFile)}
-            alt={product.name}
-          />
+          <GatsbyImage image={getImage(mainImage)} alt={product.name} />
         </div>
       )}
     </div>
@@ -42,11 +39,7 @@ export const query = graphql`
       filter: { productImages: { elemMatch: { id: { eq: $id } } } }
     ) {
       nodes {
-        localFile {
-          childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
-          }
-        }
+        gatsbyImageData(layout: FULL_WIDTH)
       }
     }
   }
