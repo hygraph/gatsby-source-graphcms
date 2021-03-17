@@ -1,20 +1,20 @@
-const crypto = require('crypto')
-const fs = require('fs')
-const {
+import crypto from 'crypto'
+import fs from 'fs'
+import {
   wrapQueryExecutorWithQueue,
   loadSchema,
   readOrGenerateDefaultFragments,
   compileNodeQueries,
   buildNodeDefinitions,
-  createSchemaCustomization,
+  createSchemaCustomization as createToolkitSchemaCustomization,
   sourceAllNodes,
   sourceNodeChanges,
-} = require('gatsby-graphql-source-toolkit')
-const { createRemoteFileNode } = require('gatsby-source-filesystem')
-const he = require('he')
-const fetch = require('node-fetch')
+} from 'gatsby-graphql-source-toolkit'
+import { createRemoteFileNode } from 'gatsby-source-filesystem'
+import he from 'he'
+import fetch from 'node-fetch'
 
-exports.pluginOptionsSchema = ({ Joi }) => {
+export function pluginOptionsSchema({ Joi }) {
   return Joi.object({
     buildMarkdownNodes: Joi.boolean()
       .description(
@@ -188,12 +188,12 @@ const createSourcingConfig = async (
   }
 }
 
-exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
+export async function sourceNodes(gatsbyApi, pluginOptions) {
   const { webhookBody } = gatsbyApi
 
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
 
-  await createSchemaCustomization(config)
+  await createToolkitSchemaCustomization(config)
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const { operation, data } = webhookBody
@@ -230,14 +230,14 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
   }
 }
 
-exports.onCreateNode = async (
+export async function onCreateNode(
   { node, actions: { createNode }, createNodeId, getCache },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
     typePrefix = 'GraphCMS_',
   }
-) => {
+) {
   if (
     downloadLocalImages &&
     node.remoteTypeName === 'Asset' &&
@@ -293,14 +293,14 @@ exports.onCreateNode = async (
   }
 }
 
-exports.createSchemaCustomization = (
+export function createSchemaCustomization(
   { actions: { createTypes } },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
     typePrefix = 'GraphCMS_',
   }
-) => {
+) {
   if (downloadLocalImages)
     createTypes(`
       type ${typePrefix}Asset {
