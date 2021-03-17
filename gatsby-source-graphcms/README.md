@@ -66,7 +66,7 @@ module.exports = {
 
 - [Querying localised nodes](#querying-localised-nodes)
 - [Querying from content stages](#querying-from-content-stages)
-- [Downloading local image assets](#downloading-local-image-assets)
+- [Usage with `gatsby-plugin-image`](#usage-with-gatsby-plugin-image)
 - [Using markdown nodes](#using-markdown-nodes)
 - [Working with query fragments](#working-with-query-fragments)
 
@@ -140,9 +140,27 @@ To query for nodes from a specific Content Stage, use the `filter` query argumen
 }
 ```
 
-### Downloading local image assets
+### Usage with `gatsby-plugin-image`
 
-This source plugin provides the option to download and cache GraphCMS assets in your Gatsby project. This enables you to use [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image), for image loading optimizations, with your GraphCMS image assets.
+This source plugin supports `gatsby-plugin-image` for responsive, high performance GraphCMS images direct from our CDN.
+
+Use the `gatsbyImageData` resolver on your `GraphCMS_Asset` nodes.
+
+```gql
+{
+  allGraphCmsAsset {
+    nodes {
+      gatsbyImageData(layout: FULL_WIDTH)
+    }
+  }
+}
+```
+
+For more information on using `gatsby-plugin-image`, please see the [documentation](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/).
+
+#### Downloading local image assets
+
+If you prefer, the source plugin also provides the option to download and cache GraphCMS assets in your Gatsby project.
 
 To enable this, add `downloadLocalImages: true` to your plugin configuration.
 
@@ -163,25 +181,19 @@ module.exports = {
 
 This adds a `localFile` field to the `GraphCMS_Asset` type which resolves to the file node generated at build by [`gatsby-source-filesystem`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem).
 
-You can then use the fragments from [`gatsby-transformer-sharp`](https://www.gatsbyjs.org/packages/gatsby-transformer-sharp) as a part of your GraphQL query.
-
 ```gql
 {
   allGraphCmsAsset {
     nodes {
       localFile {
         childImageSharp {
-          fixed {
-            ...GatsbyImageSharpFixed
-          }
+          gatsbyImageData(layout: FULL_WIDTH)
         }
       }
     }
   }
 }
 ```
-
-For more information on using `gatsby-plugin-image`, please see the [documentation](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/).
 
 ### Using markdown nodes
 
