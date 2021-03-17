@@ -5,7 +5,6 @@ module.exports = {
     `gatsby-plugin-image`,
     'gatsby-plugin-mdx',
     'gatsby-plugin-postcss',
-    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-source-graphcms',
       options: {
@@ -17,6 +16,5 @@ module.exports = {
         stages: ['DRAFT', 'PUBLISHED'],
       },
     },
-    'gatsby-transformer-sharp',
   ],
 }

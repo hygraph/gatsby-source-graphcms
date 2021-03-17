@@ -15,9 +15,7 @@
     "gatsby-plugin-image": "1.1.0",
     "gatsby-plugin-mdx": "2.1.0",
     "gatsby-plugin-postcss": "4.1.0",
-    "gatsby-plugin-sharp": "3.1.0",
     "gatsby-source-graphcms": "2.0.0",
-    "gatsby-transformer-sharp": "3.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
