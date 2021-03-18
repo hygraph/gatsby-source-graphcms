@@ -7,7 +7,7 @@
 ## Installation
 
 ```shell
-yarn add gatsby-source-graphcms
+yarn add gatsby-source-graphcms gatsby-plugin-image
 ```
 
 ## Configuration
@@ -141,6 +141,8 @@ To query for nodes from a specific Content Stage, use the `filter` query argumen
 ```
 
 ### Usage with `gatsby-plugin-image`
+
+> Requires [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) as a project dependency.
 
 This source plugin supports `gatsby-plugin-image` for responsive, high performance GraphCMS images direct from our CDN.
 
