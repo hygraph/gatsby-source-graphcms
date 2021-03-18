@@ -359,7 +359,11 @@ export function createResolvers(
   createResolvers({
     [typeName]: {
       gatsbyImageData: getGatsbyImageResolver(resolveGatsbyImageData, {
-        quality: 'Int',
+        quality: {
+          type: 'Int',
+          description:
+            'The default image quality generated. This is overridden by any format-specific options.',
+        },
       }),
     },
   })
