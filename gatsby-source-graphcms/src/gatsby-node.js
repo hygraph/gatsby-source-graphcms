@@ -1,20 +1,22 @@
-const crypto = require('crypto')
-const fs = require('fs')
-const {
+import crypto from 'crypto'
+import fs from 'fs'
+import {
   wrapQueryExecutorWithQueue,
   loadSchema,
   readOrGenerateDefaultFragments,
   compileNodeQueries,
   buildNodeDefinitions,
-  createSchemaCustomization,
+  createSchemaCustomization as createToolkitSchemaCustomization,
   sourceAllNodes,
   sourceNodeChanges,
-} = require('gatsby-graphql-source-toolkit')
-const { createRemoteFileNode } = require('gatsby-source-filesystem')
-const he = require('he')
-const fetch = require('node-fetch')
+} from 'gatsby-graphql-source-toolkit'
+import { generateImageData } from 'gatsby-plugin-image'
+import { getGatsbyImageResolver } from 'gatsby-plugin-image/graphql-utils'
+import { createRemoteFileNode } from 'gatsby-source-filesystem'
+import he from 'he'
+import fetch from 'node-fetch'
 
-exports.pluginOptionsSchema = ({ Joi }) => {
+export function pluginOptionsSchema({ Joi }) {
   return Joi.object({
     buildMarkdownNodes: Joi.boolean()
       .description(
@@ -188,12 +190,12 @@ const createSourcingConfig = async (
   }
 }
 
-exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
+export async function sourceNodes(gatsbyApi, pluginOptions) {
   const { webhookBody } = gatsbyApi
 
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
 
-  await createSchemaCustomization(config)
+  await createToolkitSchemaCustomization(config)
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const { operation, data } = webhookBody
@@ -230,14 +232,14 @@ exports.sourceNodes = async (gatsbyApi, pluginOptions) => {
   }
 }
 
-exports.onCreateNode = async (
+export async function onCreateNode(
   { node, actions: { createNode }, createNodeId, getCache },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
     typePrefix = 'GraphCMS_',
   }
-) => {
+) {
   if (
     downloadLocalImages &&
     node.remoteTypeName === 'Asset' &&
@@ -293,14 +295,14 @@ exports.onCreateNode = async (
   }
 }
 
-exports.createSchemaCustomization = (
+export function createSchemaCustomization(
   { actions: { createTypes } },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
     typePrefix = 'GraphCMS_',
   }
-) => {
+) {
   if (downloadLocalImages)
     createTypes(`
       type ${typePrefix}Asset {
@@ -317,4 +319,52 @@ exports.createSchemaCustomization = (
         markdownNode: ${typePrefix}MarkdownNode @link
       }
     `)
+}
+
+const generateImageSource = (
+  baseURL,
+  width,
+  height,
+  format,
+  fit = 'clip',
+  { quality = 100 }
+) => {
+  const src = `https://media.graphcms.com/resize=width:${width},height:${height},fit:${fit}/output=quality:${quality}/${baseURL}`
+
+  return { src, width, height, format }
+}
+
+const resolveGatsbyImageData = async (
+  { handle: filename, height, mimeType, width },
+  options
+) => {
+  const imageDataArgs = {
+    ...options,
+    pluginName: `gatsby-source-graphcms`,
+    sourceMetadata: { format: mimeType.split('/')[1], height, width },
+    filename,
+    generateImageSource,
+    options,
+  }
+
+  return generateImageData(imageDataArgs)
+}
+
+export function createResolvers(
+  { createResolvers },
+  { typePrefix = 'GraphCMS_' }
+) {
+  const typeName = `${typePrefix}Asset`
+
+  createResolvers({
+    [typeName]: {
+      gatsbyImageData: getGatsbyImageResolver(resolveGatsbyImageData, {
+        quality: {
+          type: 'Int',
+          description:
+            'The default image quality generated. This is overridden by any format-specific options.',
+        },
+      }),
+    },
+  })
 }
