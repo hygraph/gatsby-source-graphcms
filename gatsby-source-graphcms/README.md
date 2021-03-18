@@ -1,8 +1,6 @@
-# gatsby-source-graphcms
+<h2 align="center">gatsby-source-graphcms</h2>
 
-> The official Gatsby source plugin for GraphCMS projects 🚀
-
-• [Demo](https://gatsby-source-graphcms.vercel.app) • [`gatsby-starter-graphcms-blog`](https://github.com/GraphCMS/gatsby-starter-graphcms-blog)
+<p align="center">The official Gatsby source plugin for GraphCMS projects • <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a></p>
 
 ## Installation
 
