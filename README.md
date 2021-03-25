@@ -1,9 +1,11 @@
 <h2 align="center">gatsby-source-graphcms</h2>
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<p align="center">The official Gatsby source plugin for GraphCMS projects • <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a></p>
+<p align="center">The official Gatsby source plugin for GraphCMS projects</p>
+
+<p align="center"><a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<img src="https://img.shields.io/badge/all_contributors-1-purple.svg" alt="Contributors" />
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
 
 ## Installation
 
@@ -315,7 +317,7 @@ Field arguments cannot be read by Gatsby from the GraphCMS schema. Instead we mu
 }
 ```
 
-## Contributors ✨
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
