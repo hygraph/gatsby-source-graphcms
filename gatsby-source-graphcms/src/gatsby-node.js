@@ -10,11 +10,19 @@ import {
   sourceAllNodes,
   sourceNodeChanges,
 } from 'gatsby-graphql-source-toolkit'
-import { generateImageData } from 'gatsby-plugin-image'
+import {
+  generateImageData,
+  getLowResolutionImageURL,
+} from 'gatsby-plugin-image'
 import { getGatsbyImageResolver } from 'gatsby-plugin-image/graphql-utils'
 import { createRemoteFileNode } from 'gatsby-source-filesystem'
 import he from 'he'
 import fetch from 'node-fetch'
+
+import { PLUGIN_NAME } from './util/constants'
+import { getImageBase64, getBase64DataURI } from './util/getImageBase64'
+import { getImageDominantColor } from './util/getDominantColor'
+import { getTracedSVG } from './util/getTracedSVG'
 
 export function pluginOptionsSchema({ Joi }) {
   return Joi.object({
@@ -81,7 +89,7 @@ const createSourcingConfig = async (
       .then((response) => {
         if (!response.ok) {
           return reporter.panic(
-            `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+            `[${PLUGIN_NAME}]: Problem building GraphCMS nodes`,
             new Error(response.statusText)
           )
         }
@@ -91,7 +99,7 @@ const createSourcingConfig = async (
       .then((response) => {
         if (response.errors) {
           return reporter.panic(
-            `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+            `[${PLUGIN_NAME}]: Problem building GraphCMS nodes`,
             new Error(response.errors)
           )
         }
@@ -100,7 +108,7 @@ const createSourcingConfig = async (
       })
       .catch((error) => {
         return reporter.panic(
-          `gatsby-source-graphcms: Problem building GraphCMS nodes`,
+          `[${PLUGIN_NAME}]: Problem building GraphCMS nodes`,
           new Error(error)
         )
       })
@@ -233,7 +241,7 @@ export async function sourceNodes(gatsbyApi, pluginOptions) {
 }
 
 export async function onCreateNode(
-  { node, actions: { createNode }, createNodeId, getCache },
+  { node, actions: { createNode }, createNodeId, getCache, cache },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
@@ -251,13 +259,14 @@ export async function onCreateNode(
         parentNodeId: node.id,
         createNode,
         createNodeId,
+        cache,
         getCache,
         ...(node.fileName && { name: node.fileName }),
       })
 
       if (fileNode) node.localFile = fileNode.id
     } catch (e) {
-      console.error('gatsby-source-graphcms:', e)
+      console.error(`[${PLUGIN_NAME}]`, e)
     }
   }
 
@@ -334,37 +343,83 @@ const generateImageSource = (
   return { src, width, height, format }
 }
 
-const resolveGatsbyImageData = async (
-  { handle: filename, height, mimeType, width },
-  options
-) => {
-  const imageDataArgs = {
-    ...options,
-    pluginName: `gatsby-source-graphcms`,
-    sourceMetadata: { format: mimeType.split('/')[1], height, width },
-    filename,
-    generateImageSource,
-    options,
-  }
+function makeResolveGatsbyImageData(cache) {
+  return async function resolveGatsbyImageData(
+    { handle: filename, height, mimeType, width, url, internal },
+    options
+  ) {
+    const imageDataArgs = {
+      ...options,
+      pluginName: PLUGIN_NAME,
+      sourceMetadata: { format: mimeType.split('/')[1], height, width },
+      filename,
+      generateImageSource,
+      options,
+    }
 
-  return generateImageData(imageDataArgs)
+    if (options?.placeholder === `BLURRED`) {
+      const lowResImageURL = getLowResolutionImageURL(imageDataArgs)
+
+      const imageBase64 = await getImageBase64({
+        url: lowResImageURL,
+        cache,
+      })
+
+      imageDataArgs.placeholderURL = getBase64DataURI({
+        imageBase64,
+      })
+    }
+
+    if (options?.placeholder === `DOMINANT_COLOR`) {
+      const lowResImageURL = getLowResolutionImageURL(imageDataArgs)
+
+      imageDataArgs.backgroundColor = await getImageDominantColor({
+        url: lowResImageURL,
+        cache,
+      })
+    }
+
+    if (options?.placeholder === `TRACED_SVG`) {
+      imageDataArgs.placeholderURL = await getTracedSVG({
+        url,
+        internal,
+        filename,
+        cache,
+      })
+    }
+
+    return generateImageData(imageDataArgs)
+  }
 }
 
 export function createResolvers(
-  { createResolvers },
+  { createResolvers, cache },
   { typePrefix = 'GraphCMS_' }
 ) {
   const typeName = `${typePrefix}Asset`
 
   createResolvers({
     [typeName]: {
-      gatsbyImageData: getGatsbyImageResolver(resolveGatsbyImageData, {
-        quality: {
-          type: 'Int',
-          description:
-            'The default image quality generated. This is overridden by any format-specific options.',
-        },
-      }),
+      gatsbyImageData: getGatsbyImageResolver(
+        makeResolveGatsbyImageData(cache),
+        {
+          quality: {
+            type: 'Int',
+            description:
+              'The default image quality generated. This is overridden by any format-specific options.',
+          },
+          placeholder: {
+            type:
+              'enum GraphCMSImagePlaceholder { NONE, BLURRED, DOMINANT_COLOR, TRACED_SVG }',
+            description: `The style of temporary image shown while the full image loads.
+BLURRED: generates a very low-resolution version of the image and displays it as a blurred background (default).
+DOMINANT_COLOR: the dominant color of the image used as a solid background color.
+TRACED_SVG: generates a simplified, flat SVG version of the source image, which it displays as a placeholder.
+NONE: No placeholder. Use the backgroundColor option to set a static background if you wish.
+`,
+          },
+        }
+      ),
     },
   })
 }

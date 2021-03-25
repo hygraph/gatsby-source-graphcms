@@ -12,4 +12,5 @@ yarn-error.log*
 
 # Output
 gatsby-source-graphcms/gatsby-*
+gatsby-source-graphcms/util/
 !gatsby-source-graphcms/src/**

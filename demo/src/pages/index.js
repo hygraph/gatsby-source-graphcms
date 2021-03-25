@@ -39,7 +39,7 @@ export const query = graphql`
         formattedPrice
         id
         images {
-          gatsbyImageData(layout: FULL_WIDTH)
+          gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
         }
         locale
         name
