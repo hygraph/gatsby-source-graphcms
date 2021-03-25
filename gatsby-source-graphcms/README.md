@@ -8,7 +8,7 @@
   <a href="https://npmjs.org/package/gatsby-source-graphcms">
     <img src="https://img.shields.io/npm/dw/gatsby-source-graphcms.svg" alt="Downloads/week" />
   </a>
-  <a href="https://github.com/GraphCMS/gatsby-source-graphcms/blob/main/gatsby-source-graphcms/LICENSE">
+  <a href="https://github.com/GraphCMS/gatsby-source-graphcms/blob/main/LICENSE">
     <img src="https://img.shields.io/npm/l/gatsby-source-graphcms.svg" alt="License" />
   </a>
   <a href="https://github.com/GraphCMS/gatsby-source-graphcms/stargazers">
