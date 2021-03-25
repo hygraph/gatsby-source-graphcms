@@ -4,6 +4,7 @@
   ],
   "imageSize": 100,
   "commit": false,
+  "badgeTemplate": "<img src="https://img.shields.io/badge/all_contributors-1-purple.svg" alt="Contributors" />",
   "contributors": [
     {
       "login": "ynnoj",
@@ -17,6 +18,17 @@
         "ideas",
         "maintenance",
         "projectManagement"
+      ]
+    },
+    {
+      "login": "jpedroschmitz",
+      "name": "João Pedro Schmitz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26466516?v=4",
+      "profile": "http://joaopedro.dev",
+      "contributions": [
+        "code",
+        "example",
+        "ideas"
       ]
     }
   ],
