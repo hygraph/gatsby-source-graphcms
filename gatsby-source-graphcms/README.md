@@ -1,6 +1,10 @@
 <h2 align="center">gatsby-source-graphcms</h2>
+<p align="center">The official Gatsby source plugin for GraphCMS projects</p>
 
-<p align="center">The official Gatsby source plugin for GraphCMS projects • <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a></p>
+<p align="center"><a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<img src="https://img.shields.io/badge/all_contributors-1-purple.svg" alt="Contributors" />
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+</p>
 
 ## Installation
 
@@ -311,3 +315,21 @@ Field arguments cannot be read by Gatsby from the GraphCMS schema. Instead we mu
   }
 }
 ```
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://jonathan.steele.pro"><img src="https://avatars.githubusercontent.com/u/3578709?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Steele</b></sub></a><br /><a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=ynnoj" title="Code">💻</a> <a href="#blog-ynnoj" title="Blogposts">📝</a> <a href="#example-ynnoj" title="Examples">💡</a> <a href="#ideas-ynnoj" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-ynnoj" title="Maintenance">🚧</a> <a href="#projectManagement-ynnoj" title="Project Management">📆</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
