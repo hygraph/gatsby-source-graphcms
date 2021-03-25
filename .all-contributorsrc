@@ -18,6 +18,17 @@
         "maintenance",
         "projectManagement"
       ]
+    },
+    {
+      "login": "jpedroschmitz",
+      "name": "João Pedro Schmitz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26466516?v=4",
+      "profile": "http://joaopedro.dev",
+      "contributions": [
+        "code",
+        "example",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
