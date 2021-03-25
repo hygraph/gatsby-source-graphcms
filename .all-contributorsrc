@@ -4,22 +4,7 @@
   ],
   "imageSize": 100,
   "commit": false,
-  "contributors": [
-    {
-      "login": "ynnoj",
-      "name": "Jonathan Steele",
-      "avatar_url": "https://avatars.githubusercontent.com/u/3578709?v=4",
-      "profile": "http://jonathan.steele.pro",
-      "contributions": [
-        "code",
-        "blog",
-        "example",
-        "ideas",
-        "maintenance",
-        "projectManagement"
-      ]
-    }
-  ],
+  "contributors": [],
   "contributorsPerLine": 7,
   "projectName": "gatsby-source-graphcms",
   "projectOwner": "GraphCMS",
