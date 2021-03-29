@@ -1,9 +1,25 @@
 <h2 align="center">gatsby-source-graphcms</h2>
 <p align="center">The official Gatsby source plugin for GraphCMS projects</p>
 
-<p align="center"><a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<img src="https://img.shields.io/badge/all_contributors-1-purple.svg" alt="Contributors" />
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p align="center">
+  <a href="https://npmjs.org/package/gatsby-source-graphcms">
+    <img src="https://img.shields.io/npm/v/gatsby-source-graphcms.svg" alt="Version" />
+  </a>
+  <a href="https://npmjs.org/package/gatsby-source-graphcms">
+    <img src="https://img.shields.io/npm/dw/gatsby-source-graphcms.svg" alt="Downloads/week" />
+  </a>
+  <a href="https://github.com/GraphCMS/gatsby-source-graphcms/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/gatsby-source-graphcms.svg" alt="License" />
+  </a>
+  <a href="https://github.com/GraphCMS/gatsby-source-graphcms/stargazers">
+    <img src="https://img.shields.io/github/stars/GraphCMS/gatsby-source-graphcms" alt="Forks on GitHub" />
+  </a>
+  <img src="https://badgen.net/bundlephobia/minzip/gatsby-source-graphcms" alt="minified + gzip size" />
+  <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+  <img src="https://img.shields.io/badge/all_contributors-2-purple.svg" alt="Contributors" />
+  <!-- ALL-CONTRIBUTORS-BADGE:END -->
+  <br>
+    <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <a href="https://slack.graphcms.com">Join us on Slack</a>  • <a href="https://app.graphcms.com">Login to GraphCMS</a> • <a href="https://twitter.com/GraphCMS">@GraphCMS</a>
 </p>
 
 ## Installation
@@ -329,6 +345,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://jonathan.steele.pro"><img src="https://avatars.githubusercontent.com/u/3578709?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Steele</b></sub></a><br /><a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=ynnoj" title="Code">💻</a> <a href="#blog-ynnoj" title="Blogposts">📝</a> <a href="#example-ynnoj" title="Examples">💡</a> <a href="#ideas-ynnoj" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-ynnoj" title="Maintenance">🚧</a> <a href="#projectManagement-ynnoj" title="Project Management">📆</a></td>
+    <td align="center"><a href="http://joaopedro.dev"><img src="https://avatars.githubusercontent.com/u/26466516?v=4?s=100" width="100px;" alt=""/><br /><sub><b>João Pedro Schmitz</b></sub></a><br /><a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=jpedroschmitz" title="Code">💻</a> <a href="#example-jpedroschmitz" title="Examples">💡</a> <a href="#ideas-jpedroschmitz" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
