@@ -2,7 +2,8 @@ require('dotenv').config()
 
 module.exports = {
   plugins: [
-    `gatsby-plugin-image`,
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
     'gatsby-plugin-mdx',
     'gatsby-plugin-postcss',
     {
