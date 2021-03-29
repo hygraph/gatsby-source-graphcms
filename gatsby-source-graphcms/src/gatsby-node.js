@@ -404,9 +404,8 @@ export function createResolvers(
 
   createResolvers({
     [typeName]: {
-      gatsbyImageData: getGatsbyImageResolver(
-        makeResolveGatsbyImageData(cache),
-        {
+      gatsbyImageData: {
+        ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), {
           quality: {
             type: 'Int',
             description:
@@ -421,10 +420,10 @@ DOMINANT_COLOR: the dominant color of the image used as a solid background color
 TRACED_SVG: generates a simplified, flat SVG version of the source image, which it displays as a placeholder.
 NONE: No placeholder. Use the backgroundColor option to set a static background if you wish.
 `,
-            type: 'JSON',
           },
-        }
-      ),
+        }),
+        type: 'JSON',
+      },
     },
   })
 }
