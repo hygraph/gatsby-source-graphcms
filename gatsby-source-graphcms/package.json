@@ -18,7 +18,7 @@
   "dependencies": {
     "@babel/runtime": "7.12.5",
     "gatsby-core-utils": "2.1.0",
-    "gatsby-graphql-source-toolkit": "0.6.3",
+    "gatsby-graphql-source-toolkit": "1.0.0",
     "gatsby-source-filesystem": "2.11.1",
     "he": "1.2.0",
     "node-fetch": "2.6.1"
