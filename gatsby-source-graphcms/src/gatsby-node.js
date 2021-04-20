@@ -23,6 +23,7 @@ import { PLUGIN_NAME } from './util/constants'
 import { getImageBase64, getBase64DataURI } from './util/getImageBase64'
 import { getImageDominantColor } from './util/getDominantColor'
 import { getTracedSVG } from './util/getTracedSVG'
+import { reportPanic } from './util/reportPanic'
 
 export function pluginOptionsSchema({ Joi }) {
   return Joi.object({
@@ -88,9 +89,11 @@ const createSourcingConfig = async (
     })
       .then((response) => {
         if (!response.ok) {
-          return reporter.panic(
-            `[${PLUGIN_NAME}]: Problem building GraphCMS nodes`,
-            new Error(response.statusText)
+          return reportPanic(
+            1,
+            'Problem building GraphCMS nodes',
+            response.statusText,
+            reporter
           )
         }
 
@@ -98,18 +101,22 @@ const createSourcingConfig = async (
       })
       .then((response) => {
         if (response.errors) {
-          return reporter.panic(
-            `[${PLUGIN_NAME}]: Problem building GraphCMS nodes`,
-            new Error(response.errors)
+          return reportPanic(
+            2,
+            'Problem building GraphCMS nodes',
+            JSON.stringify(response.errors, null, 2),
+            reporter
           )
         }
 
         return response
       })
       .catch((error) => {
-        return reporter.panic(
-          `[${PLUGIN_NAME}]: Problem building GraphCMS nodes`,
-          new Error(error)
+        return reportPanic(
+          3,
+          'Problem building GraphCMS nodes',
+          JSON.stringify(error, null, 2),
+          reporter
         )
       })
   }
