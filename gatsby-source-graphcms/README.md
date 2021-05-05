@@ -353,3 +353,19 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## FAQs
+
+<details>
+  <summary>"endpoint" is required</summary>
+
+  If you are using environment variables, make sure to include `require("dotenv").config();` inside your `gatsby-config.js`.
+  
+  If it's already included, make sure you have your ENV variable added to `.env`, or `.env.local` without spaces.
+</details>
+
+<details>
+  <summary>"message": "not allowed"</summary>
+
+  This error occurs most likely if your token doesn't have access to the `PUBLISHED` content stage. Configure your token to also access `PUBLISHED`, or specify `stages: ["DRAFT"]` to the options inside `gatsby-config.js`.
+</details>
