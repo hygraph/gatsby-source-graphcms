@@ -69,12 +69,25 @@ export function pluginOptionsSchema({ Joi }) {
         `The string by which every generated type name is prefixed with. For example, a type of Post in GraphCMS would become GraphCMS_Post by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts`
       )
       .default(`GraphCMS_`),
+    queryConcurrency: Joi.number()
+      .integer()
+      .min(1)
+      .default(10)
+      .description(`The number of promises to run at one time.`),
   })
 }
 
 const createSourcingConfig = async (
   gatsbyApi,
-  { endpoint, fragmentsPath, locales, stages, token, typePrefix }
+  {
+    endpoint,
+    fragmentsPath,
+    locales,
+    stages,
+    token,
+    typePrefix,
+    queryConcurrency,
+  }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     const { reporter } = gatsbyApi
@@ -199,7 +212,9 @@ const createSourcingConfig = async (
   return {
     gatsbyApi,
     schema,
-    execute: wrapQueryExecutorWithQueue(execute, { concurrency: 10 }),
+    execute: wrapQueryExecutorWithQueue(execute, {
+      concurrency: queryConcurrency,
+    }),
     gatsbyTypePrefix: typePrefix,
     gatsbyNodeDefs: buildNodeDefinitions({ gatsbyNodeTypes, documents }),
   }

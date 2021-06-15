@@ -73,12 +73,13 @@ module.exports = {
 | --------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `endpoint`            | String (**required**)                    | The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).                                                                                                                                                                           |
 | `token`               | String                                   | If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
-| `typePrefix`          | String _(Default: `GraphCMS_`)_         | The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                                                      |
+| `typePrefix`          | String _(Default: `GraphCMS_`)\_         | The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                                                      |
 | `downloadLocalImages` | Boolean _(Default: `false`)_             | Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).                                                                                                                                                                                                                        |
 | `buildMarkdownNodes`  | Boolean _(Default: `false`)_             | Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).                                                                                                                                                                   |
 | `fragmentsPath`       | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.                                                                                   |
 | `locales`             | String _(Default: `['en']`)_             | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).                                                                                                              |
 | `stages`              | String _(Default: `['PUBLISHED']`)_      | An array of Content Stages from your GraphCMS project. [Learn more](#querying-from-content-stages). You can read more about using Content Stages [here](https://graphcms.com/guides/working-with-content-stages).                                                                                                                      |
+| `queryConcurrency`    | Integer _(Default: 10)_                  | The number of promises ran at once when executing queries.                                                                                                                                                                                                                                                                             |
 
 ## Features
 
@@ -190,7 +191,7 @@ Use the `gatsbyImageData` resolver on your `GraphCMS_Asset` nodes.
 | `quality`              | Int                                                    | The default image quality generated. This is overridden by any format-specific options.                                                                                                                                                                                                                                                                                                                       |
 | `sizes`                | String                                                 | [The `<img> sizes` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attributes), passed to the img tag. This describes the display size of the image, and does not affect generated images. You are only likely to need to change this if your are using full width images that do not span the full width of the screen.                                                             |
 | `width`                | Int                                                    | Change the size of the image.                                                                                                                                                                                                                                                                                                                                                                                 |
-| `placeholder`          | `NONE`/`BLURRED`/`DOMINANT_COLOR`/`TRACED_SVG` | Choose the style of temporary image shown while the full image loads.                                                                                                                                                                                                                                                                                                                                         |
+| `placeholder`          | `NONE`/`BLURRED`/`DOMINANT_COLOR`/`TRACED_SVG`         | Choose the style of temporary image shown while the full image loads.                                                                                                                                                                                                                                                                                                                                         |
 
 **NOTE**: `gatsby-plugin-sharp` needs to be listed as a dependency on your project if you plan to use placeholder `TRACED_SVG` or `DOMINANT_COLOR`.
 
@@ -359,13 +360,15 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <details>
   <summary>"endpoint" is required</summary>
 
-  If you are using environment variables, make sure to include `require("dotenv").config();` inside your `gatsby-config.js`.
-  
-  If it's already included, make sure you have your ENV variable added to `.env`, or `.env.local` without spaces.
+If you are using environment variables, make sure to include `require("dotenv").config();` inside your `gatsby-config.js`.
+
+If it's already included, make sure you have your ENV variable added to `.env`, or `.env.local` without spaces.
+
 </details>
 
 <details>
   <summary>"message": "not allowed"</summary>
 
-  This error occurs most likely if your token doesn't have access to the `PUBLISHED` content stage. Configure your token to also access `PUBLISHED`, or specify `stages: ["DRAFT"]` to the options inside `gatsby-config.js`.
+This error occurs most likely if your token doesn't have access to the `PUBLISHED` content stage. Configure your token to also access `PUBLISHED`, or specify `stages: ["DRAFT"]` to the options inside `gatsby-config.js`.
+
 </details>
