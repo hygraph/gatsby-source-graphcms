@@ -17,9 +17,9 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "7.12.5",
-    "gatsby-core-utils": "2.4.0",
+    "gatsby-core-utils": "alpha-9689ff",
     "gatsby-graphql-source-toolkit": "0.6.3",
-    "gatsby-source-filesystem": "2.11.1",
+    "gatsby-source-filesystem": "alpha-9689ff",
     "he": "1.2.0",
     "node-fetch": "2.6.1"
   },
@@ -30,6 +30,7 @@
     "@babel/preset-env": "7.12.11"
   },
   "peerDependencies": {
-    "gatsby-plugin-image": "1.4.0"
+    "gatsby": "^4.0.0",
+    "gatsby-plugin-image": "^1.0.0"
   }
 }
