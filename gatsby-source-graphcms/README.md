@@ -22,10 +22,18 @@
     <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <a href="https://slack.graphcms.com">Join us on Slack</a>  • <a href="https://app.graphcms.com">Login to GraphCMS</a> • <a href="https://twitter.com/GraphCMS">@GraphCMS</a>
 </p>
 
+<br />
+
+> **This documentation refers to the next version of `gatsby-source-graphcms`, which adds support to Gatsby v4. There are no breaking changes in the plugin, but make sure your website supports Gatsby v4.** <br /> > **If you are using Gatsby 3.x or 2.x, [click here](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next).**
+
 ## Installation
 
+> Note: Gatsby v4 requires Node.js >= 14.15.
+
+To install the next version of this plugin, make sure to use the `@next` tag when installing:
+
 ```shell
-yarn add gatsby-source-graphcms gatsby-plugin-image
+yarn add gatsby-source-graphcms@next gatsby-plugin-image@next
 ```
 
 ## Configuration

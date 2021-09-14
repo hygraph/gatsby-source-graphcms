@@ -210,8 +210,16 @@ const createSourcingConfig = async (
   }
 }
 
-export async function sourceNodes(gatsbyApi, pluginOptions) {
-  const { webhookBody } = gatsbyApi
+export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
+  const {
+    webhookBody,
+    actions: { createTypes },
+  } = gatsbyApi
+  const {
+    buildMarkdownNodes = false,
+    downloadLocalImages = false,
+    typePrefix = 'GraphCMS_',
+  } = pluginOptions
 
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
 
@@ -250,6 +258,23 @@ export async function sourceNodes(gatsbyApi, pluginOptions) {
   } else {
     await sourceAllNodes(config)
   }
+
+  if (downloadLocalImages)
+    createTypes(`
+      type ${typePrefix}Asset {
+        localFile: File @link
+      }
+    `)
+
+  if (buildMarkdownNodes)
+    createTypes(`
+      type ${typePrefix}MarkdownNode implements Node {
+        id: ID!
+      }
+      type ${typePrefix}RichText {
+        markdownNode: ${typePrefix}MarkdownNode @link
+      }
+    `)
 }
 
 export async function onCreateNode(
@@ -314,32 +339,6 @@ export async function onCreateNode(
       })
     }
   }
-}
-
-export function createSchemaCustomization(
-  { actions: { createTypes } },
-  {
-    buildMarkdownNodes = false,
-    downloadLocalImages = false,
-    typePrefix = 'GraphCMS_',
-  }
-) {
-  if (downloadLocalImages)
-    createTypes(`
-      type ${typePrefix}Asset {
-        localFile: File @link
-      }
-    `)
-
-  if (buildMarkdownNodes)
-    createTypes(`
-      type ${typePrefix}MarkdownNode implements Node {
-        id: ID!
-      }
-      type ${typePrefix}RichText {
-        markdownNode: ${typePrefix}MarkdownNode @link
-      }
-    `)
 }
 
 const generateImageSource = (
@@ -414,30 +413,30 @@ export function createResolvers(
   { createResolvers, cache },
   { typePrefix = 'GraphCMS_' }
 ) {
-  const typeName = `${typePrefix}Asset`
-
-  createResolvers({
-    [typeName]: {
-      gatsbyImageData: {
-        ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), {
-          quality: {
-            type: 'Int',
-            description:
-              'The default image quality generated. This is overridden by any format-specific options.',
-          },
-          placeholder: {
-            type:
-              'enum GraphCMSImagePlaceholder { NONE, BLURRED, DOMINANT_COLOR, TRACED_SVG }',
-            description: `The style of temporary image shown while the full image loads.
-BLURRED: generates a very low-resolution version of the image and displays it as a blurred background (default).
-DOMINANT_COLOR: the dominant color of the image used as a solid background color.
-TRACED_SVG: generates a simplified, flat SVG version of the source image, which it displays as a placeholder.
-NONE: No placeholder. Use the backgroundColor option to set a static background if you wish.
-`,
-          },
-        }),
-        type: 'JSON',
-      },
+  const args = {
+    quality: {
+      type: `Int`,
+      description: `The default image quality generated. This is overridden by any format-specific options.`,
     },
-  })
+    placeholder: {
+      type: `enum GraphCMSImagePlaceholder { NONE, BLURRED, DOMINANT_COLOR, TRACED_SVG }`,
+      description: `The style of temporary image shown while the full image loads.
+        BLURRED: generates a very low-resolution version of the image and displays it as a blurred background (default).
+        DOMINANT_COLOR: the dominant color of the image used as a solid background color.
+        TRACED_SVG: generates a simplified, flat SVG version of the source image, which it displays as a placeholder.
+        NONE: No placeholder. Use the backgroundColor option to set a static background if you wish.
+        `,
+    },
+  }
+
+  const resolvers = {
+    [`${typePrefix}Asset`]: {
+      gatsbyImageData: getGatsbyImageResolver(
+        makeResolveGatsbyImageData(cache),
+        args
+      ),
+    },
+  }
+
+  createResolvers(resolvers)
 }
