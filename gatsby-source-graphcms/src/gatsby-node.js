@@ -293,6 +293,7 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
       type ${typePrefix}RichText {
         markdownNode: ${typePrefix}MarkdownNode @link
       }
+<<<<<<< HEAD
       ${richTextTypes.map(
         (typeName) => `
           type ${typePrefix}${typeName}RichText implements Node {
@@ -300,6 +301,8 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
           }
       `
       )}
+=======
+>>>>>>> c28aac7 (feat: add support for Gatsby v4 (#206))
     `)
 }
 
