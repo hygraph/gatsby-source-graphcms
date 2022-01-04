@@ -362,7 +362,7 @@ function makeResolveGatsbyImageData(cache) {
     if (
       !['image/png', 'image/jpg', 'image/jpeg', 'image/tiff'].includes(mimeType)
     ) {
-      return {}
+      return null
     }
 
     const imageDataArgs = {
