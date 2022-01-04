@@ -431,10 +431,10 @@ export function createResolvers(
 
   const resolvers = {
     [`${typePrefix}Asset`]: {
-      gatsbyImageData: getGatsbyImageResolver(
-        makeResolveGatsbyImageData(cache),
-        args
-      ),
+      gatsbyImageData: {
+        ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), args),
+        type: 'JSON',
+      },
     },
   }
 
