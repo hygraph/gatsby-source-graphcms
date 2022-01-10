@@ -6,6 +6,6 @@ fragment User on User {
   publishedAt
   name
   picture
-  kind
   isActive
+  kind
 }

@@ -8,6 +8,36 @@ fragment Product on Product {
   name
   slug
   description {
+    ... on ProductDescriptionRichText {
+      raw
+      json
+      html
+      markdown
+      text
+      references {
+        ... on Asset {
+          remoteTypeName: __typename
+          remoteId: id
+          locale
+          stage
+        }
+        ... on Category {
+          remoteTypeName: __typename
+          remoteId: id
+          locale
+          stage
+        }
+        ... on Product {
+          remoteTypeName: __typename
+          remoteId: id
+          locale
+          stage
+        }
+      }
+    }
+  }
+  price
+  test {
     ... on RichText {
       raw
       html
@@ -15,12 +45,33 @@ fragment Product on Product {
       text
     }
   }
-  price
+  createdBy {
+    ... on User {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
+    }
+  }
+  updatedBy {
+    ... on User {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
+    }
+  }
+  publishedBy {
+    ... on User {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
+    }
+  }
   images {
     ... on Asset {
       remoteTypeName: __typename
       remoteId: id
       locale
+      stage
     }
   }
   categories {
@@ -28,6 +79,14 @@ fragment Product on Product {
       remoteTypeName: __typename
       remoteId: id
       locale
+      stage
+    }
+  }
+  scheduledIn {
+    ... on ScheduledOperation {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
     }
   }
 }

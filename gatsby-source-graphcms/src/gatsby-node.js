@@ -74,6 +74,10 @@ export function pluginOptionsSchema({ Joi }) {
       .min(1)
       .default(10)
       .description(`The number of promises to run at one time.`),
+    richTextEmbedTypeNames: Joi.array()
+      .description('An array of Rich Text fields that have embeds enabled')
+      .items(Joi.string())
+      .default([]),
   })
 }
 
@@ -219,6 +223,7 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
     typePrefix = 'GraphCMS_',
+    richTextEmbedTypeNames = [],
   } = pluginOptions
 
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
@@ -274,6 +279,13 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
       type ${typePrefix}RichText {
         markdownNode: ${typePrefix}MarkdownNode @link
       }
+      ${richTextEmbedTypeNames.map(
+        (typeName) => `
+          type ${typePrefix}${typeName}RichText implements Node {
+            markdownNode: ${typePrefix}MarkdownNode @link
+          }
+      `
+      )}
     `)
 }
 
@@ -312,7 +324,9 @@ export async function onCreateNode(
       .map(([key, value]) => ({ key, value }))
       .filter(
         ({ value }) =>
-          value && value.remoteTypeName && value.remoteTypeName === 'RichText'
+          value &&
+          value.remoteTypeName &&
+          value.remoteTypeName.endsWith('RichText')
       )
 
     if (fields.length) {

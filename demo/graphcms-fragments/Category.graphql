@@ -6,11 +6,40 @@ fragment Category on Category {
   updatedAt(variation: COMBINED)
   publishedAt(variation: COMBINED)
   name
+  createdBy {
+    ... on User {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
+    }
+  }
+  updatedBy {
+    ... on User {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
+    }
+  }
+  publishedBy {
+    ... on User {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
+    }
+  }
   products {
     ... on Product {
       remoteTypeName: __typename
       remoteId: id
       locale
+      stage
+    }
+  }
+  scheduledIn {
+    ... on ScheduledOperation {
+      remoteTypeName: __typename
+      remoteId: id
+      stage
     }
   }
 }

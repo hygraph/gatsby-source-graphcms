@@ -15,6 +15,7 @@ module.exports = {
           'https://api-eu-central-1.graphcms.com/v2/ckclvjtet0f0901z69og3f3gm/master',
         locales: ['en', 'de'],
         stages: ['DRAFT', 'PUBLISHED'],
+        richTextEmbedTypeNames: ['ProductDescription'],
       },
     },
   ],
