@@ -74,10 +74,6 @@ export function pluginOptionsSchema({ Joi }) {
       .min(1)
       .default(10)
       .description(`The number of promises to run at one time.`),
-    richTextEmbedTypeNames: Joi.array()
-      .description('An array of Rich Text fields that have embeds enabled')
-      .items(Joi.string())
-      .default([]),
   })
 }
 
@@ -143,6 +139,12 @@ const createSourcingConfig = async (
   const query = schema.getType('Query')
   const queryFields = query.getFields()
   const possibleTypes = schema.getPossibleTypes(nodeInterface)
+  const typeMap = schema.getTypeMap()
+
+  const richTextTypes = Object.keys(typeMap)
+    .filter((typeName) => typeName.endsWith('RichText'))
+    .map((value) => value.replace('RichText', ''))
+    .filter(Boolean)
 
   const singularRootFieldName = (type) =>
     Object.keys(queryFields).find(
@@ -221,6 +223,7 @@ const createSourcingConfig = async (
     }),
     gatsbyTypePrefix: typePrefix,
     gatsbyNodeDefs: buildNodeDefinitions({ gatsbyNodeTypes, documents }),
+    richTextTypes,
   }
 }
 
@@ -233,10 +236,11 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
     typePrefix = 'GraphCMS_',
-    richTextEmbedTypeNames = [],
   } = pluginOptions
 
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
+
+  const { richTextTypes } = config
 
   await createToolkitSchemaCustomization(config)
 
@@ -289,7 +293,7 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
       type ${typePrefix}RichText {
         markdownNode: ${typePrefix}MarkdownNode @link
       }
-      ${richTextEmbedTypeNames.map(
+      ${richTextTypes.map(
         (typeName) => `
           type ${typePrefix}${typeName}RichText implements Node {
             markdownNode: ${typePrefix}MarkdownNode @link
