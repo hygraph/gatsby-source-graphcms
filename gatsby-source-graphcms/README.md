@@ -359,6 +359,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+If you spot an issue, or bug that you know how to fix, please submit a pull request.
+
+When working locally you'll need to run `yarn compile` and `yarn dev` using Yarn workspaces that will let you test/develop on the `demo` Gatsby app in this project. You may need to `yarn clean` occcasionally too.
+
 ## FAQs
 
 <details>
