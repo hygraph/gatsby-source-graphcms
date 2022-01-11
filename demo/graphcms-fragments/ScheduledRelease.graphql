@@ -1,11 +1,15 @@
-fragment Category on Category {
+fragment ScheduledRelease on ScheduledRelease {
   stage
-  locale
   remoteId: id
-  createdAt(variation: COMBINED)
-  updatedAt(variation: COMBINED)
-  publishedAt(variation: COMBINED)
-  name
+  createdAt
+  updatedAt
+  publishedAt
+  title
+  description
+  errorMessage
+  isActive
+  isImplicit
+  releaseAt
   createdBy {
     ... on User {
       remoteTypeName: __typename
@@ -27,19 +31,12 @@ fragment Category on Category {
       stage
     }
   }
-  products {
-    ... on Product {
-      remoteTypeName: __typename
-      remoteId: id
-      locale
-      stage
-    }
-  }
-  scheduledIn {
+  operations {
     ... on ScheduledOperation {
       remoteTypeName: __typename
       remoteId: id
       stage
     }
   }
+  status
 }

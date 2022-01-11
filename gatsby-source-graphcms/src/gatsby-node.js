@@ -69,7 +69,7 @@ export function pluginOptionsSchema({ Joi }) {
         `The string by which every generated type name is prefixed with. For example, a type of Post in GraphCMS would become GraphCMS_Post by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts`
       )
       .default(`GraphCMS_`),
-    concurrency: Joi.number()
+    queryConcurrency: Joi.number()
       .integer()
       .min(1)
       .default(10)
@@ -79,7 +79,15 @@ export function pluginOptionsSchema({ Joi }) {
 
 const createSourcingConfig = async (
   gatsbyApi,
-  { endpoint, fragmentsPath, locales, stages, token, typePrefix, concurrency }
+  {
+    endpoint,
+    fragmentsPath,
+    locales,
+    stages,
+    token,
+    typePrefix,
+    queryConcurrency,
+  }
 ) => {
   const execute = async ({ operationName, query, variables = {} }) => {
     const { reporter } = gatsbyApi
@@ -131,6 +139,12 @@ const createSourcingConfig = async (
   const query = schema.getType('Query')
   const queryFields = query.getFields()
   const possibleTypes = schema.getPossibleTypes(nodeInterface)
+  const typeMap = schema.getTypeMap()
+
+  const richTextTypes = Object.keys(typeMap)
+    .filter((typeName) => typeName.endsWith('RichText'))
+    .map((value) => value.replace('RichText', ''))
+    .filter(Boolean)
 
   const singularRootFieldName = (type) =>
     Object.keys(queryFields).find(
@@ -204,16 +218,29 @@ const createSourcingConfig = async (
   return {
     gatsbyApi,
     schema,
-    execute: wrapQueryExecutorWithQueue(execute, { concurrency }),
+    execute: wrapQueryExecutorWithQueue(execute, {
+      concurrency: queryConcurrency,
+    }),
     gatsbyTypePrefix: typePrefix,
     gatsbyNodeDefs: buildNodeDefinitions({ gatsbyNodeTypes, documents }),
+    richTextTypes,
   }
 }
 
-export async function sourceNodes(gatsbyApi, pluginOptions) {
-  const { webhookBody } = gatsbyApi
+export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
+  const {
+    webhookBody,
+    actions: { createTypes },
+  } = gatsbyApi
+  const {
+    buildMarkdownNodes = false,
+    downloadLocalImages = false,
+    typePrefix = 'GraphCMS_',
+  } = pluginOptions
 
   const config = await createSourcingConfig(gatsbyApi, pluginOptions)
+
+  const { richTextTypes } = config
 
   await createToolkitSchemaCustomization(config)
 
@@ -250,6 +277,30 @@ export async function sourceNodes(gatsbyApi, pluginOptions) {
   } else {
     await sourceAllNodes(config)
   }
+
+  if (downloadLocalImages)
+    createTypes(`
+      type ${typePrefix}Asset {
+        localFile: File @link
+      }
+    `)
+
+  if (buildMarkdownNodes)
+    createTypes(`
+      type ${typePrefix}MarkdownNode implements Node {
+        id: ID!
+      }
+      type ${typePrefix}RichText {
+        markdownNode: ${typePrefix}MarkdownNode @link
+      }
+      ${richTextTypes.map(
+        (typeName) => `
+          type ${typePrefix}${typeName}RichText implements Node {
+            markdownNode: ${typePrefix}MarkdownNode @link
+          }
+      `
+      )}
+    `)
 }
 
 export async function onCreateNode(
@@ -287,7 +338,9 @@ export async function onCreateNode(
       .map(([key, value]) => ({ key, value }))
       .filter(
         ({ value }) =>
-          value && value.remoteTypeName && value.remoteTypeName === 'RichText'
+          value &&
+          value.remoteTypeName &&
+          value.remoteTypeName.endsWith('RichText')
       )
 
     if (fields.length) {
@@ -314,32 +367,6 @@ export async function onCreateNode(
       })
     }
   }
-}
-
-export function createSchemaCustomization(
-  { actions: { createTypes } },
-  {
-    buildMarkdownNodes = false,
-    downloadLocalImages = false,
-    typePrefix = 'GraphCMS_',
-  }
-) {
-  if (downloadLocalImages)
-    createTypes(`
-      type ${typePrefix}Asset {
-        localFile: File @link
-      }
-    `)
-
-  if (buildMarkdownNodes)
-    createTypes(`
-      type ${typePrefix}MarkdownNode implements Node {
-        id: ID!
-      }
-      type ${typePrefix}RichText {
-        markdownNode: ${typePrefix}MarkdownNode @link
-      }
-    `)
 }
 
 const generateImageSource = (
@@ -414,30 +441,30 @@ export function createResolvers(
   { createResolvers, cache },
   { typePrefix = 'GraphCMS_' }
 ) {
-  const typeName = `${typePrefix}Asset`
+  const args = {
+    quality: {
+      type: `Int`,
+      description: `The default image quality generated. This is overridden by any format-specific options.`,
+    },
+    placeholder: {
+      type: `enum GraphCMSImagePlaceholder { NONE, BLURRED, DOMINANT_COLOR, TRACED_SVG }`,
+      description: `The style of temporary image shown while the full image loads.
+        BLURRED: generates a very low-resolution version of the image and displays it as a blurred background (default).
+        DOMINANT_COLOR: the dominant color of the image used as a solid background color.
+        TRACED_SVG: generates a simplified, flat SVG version of the source image, which it displays as a placeholder.
+        NONE: No placeholder. Use the backgroundColor option to set a static background if you wish.
+        `,
+    },
+  }
 
-  createResolvers({
-    [typeName]: {
+  const resolvers = {
+    [`${typePrefix}Asset`]: {
       gatsbyImageData: {
-        ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), {
-          quality: {
-            type: 'Int',
-            description:
-              'The default image quality generated. This is overridden by any format-specific options.',
-          },
-          placeholder: {
-            type:
-              'enum GraphCMSImagePlaceholder { NONE, BLURRED, DOMINANT_COLOR, TRACED_SVG }',
-            description: `The style of temporary image shown while the full image loads.
-BLURRED: generates a very low-resolution version of the image and displays it as a blurred background (default).
-DOMINANT_COLOR: the dominant color of the image used as a solid background color.
-TRACED_SVG: generates a simplified, flat SVG version of the source image, which it displays as a placeholder.
-NONE: No placeholder. Use the backgroundColor option to set a static background if you wish.
-`,
-          },
-        }),
+        ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), args),
         type: 'JSON',
       },
     },
-  })
+  }
+
+  createResolvers(resolvers)
 }

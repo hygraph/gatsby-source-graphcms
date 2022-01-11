@@ -32,6 +32,8 @@
 yarn add gatsby-source-graphcms gatsby-plugin-image
 ```
 
+> Note: Gatsby v4 requires Node.js >= 14.15.
+
 ## Configuration
 
 > We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables).
@@ -261,6 +263,8 @@ module.exports = {
 
 Enabling this option adds a `markdownNode` nested field to all `RichText` fields on the generated Gatsby schema.
 
+You will need to rebuild your `graphcms-fragments` if you enable embeds on a Rich Text field, or you add/remove additional fields to your GraphCMS schema.
+
 #### Usage with `gatsby-plugin-mdx`
 
 These newly built nodes can be used with [`gatsby-plugin-mdx`](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx) to render markdown from GraphCMS.
@@ -359,6 +363,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+If you spot an issue, or bug that you know how to fix, please submit a pull request.
+
+When working locally you'll need to run `yarn compile` and `yarn dev` using Yarn workspaces that will let you test/develop on the `demo` Gatsby app in this project. You may need to `yarn clean` occcasionally too.
+
 ## FAQs
 
 <details>
@@ -374,5 +382,14 @@ If it's already included, make sure you have your ENV variable added to `.env`, 
   <summary>"message": "not allowed"</summary>
 
 This error occurs most likely if your token doesn't have access to the `PUBLISHED` content stage. Configure your token to also access `PUBLISHED`, or specify `stages: ["DRAFT"]` to the options inside `gatsby-config.js`.
+
+</details>
+
+<details>
+  <summary>Bad request</summary>
+
+You may need to rebuild your fragments folder when making schema changes. If you change the type of a field, or add/remove any from an existing model you have fragments for, the plugin cannot query for this.
+
+Simply delete the `graphcms-fragments` (or whatever you named it), and run `gatsby develop` to regenerate.
 
 </details>

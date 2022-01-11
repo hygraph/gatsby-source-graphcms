@@ -9,8 +9,6 @@
       }
     ]
   ],
-  "plugins": [
-    "@babel/plugin-transform-runtime"
-  ],
+  "plugins": ["@babel/plugin-transform-runtime"],
   "only": ["src/", "test/"]
 }
