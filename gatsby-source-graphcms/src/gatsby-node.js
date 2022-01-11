@@ -17,6 +17,7 @@ import {
 import { getGatsbyImageResolver } from 'gatsby-plugin-image/graphql-utils'
 import { createRemoteFileNode } from 'gatsby-source-filesystem'
 import he from 'he'
+import path from 'path'
 import fetch from 'node-fetch'
 
 import { PLUGIN_NAME } from './util/constants'
@@ -280,8 +281,8 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
 
   if (downloadLocalImages)
     createTypes(`
-      type ${typePrefix}Asset {
-        localFile: File @link
+      type ${typePrefix}Asset implements Node {
+        localFile: File @link(from: "fields.localFile")
       }
     `)
 
@@ -317,6 +318,7 @@ export async function onCreateNode(
     node.mimeType.includes('image/')
   ) {
     try {
+      const ext = path.extname(node.fileName)
       const fileNode = await createRemoteFileNode({
         url: node.url,
         parentNodeId: node.id,
@@ -324,10 +326,12 @@ export async function onCreateNode(
         createNodeId,
         cache,
         getCache,
-        ...(node.fileName && { name: node.fileName }),
+        ...(node.fileName && { name: path.basename(node.fileName, ext), ext }),
       })
 
-      if (fileNode) node.localFile = fileNode.id
+      if (fileNode) {
+        createNodeField({ node, name: "localFile", value: fileNode.id })
+      }
     } catch (e) {
       console.error(`[${PLUGIN_NAME}]`, e)
     }
