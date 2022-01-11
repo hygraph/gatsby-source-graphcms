@@ -24,13 +24,11 @@
 
 ## Installation
 
-> Note: Gatsby v4 requires Node.js >= 14.15.
-
-To install the next version of this plugin, make sure to use the `@next` tag when installing:
-
 ```shell
-yarn add gatsby-source-graphcms@next gatsby-plugin-image@next
+yarn add gatsby-source-graphcms gatsby-plugin-image
 ```
+
+> Note: Gatsby v4 requires Node.js >= 14.15.
 
 ## Configuration
 
