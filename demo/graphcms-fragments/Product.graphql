@@ -37,29 +37,6 @@ fragment Product on Product {
     }
   }
   price
-  test {
-    ... on ProductTestRichText {
-      raw
-      json
-      html
-      markdown
-      text
-      references {
-        ... on Asset {
-          remoteTypeName: __typename
-          remoteId: id
-          locale
-          stage
-        }
-        ... on Category {
-          remoteTypeName: __typename
-          remoteId: id
-          locale
-          stage
-        }
-      }
-    }
-  }
   createdBy {
     ... on User {
       remoteTypeName: __typename
