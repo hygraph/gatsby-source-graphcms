@@ -22,10 +22,6 @@
     <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <a href="https://slack.graphcms.com">Join us on Slack</a>  • <a href="https://app.graphcms.com">Login to GraphCMS</a> • <a href="https://twitter.com/GraphCMS">@GraphCMS</a>
 </p>
 
-<br />
-
-> **This documentation refers to the stable version of `gatsby-source-graphcms`, for Gatsby v3.x or 2.x.** <br /> > **If you are using Gatsby v4, [click here](https://github.com/GraphCMS/gatsby-source-graphcms/tree/next)**.
-
 ## Installation
 
 ```shell
