@@ -281,7 +281,7 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
   if (downloadLocalImages)
     createTypes(`
       type ${typePrefix}Asset {
-        localFile: File @link
+        localFile: File @link(from: "fields.localFile")
       }
     `)
 
@@ -304,7 +304,13 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
 }
 
 export async function onCreateNode(
-  { node, actions: { createNode }, createNodeId, getCache, cache },
+  {
+    node,
+    actions: { createNode, createNodeField },
+    createNodeId,
+    getCache,
+    cache,
+  },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
@@ -314,7 +320,9 @@ export async function onCreateNode(
   if (
     downloadLocalImages &&
     node.remoteTypeName === 'Asset' &&
-    node.mimeType.includes('image/')
+    ['image/png', 'image/jpg', 'image/jpeg', 'image/tiff'].includes(
+      node.mimeType
+    )
   ) {
     try {
       const fileNode = await createRemoteFileNode({
@@ -327,7 +335,9 @@ export async function onCreateNode(
         ...(node.fileName && { name: node.fileName }),
       })
 
-      if (fileNode) node.localFile = fileNode.id
+      if (fileNode) {
+        createNodeField({ node, name: 'localFile', value: fileNode.id })
+      }
     } catch (e) {
       console.error(`[${PLUGIN_NAME}]`, e)
     }
@@ -439,7 +449,7 @@ function makeResolveGatsbyImageData(cache) {
 
 export function createResolvers(
   { createResolvers, cache },
-  { typePrefix = 'GraphCMS_' }
+  { typePrefix = 'GraphCMS_', downloadLocalImages = false }
 ) {
   const args = {
     quality: {
@@ -464,6 +474,14 @@ export function createResolvers(
         type: 'JSON',
       },
     },
+    ...(downloadLocalImages && {
+      File: {
+        gatsbyImageData: {
+          ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), args),
+          type: 'JSON',
+        },
+      },
+    }),
   }
 
   createResolvers(resolvers)
