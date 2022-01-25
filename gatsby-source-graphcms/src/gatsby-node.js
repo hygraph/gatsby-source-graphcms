@@ -281,7 +281,7 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
   if (downloadLocalImages)
     createTypes(`
       type ${typePrefix}Asset {
-        localFile: File @link
+        localFile: File @link(from: "fields.localFile")
       }
     `)
 
@@ -320,7 +320,9 @@ export async function onCreateNode(
   if (
     downloadLocalImages &&
     node.remoteTypeName === 'Asset' &&
-    node.mimeType.includes('image/')
+    ['image/png', 'image/jpg', 'image/jpeg', 'image/tiff'].includes(
+      node.mimeType
+    )
   ) {
     try {
       const fileNode = await createRemoteFileNode({
@@ -447,7 +449,7 @@ function makeResolveGatsbyImageData(cache) {
 
 export function createResolvers(
   { createResolvers, cache },
-  { typePrefix = 'GraphCMS_' }
+  { typePrefix = 'GraphCMS_', downloadLocalImages = false }
 ) {
   const args = {
     quality: {
@@ -472,6 +474,14 @@ export function createResolvers(
         type: 'JSON',
       },
     },
+    ...(downloadLocalImages && {
+      File: {
+        gatsbyImageData: {
+          ...getGatsbyImageResolver(makeResolveGatsbyImageData(cache), args),
+          type: 'JSON',
+        },
+      },
+    }),
   }
 
   createResolvers(resolvers)
