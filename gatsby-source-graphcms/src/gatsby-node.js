@@ -304,7 +304,13 @@ export async function createSchemaCustomization(gatsbyApi, pluginOptions) {
 }
 
 export async function onCreateNode(
-  { node, actions: { createNode }, createNodeId, getCache, cache },
+  {
+    node,
+    actions: { createNode, createNodeField },
+    createNodeId,
+    getCache,
+    cache,
+  },
   {
     buildMarkdownNodes = false,
     downloadLocalImages = false,
@@ -327,7 +333,9 @@ export async function onCreateNode(
         ...(node.fileName && { name: node.fileName }),
       })
 
-      if (fileNode) node.localFile = fileNode.id
+      if (fileNode) {
+        createNodeField({ node, name: 'localFile', value: fileNode.id })
+      }
     } catch (e) {
       console.error(`[${PLUGIN_NAME}]`, e)
     }
