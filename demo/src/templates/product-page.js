@@ -8,6 +8,7 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
 
   return (
     <>
+      <h1 className="my-4 text-gray-900 text-3xl leading-5 font-medium">Product with GraphCMS CDN images</h1>
       <div className="bg-white flex flex-1 flex-col md:flex-row p-8 rounded-lg shadow">
         <div className="flex flex-1 flex-col">
           <h2 className="my-4 text-gray-900 text-3xl leading-5 font-medium">
@@ -19,9 +20,9 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
           {product.description && (
             <React.Fragment>
               <hr className="my-4" />
-              {/*<MDXRenderer>
+              {product.description.markdownNode && <MDXRenderer>
                 {product.description.markdownNode.childMdx.body}
-              </MDXRenderer>*/}
+              </MDXRenderer>}
             </React.Fragment>
           )}
         </div>
@@ -31,8 +32,7 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
           </div>
         )}
       </div>
-      <p>this is the local image (not served via graphcms cdn)</p>
-      <p>{JSON.stringify(mainImage)}</p>
+      <h1 className="my-4 text-gray-900 text-3xl leading-5 font-medium">Product with locally served images</h1>
       <div className="bg-white flex flex-1 flex-col md:flex-row p-8 rounded-lg shadow">
         <div className="flex flex-1 flex-col">
           <h2 className="my-4 text-gray-900 text-3xl leading-5 font-medium">
@@ -44,9 +44,9 @@ const ProductPage = ({ data: { productImages }, pageContext: { product } }) => {
           {product.description && (
             <React.Fragment>
               <hr className="my-4" />
-              {/*<MDXRenderer>
+              {product.description.markdownNode && <MDXRenderer>
                 {product.description.markdownNode.childMdx.body}
-              </MDXRenderer>*/}
+              </MDXRenderer>}
             </React.Fragment>
           )}
         </div>       
