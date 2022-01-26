@@ -320,7 +320,7 @@ export async function onCreateNode(
   if (
     downloadLocalImages &&
     node.remoteTypeName === 'Asset' &&
-    ['image/png', 'image/jpg', 'image/jpeg', 'image/tiff'].includes(
+    ['image/png', 'image/jpg', 'image/jpeg', 'image/tiff', 'image/webp'].includes(
       node.mimeType
     )
   ) {
@@ -398,7 +398,7 @@ function makeResolveGatsbyImageData(cache) {
     options
   ) {
     if (
-      !['image/png', 'image/jpg', 'image/jpeg', 'image/tiff'].includes(mimeType)
+      !['image/png', 'image/jpg', 'image/jpeg', 'image/tiff', 'image/webp'].includes(mimeType)
     ) {
       return null
     }
