@@ -387,7 +387,7 @@ const generateImageSource = (
   fit = 'clip',
   { quality = 100 }
 ) => {
-  const src = `https://media.graphcms.com/resize=width:${width},height:${height},fit:${fit}/output=quality:${quality}/${baseURL}`
+  const src = `https://media.graphassets.com/resize=width:${width},height:${height},fit:${fit}/output=quality:${quality}/${baseURL}`
 
   return { src, width, height, format }
 }
