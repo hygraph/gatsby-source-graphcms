@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-graphcms",
   "version": "2.0.0",
-  "description": "The official Gatsby source plugin for GraphCMS projects",
+  "description": "The official Gatsby source plugin for Hygraph projects",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir ./ --source-maps"
@@ -10,7 +10,7 @@
     "data",
     "gatsby",
     "gatsby-plugin",
-    "graphcms",
+    "hygraph",
     "graphql",
     "source"
   ],

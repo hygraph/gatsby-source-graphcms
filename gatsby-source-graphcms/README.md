@@ -1,5 +1,5 @@
 <h2 align="center">gatsby-source-graphcms</h2>
-<p align="center">The official Gatsby source plugin for GraphCMS projects</p>
+<p align="center">The official Gatsby source plugin for Hygraph projects</p>
 
 <p align="center">
   <a href="https://npmjs.org/package/gatsby-source-graphcms">
@@ -8,18 +8,18 @@
   <a href="https://npmjs.org/package/gatsby-source-graphcms">
     <img src="https://img.shields.io/npm/dw/gatsby-source-graphcms.svg" alt="Downloads/week" />
   </a>
-  <a href="https://github.com/GraphCMS/gatsby-source-graphcms/blob/main/LICENSE">
+  <a href="https://github.com/hygraph/gatsby-source-graphcms/blob/main/LICENSE">
     <img src="https://img.shields.io/npm/l/gatsby-source-graphcms.svg" alt="License" />
   </a>
-  <a href="https://github.com/GraphCMS/gatsby-source-graphcms/stargazers">
-    <img src="https://img.shields.io/github/stars/GraphCMS/gatsby-source-graphcms" alt="Forks on GitHub" />
+  <a href="https://github.com/hygraph/gatsby-source-graphcms/stargazers">
+    <img src="https://img.shields.io/github/stars/hygraph/gatsby-source-graphcms" alt="Forks on GitHub" />
   </a>
   <img src="https://badgen.net/bundlephobia/minzip/gatsby-source-graphcms" alt="minified + gzip size" />
   <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <img src="https://img.shields.io/badge/all_contributors-1-purple.svg" alt="Contributors" />
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <br>
-    <a href="https://gatsby-source-graphcms.vercel.app">Demo</a> • <a href="https://github.com/GraphCMS/gatsby-starter-graphcms-blog">gatsby-starter-graphcms-blog</a> • <a href="https://slack.graphcms.com">Join us on Slack</a>  • <a href="https://app.graphcms.com">Login to GraphCMS</a> • <a href="https://twitter.com/GraphCMS">@GraphCMS</a>
+    <a href="https://gatsby-source-hygraph.vercel.app">Demo</a> • <a href="https://github.com/hygraph/gatsby-starter-hygraph-blog">gatsby-starter-hygraph-blog</a> • <a href="https://slack.hygraph.com">Join us on Slack</a>  • <a href="https://app.hygraph.com">Login to Hygraph</a> • <a href="https://twitter.com/hygraphcom">@hygraphcom</a>
 </p>
 
 ## Installation
@@ -32,7 +32,7 @@ yarn add gatsby-source-graphcms gatsby-plugin-image
 
 ## Configuration
 
-> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables).
+> We recommend using environment variables with your Hygraph `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.org/docs/environment-variables).
 
 ### Basic
 
@@ -43,7 +43,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
       },
     },
   ],
@@ -52,7 +52,7 @@ module.exports = {
 
 ### Authorization
 
-You can also provide an auth token using the `token` configuration key. This is necessary if your GraphCMS project is **not** publicly available, or you want to scope access to a specific content stage (i.e. draft content).
+You can also provide an auth token using the `token` configuration key. This is necessary if your Hygraph project is **not** publicly available, or you want to scope access to a specific content stage (i.e. draft content).
 
 ```js
 // gatsby-config.js
@@ -61,8 +61,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
-        token: process.env.GRAPHCMS_TOKEN,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
+        token: process.env.HYGRAPH_TOKEN,
       },
     },
   ],
@@ -71,30 +71,41 @@ module.exports = {
 
 ### Options
 
-| Key                   | Type                                     | Description                                                                                                                                                                                                                                                                                                                            |
-| --------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `endpoint`            | String (**required**)                    | The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis).                                                                                                                                                                           |
-| `token`               | String                                   | If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis). |
-| `typePrefix`          | String _(Default: `GraphCMS_`)\_         | The string by which every generated type name is prefixed with. For example, a type of `Post` in GraphCMS would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                                                      |
-| `downloadLocalImages` | Boolean _(Default: `false`)_             | Download and cache GraphCMS image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).                                                                                                                                                                                                                        |
-| `buildMarkdownNodes`  | Boolean _(Default: `false`)_             | Build markdown nodes for all [`RichText`](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema. [Learn more](#using-markdown-nodes).                                                                                                                                                                   |
-| `fragmentsPath`       | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.                                                                                   |
-| `locales`             | String _(Default: `['en']`)_             | An array of locale key strings from your GraphCMS project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).                                                                                                              |
-| `stages`              | String _(Default: `['PUBLISHED']`)_      | An array of Content Stages from your GraphCMS project. [Learn more](#querying-from-content-stages). You can read more about using Content Stages [here](https://graphcms.com/guides/working-with-content-stages).                                                                                                                      |
-| `queryConcurrency`    | Integer _(Default: 10)_                  | The number of promises ran at once when executing queries.                                                                                                                                                                                                                                                                             |
+| Key                   | Type                                     | Description                                                                                                                                                                                                                                                                                                                         |
+| --------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpoint`            | String (**required**)                    | The endpoint URL for the Hygraph project. This can be found in the [project settings UI](https://hygraph.com/docs/guides/concepts/apis#working-with-apis).                                                                                                                                                                          |
+| `token`               | String                                   | If your Hygraph project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://hygraph.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://hygraph.com/docs/guides/concepts/apis#working-with-apis). |
+| `typePrefix`          | String _(Default: `GraphCMS_`)\_         | The string by which every generated type name is prefixed with. For example, a type of `Post` in Hygraph would become `GraphCMS_Post` by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts.                                                                    |
+| `downloadLocalImages` | Boolean _(Default: `false`)_             | Download and cache Hygraph image assets in your Gatsby project. [Learn more](#downloading-local-image-assets).                                                                                                                                                                                                                      |
+| `buildMarkdownNodes`  | Boolean _(Default: `false`)_             | Build markdown nodes for all [`RichText`](https://hygraph.com/docs/reference/fields/rich-text) fields in your Hygraph schema. [Learn more](#using-markdown-nodes).                                                                                                                                                                  |
+| `fragmentsPath`       | String _(Default: `graphcms-fragments`)_ | The local project path where generated query fragments are saved. This is relative to your current working directory. If using multiple instances of the source plugin, you **must** provide a value here to prevent type and/or fragment conflicts.                                                                                |
+| `locales`             | String _(Default: `['en']`)_             | An array of locale key strings from your Hygraph project. [Learn more](#querying-localised-nodes). You can read more about working with localisation in Hygraph [here](https://hygraph.com/docs/guides/concepts/i18n).                                                                                                              |
+| `stages`              | String _(Default: `['PUBLISHED']`)_      | An array of Content Stages from your Hygraph project. [Learn more](#querying-from-content-stages). You can read more about using Content Stages [here](https://hygraph.com/guides/working-with-content-stages).                                                                                                                     |
+| `queryConcurrency`    | Integer _(Default: 10)_                  | The number of promises ran at once when executing queries.                                                                                                                                                                                                                                                                          |
 
 ## Features
 
-- [Querying localised nodes](#querying-localised-nodes)
-- [Querying from content stages](#querying-from-content-stages)
-- [Usage with `gatsby-plugin-image`](#usage-with-gatsby-plugin-image)
-- [Downloading local image assets](#downloading-local-image-assets)
-- [Using markdown nodes](#using-markdown-nodes)
-- [Working with query fragments](#working-with-query-fragments)
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [Basic](#basic)
+  - [Authorization](#authorization)
+  - [Options](#options)
+- [Features](#features)
+  - [Querying localised nodes](#querying-localised-nodes)
+  - [Querying from content stages](#querying-from-content-stages)
+  - [Usage with `gatsby-plugin-image`](#usage-with-gatsby-plugin-image)
+    - [`gatsbyImageData` resolver arguments](#gatsbyimagedata-resolver-arguments)
+  - [Downloading local image assets](#downloading-local-image-assets)
+  - [Using markdown nodes](#using-markdown-nodes)
+    - [Usage with `gatsby-plugin-mdx`](#usage-with-gatsby-plugin-mdx)
+  - [Working with query fragments](#working-with-query-fragments)
+    - [Modifying query fragments](#modifying-query-fragments)
+- [Contributors](#contributors)
+- [FAQs](#faqs)
 
 ### Querying localised nodes
 
-If using GraphCMS localisation, this plugin provides support to build nodes for all provided locales.
+If using Hygraph localisation, this plugin provides support to build nodes for all provided locales.
 
 Update your plugin configuration to include the `locales` key.
 
@@ -105,7 +116,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
         locales: ['en', 'de'],
       },
     },
@@ -125,13 +136,13 @@ To query for nodes for a specific locale, use the `filter` query argument.
 }
 ```
 
-Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/main/demo) for an example of a localisation implementation.
+Check out the [demo source](https://github.com/hygraph/gatsby-source-graphcms/tree/main/demo) for an example of a localisation implementation.
 
 ### Querying from content stages
 
 This plugin provides support to build nodes for entries from multiple Content Stages.
 
-The provided Content Stages **must** be accessible according to the configuration of your project's [API access](https://graphcms.com/docs/authorization). If providing a `token`, then that [Permanent Auth Token](https://graphcms.com/docs/authorization#permanent-auth-tokens) must have permission to query data from all provided Content Stages.
+The provided Content Stages **must** be accessible according to the configuration of your project's [API access](https://hygraph.com/docs/authorization). If providing a `token`, then that [Permanent Auth Token](https://hygraph.com/docs/authorization#permanent-auth-tokens) must have permission to query data from all provided Content Stages.
 
 The example below assumes that both the `DRAFT` and `PUBLISHED` stages are publicly accessible.
 
@@ -142,7 +153,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
         stages: ['DRAFT', 'PUBLISHED'],
       },
     },
@@ -166,7 +177,7 @@ To query for nodes from a specific Content Stage, use the `filter` query argumen
 
 > Requires [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) as a project dependency.
 
-This source plugin supports `gatsby-plugin-image` for responsive, high performance GraphCMS images direct from our CDN.
+This source plugin supports `gatsby-plugin-image` for responsive, high performance Hygraph images direct from our CDN.
 
 Use the `gatsbyImageData` resolver on your `GraphCMS_Asset` nodes.
 
@@ -201,7 +212,7 @@ For more information on using `gatsby-plugin-image`, please see the [documentati
 
 ### Downloading local image assets
 
-If you prefer, the source plugin also provides the option to download and cache GraphCMS assets in your Gatsby project.
+If you prefer, the source plugin also provides the option to download and cache Hygraph assets in your Gatsby project.
 
 To enable this, add `downloadLocalImages: true` to your plugin configuration.
 
@@ -212,7 +223,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
         downloadLocalImages: true,
       },
     },
@@ -238,7 +249,7 @@ This adds a `localFile` field to the `GraphCMS_Asset` type which resolves to the
 
 ### Using markdown nodes
 
-This source plugin provides the option to build markdown nodes for all `RichText` fields in your GraphCMS schema, which in turn can be used with [MDX](https://mdxjs.com).
+This source plugin provides the option to build markdown nodes for all `RichText` fields in your Hygraph schema, which in turn can be used with [MDX](https://mdxjs.com).
 
 To enable this, add `buildMarkdownNodes: true` to your plugin configuration.
 
@@ -249,7 +260,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
         buildMarkdownNodes: true,
       },
     },
@@ -259,11 +270,11 @@ module.exports = {
 
 Enabling this option adds a `markdownNode` nested field to all `RichText` fields on the generated Gatsby schema.
 
-You will need to rebuild your `graphcms-fragments` if you enable embeds on a Rich Text field, or you add/remove additional fields to your GraphCMS schema.
+You will need to rebuild your `graphcms-fragments` if you enable embeds on a Rich Text field, or you add/remove additional fields to your Hygraph schema.
 
 #### Usage with `gatsby-plugin-mdx`
 
-These newly built nodes can be used with [`gatsby-plugin-mdx`](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx) to render markdown from GraphCMS.
+These newly built nodes can be used with [`gatsby-plugin-mdx`](https://www.gatsbyjs.org/packages/gatsby-plugin-mdx) to render markdown from Hygraph.
 
 Once installed, you will be able to query for `MDX` fields using a query similar to the one below.
 
@@ -284,7 +295,7 @@ Once installed, you will be able to query for `MDX` fields using a query similar
 }
 ```
 
-Check out the [demo source](https://github.com/GraphCMS/gatsby-source-graphcms/tree/main/demo) for an example of a full MDX implementation.
+Check out the [demo source](https://github.com/hygraph/gatsby-source-graphcms/tree/main/demo) for an example of a full MDX implementation.
 
 ### Working with query fragments
 
@@ -299,7 +310,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-graphcms',
       options: {
-        endpoint: process.env.GRAPHCMS_ENDPOINT,
+        endpoint: process.env.HYGRAPH_ENDPOINT,
         fragmentsPath: 'my-query-fragments',
       },
     },
@@ -309,7 +320,7 @@ module.exports = {
 
 The generated fragments are then read from the project for subsequent builds. It is recommended that they are checked in to version control for your project.
 
-Should you make any changes or additions to your GraphCMS schema, you will need to update the query fragments accrdingly. Alternatively they will be regnerated on a subsequent build after removing the directory from your project.
+Should you make any changes or additions to your Hygraph schema, you will need to update the query fragments accrdingly. Alternatively they will be regnerated on a subsequent build after removing the directory from your project.
 
 #### Modifying query fragments
 
@@ -326,7 +337,7 @@ fragment Industry on Industry {
 }
 ```
 
-Field arguments cannot be read by Gatsby from the GraphCMS schema. Instead we must alias any required usages as aliased fields. In this example, the `featuredCaseStudy` field would then be available in our Gatsby queries:
+Field arguments cannot be read by Gatsby from the Hygraph schema. Instead we must alias any required usages as aliased fields. In this example, the `featuredCaseStudy` field would then be available in our Gatsby queries:
 
 ```graphql
 {
@@ -349,9 +360,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://jonathan.steele.pro"><img src="https://avatars.githubusercontent.com/u/3578709?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Steele</b></sub></a><br /><a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=ynnoj" title="Code">💻</a> <a href="#blog-ynnoj" title="Blogposts">📝</a> <a href="#example-ynnoj" title="Examples">💡</a> <a href="#ideas-ynnoj" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-ynnoj" title="Maintenance">🚧</a> <a href="#projectManagement-ynnoj" title="Project Management">📆</a></td>
-    <td align="center"><a href="http://joaopedro.dev"><img src="https://avatars.githubusercontent.com/u/26466516?v=4?s=100" width="100px;" alt=""/><br /><sub><b>João Pedro Schmitz</b></sub></a><br /><a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=jpedroschmitz" title="Code">💻</a> <a href="#example-jpedroschmitz" title="Examples">💡</a> <a href="#ideas-jpedroschmitz" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://graphql.wtf"><img src="https://avatars.githubusercontent.com/u/950181?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jamie Barton</b></sub></a><br /><a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=notrab" title="Code">💻</a> <a href="https://github.com/GraphCMS/gatsby-source-graphcms/issues?q=author%3Anotrab" title="Bug reports">🐛</a> <a href="#maintenance-notrab" title="Maintenance">🚧</a> <a href="https://github.com/GraphCMS/gatsby-source-graphcms/commits?author=notrab" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://jonathan.steele.pro"><img src="https://avatars.githubusercontent.com/u/3578709?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Steele</b></sub></a><br /><a href="https://github.com/hygraph/gatsby-source-graphcms/commits?author=ynnoj" title="Code">💻</a> <a href="#blog-ynnoj" title="Blogposts">📝</a> <a href="#example-ynnoj" title="Examples">💡</a> <a href="#ideas-ynnoj" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-ynnoj" title="Maintenance">🚧</a> <a href="#projectManagement-ynnoj" title="Project Management">📆</a></td>
+    <td align="center"><a href="http://joaopedro.dev"><img src="https://avatars.githubusercontent.com/u/26466516?v=4?s=100" width="100px;" alt=""/><br /><sub><b>João Pedro Schmitz</b></sub></a><br /><a href="https://github.com/hygraph/gatsby-source-graphcms/commits?author=jpedroschmitz" title="Code">💻</a> <a href="#example-jpedroschmitz" title="Examples">💡</a> <a href="#ideas-jpedroschmitz" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://graphql.wtf"><img src="https://avatars.githubusercontent.com/u/950181?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jamie Barton</b></sub></a><br /><a href="https://github.com/hygraph/gatsby-source-graphcms/commits?author=notrab" title="Code">💻</a> <a href="https://github.com/hygraph/gatsby-source-graphcms/issues?q=author%3Anotrab" title="Bug reports">🐛</a> <a href="#maintenance-notrab" title="Maintenance">🚧</a> <a href="https://github.com/hygraph/gatsby-source-graphcms/commits?author=notrab" title="Documentation">📖</a></td>
   </tr>
 </table>
 
