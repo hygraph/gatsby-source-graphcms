@@ -29,17 +29,17 @@ export function pluginOptionsSchema({ Joi }) {
   return Joi.object({
     buildMarkdownNodes: Joi.boolean()
       .description(
-        `Build markdown nodes for all [RichText](https://graphcms.com/docs/reference/fields/rich-text) fields in your GraphCMS schema`
+        `Build markdown nodes for all [RichText](https://hygraph.com/docs/reference/fields/rich-text) fields in your Hygraph schema`
       )
       .default(false),
     downloadLocalImages: Joi.boolean()
       .description(
-        `Download and cache GraphCMS image assets in your Gatsby project`
+        `Download and cache Hygraph image assets in your Gatsby project`
       )
       .default(false),
     endpoint: Joi.string()
       .description(
-        `The endpoint URL for the GraphCMS project. This can be found in the [project settings UI](https://graphcms.com/docs/guides/concepts/apis#working-with-apis)`
+        `The endpoint URL for the Hygraph project. This can be found in the [project settings UI](https://hygraph.com/docs/guides/concepts/apis#working-with-apis)`
       )
       .required(),
     fragmentsPath: Joi.string()
@@ -49,24 +49,24 @@ export function pluginOptionsSchema({ Joi }) {
       .default(`graphcms-fragments`),
     locales: Joi.array()
       .description(
-        `An array of locale key strings from your GraphCMS project. You can read more about working with localisation in GraphCMS [here](https://graphcms.com/docs/guides/concepts/i18n).`
+        `An array of locale key strings from your Hygraph project. You can read more about working with localisation in Hygraph [here](https://hygraph.com/docs/guides/concepts/i18n).`
       )
       .items(Joi.string())
       .min(1)
       .default(['en']),
     stages: Joi.array()
       .description(
-        `An array of Content Stages from your GraphCMS project. You can read more about using Content Stages [here](https://graphcms.com/guides/working-with-content-stages).`
+        `An array of Content Stages from your Hygraph project. You can read more about using Content Stages [here](https://hygraph.com/guides/working-with-content-stages).`
       )
       .items(Joi.string())
       .min(1)
       .default(['PUBLISHED']),
     token: Joi.string().description(
-      `If your GraphCMS project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://graphcms.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://graphcms.com/docs/guides/concepts/apis#working-with-apis)`
+      `If your Hygraph project is **not** publicly accessible, you will need to provide a [Permanent Auth Token](https://hygraph.com/docs/reference/authorization) to correctly authorize with the API. You can learn more about creating and managing API tokens [here](https://hygraph.com/docs/guides/concepts/apis#working-with-apis)`
     ),
     typePrefix: Joi.string()
       .description(
-        `The string by which every generated type name is prefixed with. For example, a type of Post in GraphCMS would become GraphCMS_Post by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts`
+        `The string by which every generated type name is prefixed with. For example, a type of Post in Hygraph would become GraphCMS_Post by default. If using multiple instances of the source plugin, you **must** provide a value here to prevent type conflicts`
       )
       .default(`GraphCMS_`),
     queryConcurrency: Joi.number()
@@ -104,7 +104,7 @@ const createSourcingConfig = async (
         if (!response.ok) {
           return reportPanic(
             1,
-            'Problem building GraphCMS nodes',
+            'Problem building Hygraph nodes',
             response.statusText,
             reporter
           )
@@ -116,7 +116,7 @@ const createSourcingConfig = async (
         if (response.errors) {
           return reportPanic(
             2,
-            'Problem building GraphCMS nodes',
+            'Problem building Hygraph nodes',
             JSON.stringify(response.errors, null, 2),
             reporter
           )
@@ -127,7 +127,7 @@ const createSourcingConfig = async (
       .catch((error) => {
         return reportPanic(
           3,
-          'Problem building GraphCMS nodes',
+          'Problem building Hygraph nodes',
           JSON.stringify(error, null, 2),
           reporter
         )
@@ -320,9 +320,13 @@ export async function onCreateNode(
   if (
     downloadLocalImages &&
     node.remoteTypeName === 'Asset' &&
-    ['image/png', 'image/jpg', 'image/jpeg', 'image/tiff', 'image/webp'].includes(
-      node.mimeType
-    )
+    [
+      'image/png',
+      'image/jpg',
+      'image/jpeg',
+      'image/tiff',
+      'image/webp',
+    ].includes(node.mimeType)
   ) {
     try {
       const fileNode = await createRemoteFileNode({
@@ -398,7 +402,13 @@ function makeResolveGatsbyImageData(cache) {
     options
   ) {
     if (
-      !['image/png', 'image/jpg', 'image/jpeg', 'image/tiff', 'image/webp'].includes(mimeType)
+      ![
+        'image/png',
+        'image/jpg',
+        'image/jpeg',
+        'image/tiff',
+        'image/webp',
+      ].includes(mimeType)
     ) {
       return null
     }

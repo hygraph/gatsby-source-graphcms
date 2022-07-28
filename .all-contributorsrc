@@ -46,7 +46,7 @@
   ],
   "contributorsPerLine": 7,
   "projectName": "gatsby-source-graphcms",
-  "projectOwner": "GraphCMS",
+  "projectOwner": "hygraph",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true
