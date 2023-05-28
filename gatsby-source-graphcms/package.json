@@ -17,9 +17,9 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "7.16.7",
-    "gatsby-core-utils": "3.4.0",
+    "gatsby-core-utils": "3.25.0",
     "gatsby-graphql-source-toolkit": "^2.0.1",
-    "gatsby-source-filesystem": "4.4.0",
+    "gatsby-source-filesystem": "4.25.0",
     "he": "1.2.0",
     "node-fetch": "2.6.1"
   },
