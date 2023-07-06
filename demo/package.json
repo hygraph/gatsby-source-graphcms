@@ -12,11 +12,11 @@
   "dependencies": {
     "@mdx-js/mdx": "1.6.22",
     "@mdx-js/react": "1.6.22",
-    "gatsby": "4.4.0",
-    "gatsby-plugin-image": "2.4.0",
-    "gatsby-plugin-mdx": "3.4.0",
-    "gatsby-plugin-postcss": "5.4.0",
-    "gatsby-plugin-sharp": "4.4.0",
+    "gatsby": "4.25.7",
+    "gatsby-plugin-image": "2.25.0",
+    "gatsby-plugin-mdx": "3.20.0",
+    "gatsby-plugin-postcss": "5.25.0",
+    "gatsby-plugin-sharp": "4.25.1",
     "gatsby-source-graphcms": "2.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
