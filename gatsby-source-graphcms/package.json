@@ -21,7 +21,7 @@
     "gatsby-graphql-source-toolkit": "^2.0.1",
     "gatsby-source-filesystem": "4.4.0",
     "he": "1.2.0",
-    "node-fetch": "2.6.1"
+    "node-fetch": "2.7.0"
   },
   "devDependencies": {
     "@babel/cli": "7.16.7",
